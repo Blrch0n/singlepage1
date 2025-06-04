@@ -22,14 +22,15 @@ const Section10 = () => {
       {section10Data.map((item, index) => (
         <div
           key={index}
-          className="flex flex-col items-center justify-center text-center p-4"
+          className="flex flex-col w-full h-[150px] group relative items-center justify-center text-center p-4"
           style={{
             backgroundImage: `url(${item.image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          <h3 className="text-lg font-semibold text-white bg-black bg-opacity-50 p-2 rounded">
+          <div className="absolute inset-0 bg-[#000000c2] group-hover:bg-[#3452ffc2] transition-all duration-300 ease-in-out"></div>
+          <h3 className="text-[21px] font-semibold text-white relative p-2 rounded">
             {item.title}
           </h3>
         </div>

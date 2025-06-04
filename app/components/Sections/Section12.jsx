@@ -1,54 +1,92 @@
 import { TbNotebook } from "react-icons/tb";
 import { AiFillLike } from "react-icons/ai";
+
 const section12Data = [
   {
-    icon: <TbNotebook className="text-4xl text-blue-500" />,
+    icon: (
+      <TbNotebook className="text-4xl group-hover:text-black text-[#6d83ff]" />
+    ),
     title: "Parallax Section",
     description:
       "This is how we can be sure that your brand expands according to market goals and continues to be attractive in the future",
   },
   {
-    icon: <AiFillLike className="text-4xl text-blue-500" />,
+    icon: (
+      <AiFillLike className="text-4xl group-hover:text-black text-[#6d83ff]" />
+    ),
     title: "Responsive Design",
     description:
-      "ThIt is fundamental to have a strategy that takes into consideration the features that are important to the client",
+      "It is fundamental to have a strategy that takes into consideration the features that are important to the client",
   },
 ];
+
 const Section12 = () => {
   return (
-    <div className="w-full h-fit flex flex-row items-center justify-between bg-gray-100 p-8">
-      <div className="w-[40%] h-fit flex flex-col items-center justify-center text-black p-8">
-        <div className="w-full bg-white h-fit flex flex-col">
-          <h3>our concept</h3>
-          <h2>New products inspired by the changing working-style and times</h2>
-          <span
-            className="block h-2 w-6 rounded-full my-4"
-            style={{
-              background: "linear-gradient(to right, #3452ff 0%, #ad3ed8 100%)",
-            }}
-          ></span>
-          <p>
-            Enside allows you to build a fully functional and feature rich
-            onepage WordPress site, whatever your agency or business, without
-            any knowledge of coding.
-          </p>
-        </div>
-        <hr />
-        <div className="w-full grid grid-cols-2">
-          {section12Data.map((data, index) => (
-            <div className="w-full flex flex-col" key={index}>
-              <span>{data.icon}</span>
-              <h2>{data.title}</h2>
-              <p>{data.description}</p>
-            </div>
-          ))}
+    <div
+      className="w-full min-h-screen flex flex-col px-[100px] lg:flex-row items-center justify-between bg-cover bg-center bg-fixed relative"
+      style={{ backgroundImage: "url(/image4.jpg)" }}
+    >
+      {/* Background overlay for better text readability */}
+      {/* <div className="absolute inset-0 bg-black bg-opacity-30"></div> */}
+
+      {/* Content Container */}
+      <div className="relative z-10 w-full lg:w-[45%] h-fit flex flex-col items-center justify-center p-6 lg:p-12">
+        {/* Main Content Card */}
+        <div className="w-full rounded-2xl shadow-2xl p-8 lg:p-10 transform transition-all duration-300">
+          {/* Header Section */}
+          <div className="mb-8">
+            <h3 className="text-[#b8b8b8] font-semibold text-[16px] uppercase tracking-wider mb-2">
+              Our Concept
+            </h3>
+            <h2 className="text-4xl font-bold text-white leading-tight mb-4">
+              New products inspired by the changing working-style and times
+            </h2>
+            <span
+              className="block h-1.5 w-16 rounded-full mb-6"
+              style={{
+                background: "linear-gradient(135deg, #3452ff 0%, #ad3ed8 100%)",
+              }}
+            ></span>
+            <p className="text-[#ffffff] text-base lg:text-lg leading-relaxed">
+              Enside allows you to build a fully functional and feature rich
+              onepage WordPress site, whatever your agency or business, without
+              any knowledge of coding.
+            </p>
+          </div>
+
+          {/* Divider */}
+          <hr className="border-gray-200 my-8" />
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            {section12Data.map((data, index) => (
+              <div
+                className="flex flex-col space-y-4 p-4 rounded-xl  transition-all duration-500 transform"
+                key={index}
+              >
+                <div className="flex items-center justify-center group w-16 h-16 bg-transparent border border-[#6d83ff] rounded-xl hover:border-white hover:bg-white transition-colors duration-300">
+                  {data.icon}
+                </div>
+                <h3 className="text-lg font-bold text-white transition-colors duration-300">
+                  {data.title}
+                </h3>
+                <p className="text-[#b8b8b8] text-[16px]  leading-relaxed">
+                  {data.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="w-[50%] h-fit flex flex-col items-center justify-center text-black p-8">
-        <img
-          src="https://max-themes.net/demos/enside/main/upload/images-ipad-phone.png"
-          alt="ehll"
-        />
+
+      <div className="relative z-10  w-[50%] h-fit flex flex-col items-center justify-center p-6 lg:p-12">
+        <div className="relative group w-full h-fit">
+          <img
+            src="https://max-themes.net/demos/enside/main/upload/images-ipad-phone.png"
+            alt="iPad and Phone mockup"
+            className="w-full h-auto drop-shadow-2xl transform transition-all duration-500 filter group-hover:brightness-110"
+          />
+        </div>
       </div>
     </div>
   );
