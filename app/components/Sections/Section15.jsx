@@ -1,318 +1,213 @@
 "use client";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { motion } from "framer-motion";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const section15Data = [
+const section14Data = [
   {
     image:
-      "https://max-themes.net/demos/enside/main/upload/man-photo-portfolio-75x75.jpg",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    name: "John Doe",
-    position: "CEO, Company",
+      "https://max-themes.net/demos/enside/main/upload/Creative-business-team-laughing-1170x660.jpg",
+    title: "The Future of Work: Embracing Remote Collaboration",
+    categories: "client, design, development",
+    date: "2023-10-01",
   },
   {
     image:
-      "https://max-themes.net/demos/enside/main/upload/man-photo-portfolio-75x75.jpg",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    name: "Jane Smith",
-    position: "CTO, Tech Corp",
+      "https://max-themes.net/demos/enside/main/upload/business-morning-1170x660.jpg",
+    title: "The Future of Work: Embracing Remote Collaboration",
+    categories: "client, design, development",
+    date: "2023-10-01",
   },
   {
     image:
-      "https://max-themes.net/demos/enside/main/upload/man-photo-portfolio-75x75.jpg",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    name: "Mike Johnson",
-    position: "Designer, Creative Studio",
+      "https://max-themes.net/demos/enside/main/upload/coffe-vertical-1100x660.jpg",
+    title: "The Future of Work: Embracing Remote Collaboration",
+    categories: "client, design, development",
+    date: "2023-10-01",
   },
   {
     image:
-      "https://max-themes.net/demos/enside/main/upload/man-photo-portfolio-75x75.jpg",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    name: "Sarah Wilson",
-    position: "Marketing Director",
+      "https://max-themes.net/demos/enside/main/upload/Creative-business-team-laughing-1170x660.jpg",
+    title: "The Future of Work: Embracing Remote Collaboration",
+    categories: "client, design, development",
+    date: "2023-10-01",
   },
 ];
 
-const Section15 = () => {
+const Section14 = () => {
+  const [slidesPerView, setSlidesPerView] = useState(1);
+
+  // Handle responsive slides per view
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width >= 1024) {
+        setSlidesPerView(3);
+      } else if (width >= 768) {
+        setSlidesPerView(2);
+      } else {
+        setSlidesPerView(1);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <motion.div
-      className="w-full h-fit bg-cover bg-center relative py-[110px] md:py-[80px] sm:py-[60px] overflow-x-hidden"
-      style={{ backgroundImage: "url(/image6.jpg)" }}
+      className="w-full h-fit bg-white py-16 sm:py-20 md:py-24 lg:py-28 xl:py-28"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true }}
     >
-      <div className="absolute inset-0 bg-[#00000090]"></div>
-      <motion.div
-        className="w-full max-w-[1200px] mx-auto h-fit relative flex flex-col lg:flex-row items-center justify-center px-4 md:px-6 lg:px-8 overflow-x-hidden"
-        initial={{ y: 50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <motion.div
-          className="w-full lg:w-1/3 lg:pr-[80px] md:pr-[40px] h-fit flex flex-col gap-4 md:gap-6 lg:gap-8 items-start justify-center mb-8 lg:mb-0"
-          initial={{ x: -50, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <motion.h3
-              className="text-[#fff] text-[14px] md:text-[16px] uppercase font-semibold tracking-wider mb-2"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              viewport={{ once: true }}
-            >
-              Reviews
-            </motion.h3>
-            <motion.h2
-              className="text-2xl md:text-3xl lg:text-4xl text-[#fff] leading-tight mb-4"
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              viewport={{ once: true }}
-            >
-              What our clients said about us
-            </motion.h2>
-          </motion.div>
-          <motion.p
-            className="text-[#fff] text-base md:text-lg leading-relaxed"
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-            viewport={{ once: true }}
-          >
-            We are the comprehensive design and technology partner for the
-            digital age
-          </motion.p>
-
-          <motion.button
+      <div className="w-full max-w-7xl mx-auto h-fit bg-white flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="mb-8 sm:mb-10 md:mb-12 w-full h-fit flex flex-col items-center justify-center">
+          <h3 className="text-gray-500 font-semibold text-sm sm:text-base uppercase tracking-wider mb-2">
+            articles
+          </h3>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl w-full sm:w-[90%] md:w-[80%] lg:w-[570px] text-center text-gray-800 leading-tight mb-4 px-4">
+            Our Recent Writings
+          </h2>
+          <div
+            className="block h-1 sm:h-1.5 w-6 sm:w-8 rounded-full mb-4 sm:mb-6"
             style={{
-              background: "linear-gradient(to right, #3452ff 0%, #ad3ed8 100%)",
-              color: "#fff",
-              border: "none",
-              padding: "0.75rem 1.5rem",
-              borderRadius: "0.5rem",
-              fontWeight: "bold",
-              cursor: "pointer",
-              fontSize: "14px",
+              background: "linear-gradient(135deg, #3452ff 0%, #ad3ed8 100%)",
             }}
-            className="md:text-base md:px-8"
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.4 }}
-            viewport={{ once: true }}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 10px 25px rgba(52, 82, 255, 0.3)",
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Contact Us
-          </motion.button>
-        </motion.div>
+          />
+          <p className="text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed text-center px-4">
+            Updates and events of Enside
+          </p>
+        </div>
 
-        {/* Swiper Container */}
-        <motion.div
-          className="w-full lg:w-2/3 relative overflow-hidden"
-          initial={{ x: 50, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
+        {/* Swiper Section */}
+        <div className="w-full relative">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={16}
             slidesPerView={1}
-            width={null} // Let Swiper calculate width automatically
             navigation={{
-              nextEl: ".swiper-button-next-testimonial",
-              prevEl: ".swiper-button-prev-testimonial",
+              prevEl: ".swiper-button-prev-custom",
+              nextEl: ".swiper-button-next-custom",
             }}
             pagination={{
+              el: ".swiper-pagination-custom",
               clickable: true,
-              el: ".swiper-pagination-testimonial",
+              renderBullet: (index, className) => {
+                return `<span class="${className} w-5 h-1 sm:w-6 sm:h-1 rounded-full transition-all duration-300 cursor-pointer"></span>`;
+              },
             }}
             autoplay={{
               delay: 4000,
               disableOnInteraction: false,
             }}
             breakpoints={{
-              320: {
-                slidesPerView: 1,
-                spaceBetween: 12,
-              },
-              640: {
-                slidesPerView: 1,
-                spaceBetween: 16,
-              },
               768: {
-                slidesPerView: 1,
+                slidesPerView: 2,
                 spaceBetween: 20,
               },
               1024: {
-                slidesPerView: 2,
+                slidesPerView: 3,
                 spaceBetween: 24,
               },
             }}
-            className="relative !overflow-visible"
-            style={{ width: "100%" }}
+            className="w-full"
           >
-            {section15Data.map((data, index) => (
+            {section14Data.map((data, index) => (
               <SwiperSlide key={index}>
                 <motion.div
-                  className="w-full min-h-[350px] md:min-h-[380px] lg:min-h-[410px] bg-white flex flex-col items-start justify-start overflow-hidden shadow-lg rounded-lg"
-                  initial={{ y: 30, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
+                  className="w-full flex flex-col group h-72 sm:h-80 md:h-84 lg:h-80 xl:h-84 p-6 sm:p-7 md:p-8 text-white relative items-start justify-between rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300"
+                  style={{
+                    backgroundImage: `url(${data.image})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   transition={{
                     duration: 0.6,
-                    delay: 0.8 + index * 0.1,
+                    delay: (index % slidesPerView) * 0.1,
                   }}
                   viewport={{ once: true }}
-                  whileHover={{
-                    y: -5,
-                    boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
-                  }}
                 >
-                  <div className="w-full flex-1 p-4 md:p-6 flex flex-col gap-3 md:gap-4">
-                    <motion.img
-                      src={data.image}
-                      alt={data.name}
-                      className="w-[60px] h-[60px] md:w-[75px] md:h-[75px] rounded-full object-cover"
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 1.0 + index * 0.1,
-                        type: "spring",
-                        stiffness: 200,
-                      }}
-                      viewport={{ once: true }}
-                      whileHover={{ scale: 1.1 }}
-                    />
-                    <motion.p
-                      className="text-gray-700 text-sm md:text-base text-start leading-relaxed flex-1"
-                      initial={{ y: 15, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: 1.2 + index * 0.1,
-                      }}
-                      viewport={{ once: true }}
-                    >
-                      {data.description}
-                    </motion.p>
-                  </div>
-                  <hr className="w-full border-gray-200" />
-                  <motion.div
-                    className="w-full p-4 md:p-6 flex flex-col text-start"
-                    initial={{ y: 15, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: 1.4 + index * 0.1,
-                    }}
-                    viewport={{ once: true }}
-                  >
-                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1">
-                      {data.name}
-                    </h3>
-                    <p className="text-sm md:text-base text-gray-600">
-                      {data.position}
+                  <div className="absolute inset-0 z-0 bg-black opacity-50 group-hover:opacity-30 transition-opacity duration-300" />
+                  <h1 className="relative text-sm sm:text-base text-white/50 z-10">
+                    {data.date}
+                  </h1>
+                  <div className="relative w-full z-10 duration-500 transition-all group-hover:-translate-y-2 md:group-hover:-translate-y-3 lg:group-hover:-translate-y-4 text-start">
+                    <h2 className="text-xs sm:text-sm text-white/80 font-normal mb-2 group-hover:text-white transition-colors duration-200">
+                      {data.categories}
+                    </h2>
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-tight group-hover:-translate-y-1 transition-transform duration-200">
+                      {data.title}
                     </p>
-                  </motion.div>
+                  </div>
                 </motion.div>
               </SwiperSlide>
             ))}
           </Swiper>
 
+          {/* Custom Navigation Buttons */}
+          <button className="swiper-button-prev-custom hidden lg:flex absolute -left-6 xl:-left-12 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-12 h-12 xl:w-14 xl:h-14 items-center justify-center shadow-lg transition-all duration-300 z-20 cursor-pointer hover:scale-110">
+            <svg
+              className="w-6 h-6 xl:w-7 xl:h-7 text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <button className="swiper-button-next-custom hidden lg:flex absolute -right-6 xl:-right-12 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-12 h-12 xl:w-14 xl:h-14 items-center justify-center shadow-lg transition-all duration-300 z-20 cursor-pointer hover:scale-110">
+            <svg
+              className="w-6 h-6 xl:w-7 xl:h-7 text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+
           {/* Custom Pagination */}
-          <motion.div
-            className="swiper-pagination-testimonial flex justify-center mt-4 md:mt-6 space-x-2"
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.6 }}
-            viewport={{ once: true }}
-          ></motion.div>
-        </motion.div>
-      </motion.div>
+          <div className="swiper-pagination-custom flex justify-center mt-6 sm:mt-8 space-x-2"></div>
+        </div>
+      </div>
 
       <style jsx global>{`
-        .swiper {
-          width: 100% !important;
-          max-width: 100% !important;
-        }
-
-        .swiper-wrapper {
-          width: 100% !important;
-        }
-
-        .swiper-slide {
-          width: auto !important;
-          max-width: 100% !important;
-          box-sizing: border-box;
-        }
-
-        .swiper-pagination-testimonial .swiper-pagination-bullet {
-          width: 20px;
-          height: 3px;
-          background: rgba(255, 255, 255, 0.5);
+        .swiper-pagination-custom .swiper-pagination-bullet {
+          background: #d1d5db;
           opacity: 1;
-          border-radius: 2px;
-          margin: 0 3px;
           transition: all 0.3s ease;
         }
-
-        @media (min-width: 768px) {
-          .swiper-pagination-testimonial .swiper-pagination-bullet {
-            width: 25px;
-            height: 4px;
-            margin: 0 4px;
-          }
+        .swiper-pagination-custom .swiper-pagination-bullet:hover {
+          background: #9ca3af;
         }
-
-        .swiper-slide img {
-          object-fit: cover;
-          display: block;
-          width: 50px;
-          height: 50px;
+        .swiper-pagination-custom .swiper-pagination-bullet-active {
+          background: linear-gradient(135deg, #3b82f6 0%, #9333ea 100%);
         }
-
-        .swiper-pagination-testimonial .swiper-pagination-bullet-active {
-          background: linear-gradient(135deg, #3452ff 0%, #ad3ed8 100%);
-        }
-
-        .swiper-pagination-testimonial .swiper-pagination-bullet:hover {
-          background: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Remove the problematic media query */
-        /* @media (max-width: 1023px) {
-          .swiper-slide {
-            max-width: 100% !important;
-          }
-        } */
       `}</style>
     </motion.div>
   );
 };
 
-export default Section15;
+export default Section14;

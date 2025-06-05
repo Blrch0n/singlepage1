@@ -1,12 +1,6 @@
 "use client";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 const section14Data = [
   {
@@ -40,80 +34,95 @@ const section14Data = [
 ];
 
 const Section14 = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(1);
+
+  // Handle responsive slides per view
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width >= 1024) {
+        setSlidesPerView(3);
+      } else if (width >= 768) {
+        setSlidesPerView(2);
+      } else {
+        setSlidesPerView(1);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Auto-slide functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => {
+        const maxSlide = Math.max(0, section14Data.length - slidesPerView);
+        return prev >= maxSlide ? 0 : prev + 1;
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [slidesPerView]);
+
+  const nextSlide = () => {
+    const maxSlide = Math.max(0, section14Data.length - slidesPerView);
+    setCurrentSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    const maxSlide = Math.max(0, section14Data.length - slidesPerView);
+    setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const getTranslateX = () => {
+    const slideWidth = 100 / slidesPerView;
+    return -(currentSlide * slideWidth);
+  };
+
   return (
     <motion.div
-      className="w-full h-fit bg-[#fff] py-16 sm:py-20 md:py-24 lg:py-28 xl:py-[110px]"
+      className="w-full h-fit bg-white py-16 sm:py-20 md:py-24 lg:py-28 xl:py-28"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
-      <div className="w-full max-w-[1200px] mx-auto h-fit bg-[#fff] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="mb-6 sm:mb-8 md:mb-10 w-full h-fit flex flex-col items-center justify-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          <motion.h3
-            className="text-[#828282] font-semibold text-sm sm:text-base md:text-[16px] uppercase tracking-wider mb-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-          >
+      <div className="w-full max-w-7xl mx-auto h-fit bg-white flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="mb-8 sm:mb-10 md:mb-12 w-full h-fit flex flex-col items-center justify-center">
+          <h3 className="text-gray-500 font-semibold text-sm sm:text-base uppercase tracking-wider mb-2">
             articles
-          </motion.h3>
-          <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[72px] w-full sm:w-[90%] md:w-[80%] lg:w-[570px] text-center text-[#2A2F35] leading-tight mb-4 px-4"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
+          </h3>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl w-full sm:w-[90%] md:w-[80%] lg:w-[570px] text-center text-gray-800 leading-tight mb-4 px-4">
             Our Recent Writings
-          </motion.h2>
-          <motion.span
+          </h2>
+          <div
             className="block h-1 sm:h-1.5 w-6 sm:w-8 rounded-full mb-4 sm:mb-6"
             style={{
               background: "linear-gradient(135deg, #3452ff 0%, #ad3ed8 100%)",
             }}
-            initial={{ opacity: 0, width: 0 }}
-            whileInView={{ opacity: 1, width: 32 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            viewport={{ once: true }}
           />
-          <motion.p
-            className="text-[#808080] text-sm sm:text-base lg:text-lg leading-relaxed text-center px-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
+          <p className="text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed text-center px-4">
             Updates and events of Enside
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        <motion.div
-          className="w-full px-4 sm:px-6 md:px-8 lg:px-12 relative"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          viewport={{ once: true }}
-        >
-          {/* Desktop Navigation Buttons */}
-          <motion.div
-            className="swiper-button-prev-custom hidden lg:flex absolute -left-2 xl:-left-6 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-10 h-10 xl:w-12 xl:h-12 items-center justify-center shadow-lg transition-all duration-300 z-10 cursor-pointer"
-            whileHover={{ scale: 1.1, x: -5 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            viewport={{ once: true }}
+        {/* Carousel Section */}
+        <div className="w-full relative">
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            className="hidden lg:flex absolute -left-6 xl:-left-12 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-12 h-12 xl:w-14 xl:h-14 items-center justify-center shadow-lg transition-all duration-300 z-20 cursor-pointer hover:scale-110"
           >
             <svg
-              className="w-5 h-5 xl:w-6 xl:h-6 text-gray-800"
+              className="w-6 h-6 xl:w-7 xl:h-7 text-gray-800"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -125,18 +134,13 @@ const Section14 = () => {
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-          </motion.div>
-          <motion.div
-            className="swiper-button-next-custom hidden lg:flex absolute -right-2 xl:-right-6 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full w-10 h-10 xl:w-12 xl:h-12 items-center justify-center shadow-lg transition-all duration-300 z-10 cursor-pointer"
-            whileHover={{ scale: 1.1, x: 5 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            viewport={{ once: true }}
+          </button>
+          <button
+            onClick={nextSlide}
+            className="hidden lg:flex absolute -right-6 xl:-right-12 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-12 h-12 xl:w-14 xl:h-14 items-center justify-center shadow-lg transition-all duration-300 z-20 cursor-pointer hover:scale-110"
           >
             <svg
-              className="w-5 h-5 xl:w-6 xl:h-6 text-gray-800"
+              className="w-6 h-6 xl:w-7 xl:h-7 text-gray-800"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -148,134 +152,76 @@ const Section14 = () => {
                 d="M9 5l7 7-7 7"
               />
             </svg>
-          </motion.div>
+          </button>
 
-          <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={16}
-            slidesPerView={1}
-            navigation={{
-              nextEl: ".swiper-button-next-custom",
-              prevEl: ".swiper-button-prev-custom",
-            }}
-            pagination={{
-              clickable: true,
-              el: ".swiper-pagination-custom",
-            }}
-            autoplay={{
-              delay: 4000,
-              disableOnInteraction: false,
-            }}
-            breakpoints={{
-              320: {
-                slidesPerView: 1,
-                spaceBetween: 16,
-              },
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 24,
-              },
-            }}
-            className="relative"
-          >
-            {section14Data.map((data, index) => (
-              <SwiperSlide key={index}>
-                <motion.div
-                  className="w-full flex flex-col group h-[250px] sm:h-[280px] md:h-[300px] lg:h-[320px] xl:h-[340px] p-4 sm:p-6 md:p-7 lg:p-8 text-white relative items-start justify-between rounded-lg overflow-hidden cursor-pointer"
-                  style={{
-                    backgroundImage: `url(${data.image})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{
-                    scale: 1.0,
-                    transition: { duration: 0.3 },
-                  }}
+          {/* Carousel Container */}
+          <div className="w-full overflow-hidden">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(${getTranslateX()}%)`,
+                width: `${(section14Data.length / slidesPerView) * 100}%`,
+              }}
+            >
+              {section14Data.map((data, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 px-2 sm:px-3 lg:px-4"
+                  style={{ width: `${100 / section14Data.length}%` }}
                 >
                   <motion.div
-                    className="absolute inset-0 z-0 bg-black opacity-50"
-                    whileHover={{ opacity: 0.3 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <motion.h1
-                    className="relative text-sm sm:text-base md:text-[16px] text-[#ffffff50] z-10"
-                    initial={{ opacity: 0, y: 10 }}
+                    className="w-full flex flex-col group h-72 sm:h-80 md:h-84 lg:h-80 xl:h-84 p-6 sm:p-7 md:p-8 text-white relative items-start justify-between rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300"
+                    style={{
+                      backgroundImage: `url(${data.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: (index % slidesPerView) * 0.1,
+                    }}
                     viewport={{ once: true }}
                   >
-                    {data.date}
-                  </motion.h1>
-                  <motion.div
-                    className="relative w-full z-10 duration-500 transition-all group-hover:-translate-y-2 md:group-hover:-translate-y-3 lg:group-hover:-translate-y-4 text-start"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <motion.h2
-                      className="text-xs sm:text-sm md:text-sm lg:text-sm text-[#ffffff80] font-normal mb-2"
-                      whileHover={{ color: "#ffffff" }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {data.categories}
-                    </motion.h2>
-                    <motion.p
-                      className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl leading-tight"
-                      whileHover={{ y: -2 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {data.title}
-                    </motion.p>
+                    <div className="absolute inset-0 z-0 bg-black opacity-50 group-hover:opacity-30 transition-opacity duration-300" />
+                    <h1 className="relative text-sm sm:text-base text-white/50 z-10">
+                      {data.date}
+                    </h1>
+                    <div className="relative w-full z-10 duration-500 transition-all group-hover:-translate-y-2 md:group-hover:-translate-y-3 lg:group-hover:-translate-y-4 text-start">
+                      <h2 className="text-xs sm:text-sm text-white/80 font-normal mb-2 group-hover:text-white transition-colors duration-200">
+                        {data.categories}
+                      </h2>
+                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-tight group-hover:-translate-y-1 transition-transform duration-200">
+                        {data.title}
+                      </p>
+                    </div>
                   </motion.div>
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <motion.div
-            className="swiper-pagination-custom flex justify-center mt-4 sm:mt-6 space-x-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            viewport={{ once: true }}
-          />
-        </motion.div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Custom Pagination */}
+          <div className="flex justify-center mt-6 sm:mt-8">
+            <div className="flex space-x-2">
+              {Array.from({
+                length: Math.max(1, section14Data.length - slidesPerView + 1),
+              }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-5 h-1 sm:w-6 sm:h-1 rounded-full transition-all duration-300 cursor-pointer ${
+                    index === currentSlide
+                      ? "bg-gradient-to-r from-blue-500 to-purple-600"
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-
-      <style jsx global>{`
-        .swiper-pagination-custom .swiper-pagination-bullet {
-          width: 20px;
-          height: 3px;
-          background: #d1d5db;
-          opacity: 1;
-          border-radius: 2px;
-          margin: 0 3px;
-          transition: all 0.3s ease;
-        }
-
-        @media (min-width: 640px) {
-          .swiper-pagination-custom .swiper-pagination-bullet {
-            width: 25px;
-            height: 4px;
-            margin: 0 4px;
-          }
-        }
-
-        .swiper-pagination-custom .swiper-pagination-bullet-active {
-          background: linear-gradient(135deg, #3452ff 0%, #ad3ed8 100%);
-        }
-        .swiper-pagination-custom .swiper-pagination-bullet:hover {
-          background: #9ca3af;
-        }
-      `}</style>
     </motion.div>
   );
 };

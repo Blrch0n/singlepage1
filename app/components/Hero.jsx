@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
 
 const Hero = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   const slides = [
     {
       image: "/image1.jpg",
@@ -13,251 +14,92 @@ const Hero = () => {
     },
     {
       image: "/image2.jpg",
+      title: "Trendy. Creative. Awesome.",
+      subtitle: "All you need",
+      description:
+        "We base our work on thorough industry, product and customer research",
+    },
+    {
+      image: "/image3.jpg",
       title: "Modern. Innovative. Bold.",
       subtitle: "Everything you want",
       description:
         "Creating exceptional digital experiences with cutting-edge design",
     },
     {
-      image: "/image3.jpg",
+      image: "/image4.jpg",
       title: "Fresh. Dynamic. Perfect.",
       subtitle: "Just what you need",
       description: "Transforming ideas into stunning visual solutions",
     },
   ];
 
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const timerRef = useRef(null);
-
-  const startTimer = () => {
-    timerRef.current = setInterval(() => {
+  // Auto-play functionality
+  useEffect(() => {
+    const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
-  };
-
-  const resetTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-    startTimer();
-  };
-
-  useEffect(() => {
-    startTimer();
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
+    return () => clearInterval(timer);
   }, [slides.length]);
 
-  const handlePrevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-    resetTimer();
+  const handlePrevious = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
-  const handleNextSlide = () => {
+  const handleNext = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
-    resetTimer();
   };
 
   const handleDotClick = (index) => {
     setCurrentSlide(index);
-    resetTimer();
-  };
-
-  // Motion variants
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-      scale: 1.1,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (direction) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-      scale: 0.9,
-    }),
-  };
-
-  const contentVariants = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const buttonVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8,
-    },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        delay: 0.4,
-        type: "spring",
-        stiffness: 100,
-      },
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    tap: {
-      scale: 0.95,
-    },
   };
 
   return (
-    <div className="relative h-[100vh] w-full overflow-hidden">
-      <AnimatePresence mode="wait" custom={currentSlide}>
-        <motion.div
-          key={currentSlide}
-          custom={currentSlide}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.8 },
-            scale: { duration: 0.8 },
-          }}
-          className="absolute font-nunito inset-0 bg-cover bg-center bg-fixed flex items-center justify-center"
-          style={{ backgroundImage: `url("${slides[currentSlide].image}")` }}
-        >
-          <motion.div
-            variants={contentVariants}
-            initial="hidden"
-            animate="visible"
-            className="w-fit flex flex-col items-center justify-center text-center text-white px-4 sm:px-6 lg:px-8"
-          >
-            <motion.h3
-              variants={itemVariants}
-              className="font-semibold text-sm sm:text-base lg:text-[16px]"
-            >
-              {slides[currentSlide].subtitle}
-            </motion.h3>
-
-            <motion.h2
-              variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[69px] max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl xl:w-[639px] leading-tight"
-            >
-              {slides[currentSlide].title}
-            </motion.h2>
-
-            <motion.p
-              variants={itemVariants}
-              className="font-[200] max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:w-[412px] text-sm sm:text-base mt-2 sm:mt-4"
-            >
-              {slides[currentSlide].description}
-            </motion.p>
-
-            <motion.button
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
-              className="btn-gradient hover:bg-[#3452ff] duration-300 mt-4 sm:mt-6 ease-in-out px-6 py-3 sm:px-8 sm:py-4 lg:px-9 lg:py-4 text-sm sm:text-base"
-              style={{
-                zIndex: 9,
-                whiteSpace: "nowrap",
-                fontSize: "inherit",
-                lineHeight: "25px",
-                fontWeight: 300,
-                color: "rgb(255, 255, 255)",
-                letterSpacing: "0px",
-                borderRadius: "8px",
-                outline: "none",
-                boxShadow: "rgb(153, 153, 153) 0px 0px 0px 0px",
-                boxSizing: "border-box",
-                cursor: "pointer",
-                visibility: "inherit",
-                textAlign: "inherit",
-                minHeight: "0px",
-                minWidth: "0px",
-                maxHeight: "none",
-                maxWidth: "none",
-              }}
-            >
-              Discover More
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Navigation Dots with Motion */}
-      {/* <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.5 }}
-        className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 z-10"
-      >
-        {slides.map((_, index) => (
-          <motion.button
+    <div className="relative h-screen w-full overflow-hidden">
+      {/* Slides Container */}
+      <div className="relative h-full w-full">
+        {slides.map((slide, index) => (
+          <div
             key={index}
-            onClick={() => handleDotClick(index)}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "bg-white scale-125"
-                : "bg-white/50 hover:bg-white/75"
+            className={`absolute inset-0 h-full w-full bg-cover bg-center flex items-center justify-center transition-opacity duration-1000 ease-in-out ${
+              currentSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
-          />
-        ))}
-      </motion.div> */}
+            style={{ backgroundImage: `url("${slide.image}")` }}
+          >
+            {/* Dark overlay for better text readability */}
+            <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* Navigation Arrows with Motion */}
-      <motion.button
-        onClick={handlePrevSlide}
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.3)" }}
-        whileTap={{ scale: 0.95 }}
-        className="absolute left-2 sm:left-4 lg:left-8 cursor-pointer bg-black rounded-full p-2 sm:p-3 lg:p-4 hover:bg-[#00000030] top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-300 z-10"
+            <div className="relative z-10 flex flex-col items-center justify-center text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl">
+              <h3 className="font-semibold text-sm sm:text-base lg:text-lg mb-4">
+                {slide.subtitle}
+              </h3>
+
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
+                {slide.title}
+              </h2>
+
+              <p className="font-light text-sm sm:text-base lg:text-lg max-w-2xl mb-8">
+                {slide.description}
+              </p>
+
+              <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-4 rounded-lg text-white font-medium transition-all duration-300 hover:scale-105 shadow-lg">
+                Discover More
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Custom Navigation Arrows */}
+      <button
+        onClick={handlePrevious}
+        className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 z-20"
       >
-        <motion.svg
-          className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
+        <svg
+          className="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          whileHover={{ x: -2 }}
         >
           <path
             strokeLinecap="round"
@@ -265,24 +107,18 @@ const Hero = () => {
             strokeWidth={2}
             d="M15 19l-7-7 7-7"
           />
-        </motion.svg>
-      </motion.button>
+        </svg>
+      </button>
 
-      <motion.button
-        onClick={handleNextSlide}
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1.2, duration: 0.5 }}
-        whileHover={{ scale: 1.1, backgroundColor: "rgba(0,0,0,0.3)" }}
-        whileTap={{ scale: 0.95 }}
-        className="absolute right-2 sm:right-4 lg:right-8 cursor-pointer bg-black rounded-full p-2 sm:p-3 lg:p-4 hover:bg-[#00000030] top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-colors duration-300 z-10"
+      <button
+        onClick={handleNext}
+        className="absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 z-20"
       >
-        <motion.svg
-          className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8"
+        <svg
+          className="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          whileHover={{ x: 2 }}
         >
           <path
             strokeLinecap="round"
@@ -290,8 +126,21 @@ const Hero = () => {
             strokeWidth={2}
             d="M9 5l7 7-7 7"
           />
-        </motion.svg>
-      </motion.button>
+        </svg>
+      </button>
+
+      {/* Custom Pagination Dots */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleDotClick(index)}
+            className={`w-3 h-3 rounded-full cursor-pointer transition-all ${
+              currentSlide === index ? "bg-white" : "bg-white/50 hover:bg-white"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 };

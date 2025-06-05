@@ -10,14 +10,7 @@ const NewsHero = ({ imageUrl, title }) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-        className="text-center px-4"
-      >
-        {title}
-      </motion.h1>
+      <h1 className="text-center px-4">{title}</h1>
     </motion.div>
   );
 };

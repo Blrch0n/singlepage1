@@ -61,10 +61,10 @@ const Section12 = () => {
           <div className="grid grid-cols-1 mt-8 sm:grid-cols-2 gap-6 sm:gap-8">
             {section12Data.map((data, index) => (
               <div
-                className="flex flex-col space-y-3 sm:space-y-4 p-3 sm:p-4 rounded-xl transition-all duration-500 transform"
+                className="flex flex-col space-y-3 sm:space-y-4 p-3 sm:p-4 rounded-xl transition-all duration-500 transforms"
                 key={index}
               >
-                <div className="flex items-center justify-center group w-14 h-14 sm:w-16 sm:h-16 bg-transparent border border-[#6d83ff] rounded-xl hover:border-white hover:bg-white transition-colors duration-300">
+                <div className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-transparent border border-[#6d83ff] rounded-xl hover:border-white hover:bg-white transition-colors duration-300">
                   {data.icon}
                 </div>
                 <h3 className="text-base sm:text-lg font-bold text-white transition-colors duration-300">
@@ -85,7 +85,7 @@ const Section12 = () => {
           <img
             src="https://max-themes.net/demos/enside/main/upload/images-ipad-phone.png"
             alt="iPad and Phone mockup"
-            className="w-full h-auto drop-shadow-2xl transform transition-all duration-500 filter group-hover:brightness-110"
+            className="w-full h-auto drop-shadow-2xl transform transition-all duration-500 filter"
           />
         </div>
       </div>

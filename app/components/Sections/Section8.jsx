@@ -41,71 +41,26 @@ const Section8 = () => {
         <motion.div
           key={index}
           style={{ backgroundColor: item.color }}
-          className="flex flex-col items-center sm:items-start justify-start text-white gap-4 py-[40px] px-[30px] sm:py-[50px] sm:px-[40px] lg:py-[60px] lg:px-[50px] min-h-[280px] sm:min-h-[300px]"
-          initial={{ opacity: 0, y: 60, scale: 0.9 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          whileHover={{
-            y: -10,
-            scale: 1.02,
-            transition: { duration: 0.3 },
-          }}
+          className="flex flex-col items-center sm:items-start justify-start text-white gap-4 py-[40px] px-[30px] sm:py-[50px] sm:px-[40px] lg:py-[60px] lg:px-[50px] min-h-[280px] sm:min-h-[300px] hover:-translate-y-1 transition-transform duration-300"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.8,
-            delay: index * 0.2,
-            ease: "easeOut",
+            duration: 0.6,
+            delay: index * 0.1,
           }}
           viewport={{ once: true }}
         >
-          <motion.span
-            className="p-4 w-[64px] h-[64px] sm:p-5 sm:w-[74px] sm:h-[74px] flex items-center justify-center border-2 rounded-2xl sm:rounded-3xl border-white"
-            initial={{ opacity: 0, scale: 0, rotate: -180 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-            whileHover={{
-              scale: 1.1,
-              rotate: 5,
-              borderColor: "#ffffff",
-              boxShadow: "0 8px 20px rgba(255, 255, 255, 0.2)",
-            }}
-            transition={{
-              duration: 0.6,
-              delay: 0.2 + index * 0.2,
-              ease: "easeOut",
-            }}
-            viewport={{ once: true }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.2 }}
-            >
-              {item.icon}
-            </motion.div>
-          </motion.span>
+          <span className="p-4 w-[64px] h-[64px] sm:p-5 sm:w-[74px] sm:h-[74px] flex items-center justify-center border-2 rounded-2xl sm:rounded-3xl border-white hover:scale-110 transition-transform duration-200">
+            {item.icon}
+          </span>
 
-          <motion.h3
-            className="text-[14px] sm:text-[16px] font-bold mt-2 text-center sm:text-start"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: 0.4 + index * 0.2,
-            }}
-            viewport={{ once: true }}
-          >
+          <h3 className="text-[14px] sm:text-[16px] font-bold mt-2 text-center sm:text-start">
             {item.title}
-          </motion.h3>
+          </h3>
 
-          <motion.p
-            className="text-center sm:text-start text-sm sm:text-base leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.6,
-              delay: 0.6 + index * 0.2,
-            }}
-            viewport={{ once: true }}
-          >
+          <p className="text-center sm:text-start text-sm sm:text-base leading-relaxed">
             {item.desciption}
-          </motion.p>
+          </p>
         </motion.div>
       ))}
     </motion.div>

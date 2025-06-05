@@ -30,16 +30,10 @@ const SideBarToTop = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed bottom-10 bg-white right-10 hover:bg-[#2A2F35] cursor-pointer hover:text-white w-[50px] h-[50px] rounded-full flex items-center justify-center shadow-lg z-50"
+          className="fixed bottom-5 right-5 lg:bottom-10 bg-white lg:right-10 hover:bg-[#2A2F35] cursor-pointer hover:text-white w-[50px] h-[50px] rounded-full flex items-center justify-center shadow-lg z-50 hover:scale-110 active:scale-95 transition-all duration-300"
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 100 }}
-          whileHover={{
-            scale: 1.1,
-            backgroundColor: "#2A2F35",
-            color: "#ffffff",
-          }}
-          whileTap={{ scale: 0.95 }}
           transition={{
             type: "spring",
             stiffness: 400,
@@ -47,16 +41,7 @@ const SideBarToTop = () => {
           }}
           onClick={scrollToTop}
         >
-          <motion.div
-            animate={{ y: [0, -2, 0] }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <IoIosArrowUp />
-          </motion.div>
+          <IoIosArrowUp />
         </motion.div>
       )}
     </AnimatePresence>
