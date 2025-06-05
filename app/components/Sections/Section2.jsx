@@ -90,15 +90,15 @@ const Section2 = () => {
           <motion.div
             className="w-[370px] h-fit flex flex-col gap-10 items-center justify-center text-center m-4"
             key={index}
-            initial={{ opacity: 0, y: 80, scale: 0.8 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
             whileHover={{
               y: -10,
-              transition: { duration: 0.3 },
+              transition: { duration: 0.2 },
             }}
             transition={{
-              duration: 0.8,
-              delay: 0.9 + index * 0.2,
+              duration: 0.4,
+              delay: 0.5 + index * 0.1,
               ease: "easeOut",
             }}
             viewport={{ once: true }}
@@ -107,14 +107,13 @@ const Section2 = () => {
               className="w-full h-[270px] object-cover bg-center bg-cover"
               src={item.img}
               alt={item.title}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2 }}
             />
             <motion.h1
               className="text-[#2A2F35] text-[21px]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.1 + index * 0.2 }}
+              transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
               viewport={{ once: true }}
             >
               {item.title}
@@ -123,7 +122,7 @@ const Section2 = () => {
               className="text-[#999999]"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.2 + index * 0.2 }}
+              transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
               viewport={{ once: true }}
             >
               {item.description}
@@ -132,7 +131,7 @@ const Section2 = () => {
               className="bg-[#2A2F3530] w-1/2 h-[1px]"
               initial={{ width: 0, opacity: 0 }}
               whileInView={{ width: "50%", opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.3 + index * 0.2 }}
+              transition={{ duration: 0.3, delay: 0.8 + index * 0.1 }}
               viewport={{ once: true }}
             />
           </motion.div>

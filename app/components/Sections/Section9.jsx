@@ -5,11 +5,11 @@ import { TbHammer } from "react-icons/tb";
 import { PiStudent } from "react-icons/pi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiToolsFill } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SlLike } from "react-icons/sl";
 import { BsSafe2 } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 
 const buttonData = ["Prototypes", "Development", "Support", "Design"];
 
@@ -75,6 +75,34 @@ const designData = [
 
 const Section9 = () => {
   const [isclicked, setIsClicked] = useState("Prototypes");
+  const useCountAnimation = (targetValue, duration = 2000) => {
+    const [count, setCount] = useState(0);
+    const [hasAnimated, setHasAnimated] = useState(false);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
+
+    useEffect(() => {
+      if (isInView && !hasAnimated) {
+        setHasAnimated(true);
+        let startTime = null;
+        const animate = (currentTime) => {
+          if (startTime === null) startTime = currentTime;
+          const progress = Math.min((currentTime - startTime) / duration, 1);
+
+          // Easing function for smooth animation
+          const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+          setCount(Math.floor(easeOutQuart * targetValue));
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        };
+        requestAnimationFrame(animate);
+      }
+    }, [isInView, targetValue, duration, hasAnimated]);
+
+    return [count, ref];
+  };
 
   return (
     <motion.div
@@ -576,53 +604,61 @@ const Section9 = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           viewport={{ once: true }}
         >
-          {statusData.map((data, index) => (
-            <motion.div
-              className="flex flex-col items-center justify-center text-center p-4"
-              key={index}
-              initial={{ opacity: 0, y: 60, scale: 0.8 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              whileHover={{ y: -10, scale: 1.05 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.6 + index * 0.2,
-                ease: "easeOut",
-              }}
-              viewport={{ once: true }}
-            >
-              <motion.h1
-                className="flex items-center justify-start gap-8 text-[60px] mb-2"
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.7 + index * 0.2 }}
+          {statusData.map((data, index) => {
+            const [count, countRef] = useCountAnimation(
+              data.title,
+              2000 + index * 200
+            );
+
+            return (
+              <motion.div
+                className="flex flex-col items-center justify-center text-center p-4"
+                key={index}
+                initial={{ opacity: 0, y: 60, scale: 0.8 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -10, scale: 1.05 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.6 + index * 0.2,
+                  ease: "easeOut",
+                }}
                 viewport={{ once: true }}
               >
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.2 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {data.icon}
-                </motion.div>
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.8 + index * 0.2 }}
+                <motion.h1
+                  ref={countRef}
+                  className="flex items-center justify-start gap-8 text-[60px] mb-2"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.7 + index * 0.2 }}
                   viewport={{ once: true }}
                 >
-                  {data.title}
-                </motion.span>
-              </motion.h1>
-              <motion.p
-                className="text-[18px] text-[#828282]"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.9 + index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                {data.description}
-              </motion.p>
-            </motion.div>
-          ))}
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.2 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {data.icon}
+                  </motion.div>
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.8 + index * 0.2 }}
+                    viewport={{ once: true }}
+                  >
+                    {count}
+                  </motion.span>
+                </motion.h1>
+                <motion.p
+                  className="text-[18px] text-[#828282]"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.9 + index * 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  {data.description}
+                </motion.p>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </motion.div>
     </motion.div>

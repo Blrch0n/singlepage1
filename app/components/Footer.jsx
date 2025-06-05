@@ -79,7 +79,10 @@ const linkVariants = {
 
 // Sub-components
 const AboutSection = () => (
-  <motion.div className="w-1/4" variants={sectionVariants}>
+  <motion.div
+    className="w-full sm:w-1/2 lg:w-1/4 mb-8 lg:mb-0"
+    variants={sectionVariants}
+  >
     <motion.h2
       className="text-white text-lg mb-4"
       initial={{ opacity: 0, x: -20 }}
@@ -102,7 +105,10 @@ const AboutSection = () => (
 );
 
 const NewsSection = () => (
-  <motion.div className="w-1/4" variants={sectionVariants}>
+  <motion.div
+    className="w-full sm:w-1/2 lg:w-1/4 mb-8 lg:mb-0"
+    variants={sectionVariants}
+  >
     <motion.h2
       className="text-white text-lg mb-4"
       initial={{ opacity: 0, x: -20 }}
@@ -139,7 +145,10 @@ const NewsSection = () => (
 );
 
 const LinksSection = () => (
-  <motion.div className="w-1/4" variants={sectionVariants}>
+  <motion.div
+    className="w-full sm:w-1/2 lg:w-1/4 mb-8 lg:mb-0"
+    variants={sectionVariants}
+  >
     <motion.h2
       className="text-white text-lg mb-4"
       initial={{ opacity: 0, x: -20 }}
@@ -171,7 +180,10 @@ const LinksSection = () => (
 );
 
 const ContactSection = () => (
-  <motion.div className="w-1/4 text-[#b8b8b8]" variants={sectionVariants}>
+  <motion.div
+    className="w-full sm:w-1/2 lg:w-1/4 text-[#b8b8b8]"
+    variants={sectionVariants}
+  >
     <motion.h2
       className="text-white text-lg mb-4"
       initial={{ opacity: 0, x: -20 }}
@@ -232,9 +244,9 @@ const Footer = () => {
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="max-w-[1200px] mx-auto px-8 py-[60px]">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-[40px] sm:py-[50px] lg:py-[60px]">
         <motion.div
-          className="flex flex-row items-start justify-between gap-8"
+          className="flex flex-col lg:flex-row items-start justify-between gap-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -248,13 +260,13 @@ const Footer = () => {
       </div>
 
       <motion.div
-        className="w-full py-8 text-center bg-[#0d0d0d]"
+        className="w-full py-6 sm:py-8 text-center bg-[#0d0d0d]"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 1.2, duration: 0.6 }}
       >
-        <p className="text-[#ffffff66] text-[13px]">
+        <p className="text-[#ffffff66] text-[13px] px-4">
           Powered by
           <motion.span
             className="text-white hover:text-[#3452ff] transition duration-300 cursor-pointer ml-1"

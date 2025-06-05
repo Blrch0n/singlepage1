@@ -221,7 +221,7 @@ const Hero = () => {
       </AnimatePresence>
 
       {/* Navigation Dots with Motion */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
@@ -240,7 +240,7 @@ const Hero = () => {
             }`}
           />
         ))}
-      </motion.div>
+      </motion.div> */}
 
       {/* Navigation Arrows with Motion */}
       <motion.button
