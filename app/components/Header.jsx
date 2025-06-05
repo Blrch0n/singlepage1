@@ -196,8 +196,9 @@ const Header = () => {
         variants={backgroundVariants}
         animate={isScrolled ? "scrolled" : "transparent"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="w-full h-fit flex items-center justify-between px-4 py-2 max-w-7xl mx-auto"
-      >
+        className="w-full h-full flex items-center justify-center absolute inset-0"
+      />
+      <div className="w-full h-fit flex items-center justify-between px-4 py-2 max-w-7xl mx-auto relative z-10">
         {/* Logo */}
         <div className="flex-shrink-0">
           <AnimatePresence mode="wait">
@@ -302,7 +303,7 @@ const Header = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </motion.section>
   );
 };

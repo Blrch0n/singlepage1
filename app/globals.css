@@ -47,7 +47,9 @@
 }
 
 body {
-
+  padding: 0;
+  margin: 0;
+  background-color: #444;
   font-family: "Nunito", sans-serif;
 }
 .btn-gradient {

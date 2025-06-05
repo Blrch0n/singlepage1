@@ -46,7 +46,7 @@ const section15Data = [
 const Section15 = () => {
   return (
     <motion.div
-      className="w-full h-fit bg-cover bg-center relative py-[110px] md:py-[80px] sm:py-[60px]"
+      className="w-full h-fit bg-cover bg-center relative py-[110px] md:py-[80px] sm:py-[60px] overflow-x-hidden"
       style={{ backgroundImage: "url(/image6.jpg)" }}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -55,7 +55,7 @@ const Section15 = () => {
     >
       <div className="absolute inset-0 bg-[#00000090]"></div>
       <motion.div
-        className="w-full max-w-[1200px] mx-auto h-fit relative flex flex-col lg:flex-row items-center justify-center px-4 md:px-6 lg:px-8"
+        className="w-full max-w-[1200px] mx-auto h-fit relative flex flex-col lg:flex-row items-center justify-center px-4 md:px-6 lg:px-8 overflow-x-hidden"
         initial={{ y: 50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -132,7 +132,7 @@ const Section15 = () => {
 
         {/* Swiper Container */}
         <motion.div
-          className="w-full lg:w-2/3 relative"
+          className="w-full lg:w-2/3 relative overflow-hidden"
           initial={{ x: 50, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -142,6 +142,7 @@ const Section15 = () => {
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={16}
             slidesPerView={1}
+            width={null} // Let Swiper calculate width automatically
             navigation={{
               nextEl: ".swiper-button-next-testimonial",
               prevEl: ".swiper-button-prev-testimonial",
@@ -155,9 +156,13 @@ const Section15 = () => {
               disableOnInteraction: false,
             }}
             breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 12,
+              },
               640: {
                 slidesPerView: 1,
-                spaceBetween: 20,
+                spaceBetween: 16,
               },
               768: {
                 slidesPerView: 1,
@@ -168,7 +173,8 @@ const Section15 = () => {
                 spaceBetween: 24,
               },
             }}
-            className="relative"
+            className="relative !overflow-visible"
+            style={{ width: "100%" }}
           >
             {section15Data.map((data, index) => (
               <SwiperSlide key={index}>
@@ -250,6 +256,21 @@ const Section15 = () => {
       </motion.div>
 
       <style jsx global>{`
+        .swiper {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        .swiper-wrapper {
+          width: 100% !important;
+        }
+
+        .swiper-slide {
+          width: auto !important;
+          max-width: 100% !important;
+          box-sizing: border-box;
+        }
+
         .swiper-pagination-testimonial .swiper-pagination-bullet {
           width: 20px;
           height: 3px;
@@ -283,11 +304,12 @@ const Section15 = () => {
           background: rgba(255, 255, 255, 0.8);
         }
 
-        @media (max-width: 1023px) {
+        /* Remove the problematic media query */
+        /* @media (max-width: 1023px) {
           .swiper-slide {
             max-width: 100% !important;
           }
-        }
+        } */
       `}</style>
     </motion.div>
   );

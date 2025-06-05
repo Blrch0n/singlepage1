@@ -167,11 +167,11 @@ const Section14 = () => {
               disableOnInteraction: false,
             }}
             breakpoints={{
-              480: {
+              320: {
                 slidesPerView: 1,
                 spaceBetween: 16,
               },
-              640: {
+              768: {
                 slidesPerView: 2,
                 spaceBetween: 20,
               },
@@ -185,7 +185,7 @@ const Section14 = () => {
             {section14Data.map((data, index) => (
               <SwiperSlide key={index}>
                 <motion.div
-                  className="w-full flex flex-col group h-[250px] sm:h-[280px] md:h-[300px] lg:h-[320px] p-4 sm:p-6 md:p-8 text-white relative items-start justify-between rounded-lg overflow-hidden cursor-pointer"
+                  className="w-full flex flex-col group h-[250px] sm:h-[280px] md:h-[300px] lg:h-[320px] xl:h-[340px] p-4 sm:p-6 md:p-7 lg:p-8 text-white relative items-start justify-between rounded-lg overflow-hidden cursor-pointer"
                   style={{
                     backgroundImage: `url(${data.image})`,
                     backgroundSize: "cover",
@@ -196,7 +196,7 @@ const Section14 = () => {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{
-                    scale: 1.02,
+                    scale: 1.0,
                     transition: { duration: 0.3 },
                   }}
                 >
@@ -215,21 +215,21 @@ const Section14 = () => {
                     {data.date}
                   </motion.h1>
                   <motion.div
-                    className="relative w-full z-10 duration-500 transition-all group-hover:-translate-y-2 md:group-hover:-translate-y-4 text-start"
+                    className="relative w-full z-10 duration-500 transition-all group-hover:-translate-y-2 md:group-hover:-translate-y-3 lg:group-hover:-translate-y-4 text-start"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                     viewport={{ once: true }}
                   >
                     <motion.h2
-                      className="text-xs sm:text-sm text-[#ffffff80] font-normal mb-2"
+                      className="text-xs sm:text-sm md:text-sm lg:text-sm text-[#ffffff80] font-normal mb-2"
                       whileHover={{ color: "#ffffff" }}
                       transition={{ duration: 0.2 }}
                     >
                       {data.categories}
                     </motion.h2>
                     <motion.p
-                      className="text-lg sm:text-xl md:text-2xl leading-tight"
+                      className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-2xl leading-tight"
                       whileHover={{ y: -2 }}
                       transition={{ duration: 0.2 }}
                     >
@@ -240,7 +240,6 @@ const Section14 = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-
           <motion.div
             className="swiper-pagination-custom flex justify-center mt-4 sm:mt-6 space-x-2"
             initial={{ opacity: 0, y: 20 }}

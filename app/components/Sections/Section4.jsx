@@ -28,14 +28,14 @@ const section4Data = [
 const Section4 = () => {
   return (
     <motion.div
-      className="w-full flex flex-col md:flex-row h-screen"
+      className="w-full flex flex-col md:flex-row min-h-screen"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true, amount: 0.3 }}
     >
       <motion.div
-        className="w-full md:w-[50%] bg-[#25282b] h-full py-[60px] px-[30px] md:py-[120px] md:px-[150px]"
+        className="w-full sm:w-[70%] lg:w-[50%] bg-[#25282b] min-h-screen py-[60px] px-[30px] lg:py-[120px] lg:px-[150px] flex flex-col"
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -82,6 +82,7 @@ const Section4 = () => {
         </motion.p>
 
         <motion.div
+          className="flex-1 overflow-y-auto"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -109,11 +110,11 @@ const Section4 = () => {
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <AccordionTrigger className="text-[#666] px-6 py cursor-pointer bg-white rounded-none text-left hover:bg-gray-50 transition-colors duration-200">
+                    <AccordionTrigger className="text-[#666] px-6 py-4 cursor-pointer bg-white rounded-none text-left hover:bg-gray-50 transition-colors duration-200">
                       {item.title}
                     </AccordionTrigger>
                   </motion.div>
-                  <AccordionContent className="text-[#999999] text-[16px] md:text-[18px] p-4 md:p-8">
+                  <AccordionContent className="text-[#999999] text-[16px] md:text-[18px] p-4 md:p-8 max-h-[300px] overflow-y-auto">
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -130,7 +131,7 @@ const Section4 = () => {
       </motion.div>
 
       <motion.div
-        className="hidden md:block w-[50%] h-full bg-cover bg-center"
+        className="hidden md:block w-[50%] min-h-screen bg-cover bg-center"
         style={{ backgroundImage: 'url("/image2.jpg")' }}
         initial={{ opacity: 0, x: 50, scale: 1.1 }}
         whileInView={{ opacity: 1, x: 0, scale: 1 }}
