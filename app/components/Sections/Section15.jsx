@@ -46,7 +46,7 @@ const section15Data = [
 const Section15 = () => {
   return (
     <motion.div
-      className="w-full h-fit bg-cover bg-center relative py-[110px]"
+      className="w-full h-fit bg-cover bg-center relative py-[110px] md:py-[80px] sm:py-[60px]"
       style={{ backgroundImage: "url(/image6.jpg)" }}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -55,14 +55,14 @@ const Section15 = () => {
     >
       <div className="absolute inset-0 bg-[#00000090]"></div>
       <motion.div
-        className="w-full max-w-[1200px] mx-auto h-fit relative flex flex-row items-center justify-center"
+        className="w-full max-w-[1200px] mx-auto h-fit relative flex flex-col lg:flex-row items-center justify-center px-4 md:px-6 lg:px-8"
         initial={{ y: 50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         viewport={{ once: true, amount: 0.2 }}
       >
         <motion.div
-          className="w-1/3 pr-[80px] h-fit flex flex-col gap-8 items-start justify-center"
+          className="w-full lg:w-1/3 lg:pr-[80px] md:pr-[40px] h-fit flex flex-col gap-4 md:gap-6 lg:gap-8 items-start justify-center mb-8 lg:mb-0"
           initial={{ x: -50, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -75,7 +75,7 @@ const Section15 = () => {
             viewport={{ once: true }}
           >
             <motion.h3
-              className="text-[#fff] text-[16px] uppercase font-semibold tracking-wider mb-2"
+              className="text-[#fff] text-[14px] md:text-[16px] uppercase font-semibold tracking-wider mb-2"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
@@ -84,7 +84,7 @@ const Section15 = () => {
               Reviews
             </motion.h3>
             <motion.h2
-              className="text-4xl text-[#fff] leading-tight mb-4"
+              className="text-2xl md:text-3xl lg:text-4xl text-[#fff] leading-tight mb-4"
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 1.0 }}
@@ -94,7 +94,7 @@ const Section15 = () => {
             </motion.h2>
           </motion.div>
           <motion.p
-            className="text-[#fff] text-lg leading-relaxed"
+            className="text-[#fff] text-base md:text-lg leading-relaxed"
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.2 }}
@@ -109,11 +109,13 @@ const Section15 = () => {
               background: "linear-gradient(to right, #3452ff 0%, #ad3ed8 100%)",
               color: "#fff",
               border: "none",
-              padding: "0.75rem 2rem",
+              padding: "0.75rem 1.5rem",
               borderRadius: "0.5rem",
               fontWeight: "bold",
               cursor: "pointer",
+              fontSize: "14px",
             }}
+            className="md:text-base md:px-8"
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.4 }}
@@ -130,7 +132,7 @@ const Section15 = () => {
 
         {/* Swiper Container */}
         <motion.div
-          className="w-2/3 relative"
+          className="w-full lg:w-2/3 relative"
           initial={{ x: 50, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -138,7 +140,7 @@ const Section15 = () => {
         >
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={24}
+            spaceBetween={16}
             slidesPerView={1}
             navigation={{
               nextEl: ".swiper-button-next-testimonial",
@@ -153,8 +155,17 @@ const Section15 = () => {
               disableOnInteraction: false,
             }}
             breakpoints={{
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
               768: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              1024: {
                 slidesPerView: 2,
+                spaceBetween: 24,
               },
             }}
             className="relative"
@@ -162,7 +173,7 @@ const Section15 = () => {
             {section15Data.map((data, index) => (
               <SwiperSlide key={index}>
                 <motion.div
-                  className="w-full min-h-[410px] bg-white flex flex-col items-start justify-start overflow-hidden shadow-lg"
+                  className="w-full min-h-[350px] md:min-h-[380px] lg:min-h-[410px] bg-white flex flex-col items-start justify-start overflow-hidden shadow-lg rounded-lg"
                   initial={{ y: 30, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   transition={{
@@ -175,11 +186,11 @@ const Section15 = () => {
                     boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
                   }}
                 >
-                  <div className="w-full flex-1 p-6 flex flex-col gap-4">
+                  <div className="w-full flex-1 p-4 md:p-6 flex flex-col gap-3 md:gap-4">
                     <motion.img
                       src={data.image}
                       alt={data.name}
-                      className="w-[75px] h-[75px] rounded-full object-cover"
+                      className="w-[60px] h-[60px] md:w-[75px] md:h-[75px] rounded-full object-cover"
                       initial={{ scale: 0, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
                       transition={{
@@ -192,7 +203,7 @@ const Section15 = () => {
                       whileHover={{ scale: 1.1 }}
                     />
                     <motion.p
-                      className="text-gray-700 text-start leading-relaxed flex-1"
+                      className="text-gray-700 text-sm md:text-base text-start leading-relaxed flex-1"
                       initial={{ y: 15, opacity: 0 }}
                       whileInView={{ y: 0, opacity: 1 }}
                       transition={{
@@ -206,7 +217,7 @@ const Section15 = () => {
                   </div>
                   <hr className="w-full border-gray-200" />
                   <motion.div
-                    className="w-full p-6 flex flex-col text-start"
+                    className="w-full p-4 md:p-6 flex flex-col text-start"
                     initial={{ y: 15, opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     transition={{
@@ -215,10 +226,12 @@ const Section15 = () => {
                     }}
                     viewport={{ once: true }}
                   >
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1">
                       {data.name}
                     </h3>
-                    <p className="text-gray-600">{data.position}</p>
+                    <p className="text-sm md:text-base text-gray-600">
+                      {data.position}
+                    </p>
                   </motion.div>
                 </motion.div>
               </SwiperSlide>
@@ -227,7 +240,7 @@ const Section15 = () => {
 
           {/* Custom Pagination */}
           <motion.div
-            className="swiper-pagination-testimonial flex justify-center mt-6 space-x-2"
+            className="swiper-pagination-testimonial flex justify-center mt-4 md:mt-6 space-x-2"
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.6 }}
@@ -238,25 +251,42 @@ const Section15 = () => {
 
       <style jsx global>{`
         .swiper-pagination-testimonial .swiper-pagination-bullet {
-          width: 25px;
-          height: 4px;
+          width: 20px;
+          height: 3px;
           background: rgba(255, 255, 255, 0.5);
           opacity: 1;
           border-radius: 2px;
-          margin: 0 4px;
+          margin: 0 3px;
           transition: all 0.3s ease;
         }
+
+        @media (min-width: 768px) {
+          .swiper-pagination-testimonial .swiper-pagination-bullet {
+            width: 25px;
+            height: 4px;
+            margin: 0 4px;
+          }
+        }
+
         .swiper-slide img {
           object-fit: cover;
-          width: 75px;
-          height: 75px;
           display: block;
+          width: 50px;
+          height: 50px;
         }
+
         .swiper-pagination-testimonial .swiper-pagination-bullet-active {
           background: linear-gradient(135deg, #3452ff 0%, #ad3ed8 100%);
         }
+
         .swiper-pagination-testimonial .swiper-pagination-bullet:hover {
           background: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 1023px) {
+          .swiper-slide {
+            max-width: 100% !important;
+          }
         }
       `}</style>
     </motion.div>

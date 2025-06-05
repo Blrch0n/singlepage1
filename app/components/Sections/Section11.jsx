@@ -78,7 +78,7 @@ const Section11 = () => {
           team
         </motion.h3>
         <motion.h2
-          className="text-[72px] text-[#2A2F35]"
+          className="text-[32px] sm:text-[72px] text-[#2A2F35]"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -97,7 +97,7 @@ const Section11 = () => {
           viewport={{ once: true }}
         />
         <motion.p
-          className="text-[18px] text-[#999999]"
+          className="text-[18px] text-center sm:text-base text-[#999999]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}

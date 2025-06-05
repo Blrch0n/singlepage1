@@ -1,4 +1,5 @@
 "use client";
+import { IoMdMenu } from "react-icons/io";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -13,14 +14,51 @@ const headerlinks = [
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       setIsScrolled(scrollTop > 50);
+
+      // Check which section is currently in viewport
+      const sections = headerlinks.map((link) => {
+        let sectionId;
+        switch (link) {
+          case "our work":
+            sectionId = "work";
+            break;
+          default:
+            sectionId = link;
+        }
+        return { name: link, id: sectionId };
+      });
+
+      // Find the section that's currently most visible
+      let currentSection = "";
+      const viewportHeight = window.innerHeight;
+      const scrollPosition = window.scrollY + viewportHeight / 2;
+
+      sections.forEach(({ name, id }) => {
+        const element = document.getElementById(id);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          const elementTop = window.scrollY + rect.top;
+          const elementBottom = elementTop + element.offsetHeight;
+
+          if (scrollPosition >= elementTop && scrollPosition <= elementBottom) {
+            currentSection = name;
+          }
+        }
+      });
+
+      setActiveSection(currentSection);
     };
 
     window.addEventListener("scroll", handleScroll);
+    // Call once to set initial state
+    handleScroll();
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -45,7 +83,7 @@ const Header = () => {
     }
   };
 
-  // Motion variants
+  // ...existing motion variants...
   const headerVariants = {
     initial: {
       y: -100,
@@ -64,21 +102,13 @@ const Header = () => {
 
   const logoVariants = {
     initial: {
-      scale: 0.8,
       opacity: 0,
     },
     animate: {
-      scale: 1,
       opacity: 1,
       transition: {
         duration: 0.5,
         ease: "easeOut",
-      },
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.2,
       },
     },
   };
@@ -111,15 +141,11 @@ const Header = () => {
       },
     },
     hover: {
-      scale: 1.05,
       y: -2,
       transition: {
         duration: 0.2,
         ease: "easeOut",
       },
-    },
-    tap: {
-      scale: 0.95,
     },
   };
 
@@ -156,8 +182,7 @@ const Header = () => {
               variants={logoVariants}
               initial="initial"
               animate="animate"
-              whileHover="hover"
-              exit={{ opacity: 0, scale: 0.8 }}
+              exit={{ opacity: 0 }}
               className="w-[179px] h-[46px] mx-auto my-4 cursor-pointer"
               src={
                 isScrolled
@@ -173,30 +198,39 @@ const Header = () => {
           variants={navVariants}
           className="flex items-center justify-center w-full gap-4 text-[16px] font-semibold"
         >
-          {headerlinks.map((link, index) => (
-            <motion.li
-              key={link}
-              variants={linkVariants}
-              whileHover="hover"
-              whileTap="tap"
-              onClick={() => scrollToSection(link)}
-              className={`cursor-pointer duration-300 ease-in-out relative ${
-                isScrolled
-                  ? "text-black hover:text-[#3452ff]"
-                  : "text-white hover:text-[#3452ff]"
-              }`}
-            >
-              {link.toUpperCase()}
+          {headerlinks.map((link, index) => {
+            const isActive = activeSection === link;
 
-              {/* Animated underline */}
-              <motion.div
-                className="absolute bottom-0 left-0 h-0.5 bg-[#3452ff]"
-                initial={{ width: 0 }}
-                whileHover={{ width: "100%" }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-              />
-            </motion.li>
-          ))}
+            return (
+              <motion.li
+                key={link}
+                variants={linkVariants}
+                whileHover="hover"
+                onClick={() => scrollToSection(link)}
+                className={`cursor-pointer duration-100 ease-in-out relative ${
+                  isScrolled
+                    ? "text-black hover:text-[#3452ff]"
+                    : "text-white hover:text-[#3452ff]"
+                } ${
+                  isActive
+                    ? isScrolled
+                      ? "text-[#3452ff]"
+                      : "text-[#3452ff]"
+                    : ""
+                }`}
+              >
+                {link.toUpperCase()}
+
+                <motion.div
+                  className="absolute bottom-0 left-0 h-0.5 bg-[#3452ff]"
+                  initial={{ width: 0 }}
+                  animate={{ width: isActive ? "100%" : 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+              </motion.li>
+            );
+          })}
         </motion.ul>
       </motion.div>
     </motion.section>

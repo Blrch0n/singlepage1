@@ -59,28 +59,28 @@ const section5Data = [
 const Section5 = () => {
   return (
     <motion.div
-      className="w-full h-fit flex flex-col items-center justify-center bg-white"
+      className="w-full h-fit flex flex-col items-center justify-center bg-white px-4 sm:px-6 lg:px-8"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true, amount: 0.2 }}
     >
       <motion.div
-        className="bg-white max-w-[1200px] h-fit flex flex-col gap-12 items-center justify-center text-black py-[100px]"
+        className="bg-white max-w-[1200px] w-full h-fit flex flex-col gap-8 sm:gap-12 items-center justify-center text-black py-12 sm:py-16 lg:py-[100px]"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         viewport={{ once: true }}
       >
         <motion.div
-          className="w-full h-fit flex flex-col gap-4 items-center justify-center text-center"
+          className="w-full h-fit flex flex-col gap-4 items-center justify-center text-center px-4"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
         >
           <motion.h3
-            className="text-[#828282] uppercase"
+            className="text-[#828282] uppercase text-sm sm:text-base"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -89,7 +89,7 @@ const Section5 = () => {
             portfolio
           </motion.h3>
           <motion.h2
-            className="text-[72px] w-[520px]"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-[72px] w-full max-w-[520px] leading-tight"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -108,7 +108,7 @@ const Section5 = () => {
             viewport={{ once: true }}
           />
           <motion.p
-            className="text-[18px] text-[#999999] w-[520px]"
+            className="text-base sm:text-[18px] text-[#999999] w-full max-w-[520px] leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
@@ -120,7 +120,7 @@ const Section5 = () => {
         </motion.div>
 
         <motion.div
-          className="w-full h-fit grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto place-items-center"
+          className="w-full h-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mx-auto place-items-center px-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -128,7 +128,7 @@ const Section5 = () => {
         >
           {section5Data.map((item, index) => (
             <motion.div
-              className="w-full h-fit flex flex-col items-center gap-1 justify-center text-center m-4"
+              className="w-full max-w-sm h-fit flex flex-col items-center gap-1 justify-center text-center"
               key={index}
               initial={{ opacity: 0, y: 60, scale: 0.8 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -149,19 +149,19 @@ const Section5 = () => {
                 transition={{ duration: 0.3 }}
               >
                 <motion.img
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover rounded-lg"
                   src={item.image}
                   alt={item.title}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.4 }}
                 />
                 <motion.div
-                  className="absolute inset-0 bg-transparent group-hover:bg-[#00000080] flex justify-center items-center transition-all duration-300"
+                  className="absolute inset-0 bg-transparent group-hover:bg-[#00000080] flex justify-center items-center transition-all duration-300 rounded-lg"
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                 >
                   <motion.button
-                    className="bg-white text-black px-5 hover:bg-[#3452ff] py-3 text-[12px] rounded-[5px] opacity-0 group-hover:opacity-100 transition-all cursor-pointer hover:text-white duration-300"
+                    className="bg-white text-black px-4 sm:px-5 hover:bg-[#3452ff] py-2 sm:py-3 text-xs sm:text-[12px] rounded-[5px] opacity-0 group-hover:opacity-100 transition-all cursor-pointer hover:text-white duration-300"
                     whileHover={{
                       scale: 1.05,
                       boxShadow: "0 5px 15px rgba(52, 82, 255, 0.3)",
@@ -174,7 +174,7 @@ const Section5 = () => {
               </motion.div>
 
               <motion.span
-                className="uppercase text-[10px] space-x-0.5 text-[#2A2F35]"
+                className="uppercase text-[9px] sm:text-[10px] space-x-0.5 text-[#2A2F35]"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.0 + index * 0.1 }}
@@ -184,7 +184,7 @@ const Section5 = () => {
               </motion.span>
 
               <motion.h1
-                className="text-[20px] font-normal"
+                className="text-lg sm:text-[20px] font-normal"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.1 + index * 0.1 }}
@@ -194,7 +194,7 @@ const Section5 = () => {
               </motion.h1>
 
               <motion.p
-                className="text-[13px] text-[#68686d]"
+                className="text-xs sm:text-[13px] text-[#68686d]"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}

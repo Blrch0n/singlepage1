@@ -28,14 +28,14 @@ const section4Data = [
 const Section4 = () => {
   return (
     <motion.div
-      className="w-full flex flex-row h-screen"
+      className="w-full flex flex-col md:flex-row h-screen"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true, amount: 0.3 }}
     >
       <motion.div
-        className="w-[50%] bg-[#25282b] h-full py-[120px] px-[150px]"
+        className="w-full md:w-[50%] bg-[#25282b] h-full py-[60px] px-[30px] md:py-[120px] md:px-[150px]"
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -51,7 +51,7 @@ const Section4 = () => {
           UNIQUE SPACE
         </motion.h3>
         <motion.h2
-          className="text-[36px] text-white"
+          className="text-[24px] md:text-[36px] text-white"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -70,7 +70,7 @@ const Section4 = () => {
           viewport={{ once: true }}
         />
         <motion.p
-          className="text-[#999999] text-[18px] mb-6"
+          className="text-[#999999] text-[16px] md:text-[18px] mb-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
@@ -113,7 +113,7 @@ const Section4 = () => {
                       {item.title}
                     </AccordionTrigger>
                   </motion.div>
-                  <AccordionContent className="text-[#999999] text-[18px] p-8">
+                  <AccordionContent className="text-[#999999] text-[16px] md:text-[18px] p-4 md:p-8">
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -130,7 +130,7 @@ const Section4 = () => {
       </motion.div>
 
       <motion.div
-        className="w-[50%] h-full bg-cover bg-center"
+        className="hidden md:block w-[50%] h-full bg-cover bg-center"
         style={{ backgroundImage: 'url("/image2.jpg")' }}
         initial={{ opacity: 0, x: 50, scale: 1.1 }}
         whileInView={{ opacity: 1, x: 0, scale: 1 }}

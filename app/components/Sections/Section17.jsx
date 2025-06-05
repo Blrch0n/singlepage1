@@ -71,7 +71,7 @@ const Section17 = () => {
       transition={{ duration: 0.8 }}
     >
       <motion.div
-        className="max-w-[1200px] mx-auto w-full h-fit grid grid-cols-3 text-black items-center justify-center"
+        className="max-w-[1200px] mx-auto w-full h-fit grid grid-cols-1 md:grid-cols-3 text-black items-center justify-center px-4 md:px-0"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -80,8 +80,10 @@ const Section17 = () => {
         {section17Data.map((data, index) => (
           <motion.div
             key={index}
-            className={`w-full h-fit flex flex-row gap-8 items-center justify-center p-8 ${
-              index < section17Data.length - 1 ? "border-r border-gray-300" : ""
+            className={`w-full h-fit flex flex-col sm:flex-row gap-4 sm:gap-8 items-center justify-center p-4 sm:p-8 ${
+              index < section17Data.length - 1
+                ? "border-b md:border-b-0 md:border-r border-gray-300"
+                : ""
             }`}
             variants={itemVariants}
             whileHover={{
@@ -93,6 +95,7 @@ const Section17 = () => {
               {data.icon}
             </motion.div>
             <motion.div
+              className="text-center sm:text-left"
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -110,7 +113,7 @@ const Section17 = () => {
                 {data.title}
               </motion.p>
               <motion.h1
-                className="text-[25px] text-[#2A2F35] font-bold"
+                className="text-[20px] sm:text-[25px] text-[#2A2F35] font-bold break-words"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: index * 0.1 + 0.5 }}

@@ -31,7 +31,7 @@ const section8Data = [
 const Section8 = () => {
   return (
     <motion.div
-      className="w-full h-fit grid grid-cols-3"
+      className="w-full h-fit grid grid-cols-1 lg:grid-cols-3 gap-0"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -41,7 +41,7 @@ const Section8 = () => {
         <motion.div
           key={index}
           style={{ backgroundColor: item.color }}
-          className="flex flex-col items-start justify-start text-white gap-4 text-center py-[60px] px-[50px]"
+          className="flex flex-col items-center sm:items-start justify-start text-white gap-4 py-[40px] px-[30px] sm:py-[50px] sm:px-[40px] lg:py-[60px] lg:px-[50px] min-h-[280px] sm:min-h-[300px]"
           initial={{ opacity: 0, y: 60, scale: 0.9 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           whileHover={{
@@ -57,7 +57,7 @@ const Section8 = () => {
           viewport={{ once: true }}
         >
           <motion.span
-            className="p-5 w-[74px] flex items-center justify-center h-[74px] border-2 rounded-3xl border-white"
+            className="p-4 w-[64px] h-[64px] sm:p-5 sm:w-[74px] sm:h-[74px] flex items-center justify-center border-2 rounded-2xl sm:rounded-3xl border-white"
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
             whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
             whileHover={{
@@ -82,7 +82,7 @@ const Section8 = () => {
           </motion.span>
 
           <motion.h3
-            className="text-[16px] font-bold mt-2"
+            className="text-[14px] sm:text-[16px] font-bold mt-2 text-center sm:text-start"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
@@ -95,7 +95,7 @@ const Section8 = () => {
           </motion.h3>
 
           <motion.p
-            className="text-start"
+            className="text-center sm:text-start text-sm sm:text-base leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{

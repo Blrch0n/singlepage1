@@ -34,28 +34,28 @@ const section7Data = [
 const Section7 = () => {
   return (
     <motion.div
-      className="w-full h-fit bg-[#25282b] py-[120px] flex items-center justify-center"
+      className="w-full h-fit bg-[#25282b] py-[60px] md:py-[120px] flex items-center justify-center px-4"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true, amount: 0.2 }}
     >
       <motion.div
-        className="max-w-[1200px] mx-auto h-fit flex flex-col gap-[80px] items-center justify-center text-white"
+        className="max-w-[1200px] mx-auto h-fit flex flex-col gap-[40px] md:gap-[80px] items-center justify-center text-white"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         viewport={{ once: true }}
       >
         <motion.div
-          className="w-full h-fit flex flex-col items-center gap-2"
+          className="w-full h-fit flex flex-col items-center gap-2 text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
         >
           <motion.h3
-            className="text-[#b8b8b8] text-[16px] uppercase"
+            className="text-[#b8b8b8] text-[14px] md:text-[16px] uppercase"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -64,7 +64,7 @@ const Section7 = () => {
             Unique services
           </motion.h3>
           <motion.h2
-            className="text-[72px] text-white"
+            className="text-[32px] md:text-[54px] lg:text-[72px] text-white leading-tight"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -83,7 +83,7 @@ const Section7 = () => {
             viewport={{ once: true }}
           />
           <motion.p
-            className="text-[18px] text-[#999999]"
+            className="text-[16px] md:text-[18px] text-[#999999] max-w-[600px]"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
@@ -94,7 +94,7 @@ const Section7 = () => {
         </motion.div>
 
         <motion.div
-          className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-8 text-black"
+          className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-6 md:gap-8 text-black"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
@@ -103,7 +103,7 @@ const Section7 = () => {
           {section7Data.map((data, index) => (
             <motion.div
               key={index}
-              className="flex flex-col items-center gap-4 text-white group w-[270px] relative h-[350px] overflow-hidden rounded-[10px] px-[25px] pb-[25px] pt-[100px] justify-center bg-cover bg-center text-center p-4"
+              className="flex flex-col items-center gap-4 text-white group w-full max-w-[270px] mx-auto relative h-[300px] md:h-[350px] overflow-hidden rounded-[10px] px-[20px] md:px-[25px] pb-[20px] md:pb-[25px] pt-[80px] md:pt-[100px] justify-center bg-cover bg-center text-center p-4"
               style={{
                 backgroundImage: `url(${data.image})`,
               }}
@@ -130,7 +130,7 @@ const Section7 = () => {
               />
 
               <motion.h3
-                className="text-2xl relative z-10"
+                className="text-xl md:text-2xl relative z-10 font-semibold"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.1 + index * 0.15 }}
@@ -140,7 +140,7 @@ const Section7 = () => {
               </motion.h3>
 
               <motion.p
-                className="relative text-center z-10 text-[16px]"
+                className="relative text-center z-10 text-[14px] md:text-[16px] leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 + index * 0.15 }}
