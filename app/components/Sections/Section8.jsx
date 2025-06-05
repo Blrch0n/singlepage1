@@ -1,6 +1,9 @@
+"use client";
+import { motion } from "framer-motion";
 import { FiWatch } from "react-icons/fi";
 import { TfiWorld } from "react-icons/tfi";
 import { GoPlug } from "react-icons/go";
+
 const section8Data = [
   {
     icon: <FiWatch size={40} color="white" />,
@@ -12,7 +15,6 @@ const section8Data = [
   {
     icon: <TfiWorld size={40} color="white" />,
     title: "High Quality Design",
-
     color: "#ff1053",
     desciption:
       "We help our clients in developing systems of digital products and services over time.",
@@ -28,21 +30,85 @@ const section8Data = [
 
 const Section8 = () => {
   return (
-    <div className="w-full h-fit grid grid-cols-3">
+    <motion.div
+      className="w-full h-fit grid grid-cols-3"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true, amount: 0.3 }}
+    >
       {section8Data.map((item, index) => (
-        <div
+        <motion.div
           key={index}
           style={{ backgroundColor: item.color }}
           className="flex flex-col items-start justify-start text-white gap-4 text-center py-[60px] px-[50px]"
+          initial={{ opacity: 0, y: 60, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          whileHover={{
+            y: -10,
+            scale: 1.02,
+            transition: { duration: 0.3 },
+          }}
+          transition={{
+            duration: 0.8,
+            delay: index * 0.2,
+            ease: "easeOut",
+          }}
+          viewport={{ once: true }}
         >
-          <span className="p-5 w-[74px] flex items-center justify-center h-[74px] border-2 rounded-3xl border-white">
-            {item.icon}
-          </span>
-          <h3 className="text-[16px] font-bold mt-2">{item.title}</h3>
-          <p className="text-start">{item.desciption}</p>
-        </div>
+          <motion.span
+            className="p-5 w-[74px] flex items-center justify-center h-[74px] border-2 rounded-3xl border-white"
+            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            whileHover={{
+              scale: 1.1,
+              rotate: 5,
+              borderColor: "#ffffff",
+              boxShadow: "0 8px 20px rgba(255, 255, 255, 0.2)",
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.2 + index * 0.2,
+              ease: "easeOut",
+            }}
+            viewport={{ once: true }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {item.icon}
+            </motion.div>
+          </motion.span>
+
+          <motion.h3
+            className="text-[16px] font-bold mt-2"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.4 + index * 0.2,
+            }}
+            viewport={{ once: true }}
+          >
+            {item.title}
+          </motion.h3>
+
+          <motion.p
+            className="text-start"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.6 + index * 0.2,
+            }}
+            viewport={{ once: true }}
+          >
+            {item.desciption}
+          </motion.p>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 

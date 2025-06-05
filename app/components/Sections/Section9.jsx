@@ -9,8 +9,7 @@ import { useState } from "react";
 import { SlLike } from "react-icons/sl";
 import { BsSafe2 } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { AnimatePresence } from "motion/react";
-import * as motion from "motion/react-client";
+import { AnimatePresence, motion } from "framer-motion";
 
 const buttonData = ["Prototypes", "Development", "Support", "Design"];
 
@@ -78,36 +77,94 @@ const Section9 = () => {
   const [isclicked, setIsClicked] = useState("Prototypes");
 
   return (
-    <div className="w-full h-fit gap-[40px] bg-white py-[100px] flex flex-col items-center justify-center">
-      <div className="max-w-[1200px] h-fit flex flex-col items-center gap-2">
-        <h3 className="text-[#828282] text-[16px] uppercase">technology</h3>
-        <h2 className="text-[72px] text-[#2A2F35]">Capabilities</h2>
-        <span
+    <motion.div
+      className="w-full h-fit gap-[40px] bg-white py-[100px] flex flex-col items-center justify-center"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <motion.div
+        className="max-w-[1200px] h-fit flex flex-col items-center gap-2"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
+        <motion.h3
+          className="text-[#828282] text-[16px] uppercase"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+        >
+          technology
+        </motion.h3>
+        <motion.h2
+          className="text-[72px] text-[#2A2F35]"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          Capabilities
+        </motion.h2>
+        <motion.span
           className="block h-1.5 w-[35px] rounded-full my-4"
           style={{
             background: "linear-gradient(to right, #3452ff 0%, #ad3ed8 100%)",
           }}
-        ></span>
-        <p className="text-[18px] text-[#999999]">
+          initial={{ width: 0, opacity: 0 }}
+          whileInView={{ width: 35, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          viewport={{ once: true }}
+        />
+        <motion.p
+          className="text-[18px] text-[#999999]"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
           Taking care of the new products's launch and user support
-        </p>
-      </div>
-      <div className="flex w-full h-fit justify-center flex-col items-center">
-        <div className="w-fit grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center gap-2 justify-center p-8 bg-white text-black">
+        </motion.p>
+      </motion.div>
+
+      <motion.div
+        className="flex w-full h-fit justify-center flex-col items-center"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.7 }}
+        viewport={{ once: true }}
+      >
+        <motion.div
+          className="w-fit grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center gap-2 justify-center p-8 bg-white text-black"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          viewport={{ once: true }}
+        >
           {buttonData.map((item, index) => (
             <motion.div
               key={index}
-              initial={false}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               animate={{
                 backgroundColor: isclicked === item ? "#3452ff" : "transparent",
                 color: isclicked === item ? "#fff" : "#2A2F35",
                 borderColor: isclicked === item ? "#3452ff" : "#eeeeee",
               }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut",
+                delay: 0.9 + index * 0.1,
+              }}
+              viewport={{ once: true }}
               className="border relative cursor-pointer flex items-center justify-center text-center py-3 px-4 min-w-[120px] rounded-lg hover:bg-[#3452ff] hover:text-white"
               onClick={() => setIsClicked(item)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {/* <span>{item}</span> */}
               {isclicked === item && (
                 <motion.div
                   layoutId="activeTab"
@@ -119,7 +176,7 @@ const Section9 = () => {
               <span className="relative z-10">{item}</span>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <AnimatePresence mode="wait">
           {isclicked === "Prototypes" && (
@@ -131,20 +188,36 @@ const Section9 = () => {
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="max-w-[1200px] min-h-[460px] h-fit flex flex-row bg-white items-center justify-center text-center p-4"
             >
-              <div className="flex w-[40%] flex-col gap-8 items-start justify-start">
-                <h2 className="text-4xl text-start text-[#2A2F35]">
+              <motion.div
+                className="flex w-[40%] flex-col gap-8 items-start justify-start"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <motion.h2
+                  className="text-4xl text-start text-[#2A2F35]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   All you need is Enside, a modern & simple template
-                </h2>
-                <p className="text-start text-[#999999] text-[18px]">
+                </motion.h2>
+                <motion.p
+                  className="text-start text-[#999999] text-[18px]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
                   We are the comprehensive design and technology partner for the
                   digital age. We help businesses to stay relevant to their
                   customers in the digital era by touching hearts and minds.
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
               <div className="flex flex-row w-full h-fit justify-end items-center gap-8">
                 <motion.div
-                  initial={{ x: 50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
+                  initial={{ x: 50, opacity: 0, scale: 0.8 }}
+                  animate={{ x: 0, opacity: 1, scale: 1 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className="w-[368px] h-[300px] relative rounded-[10px] p-10 flex flex-col items-center justify-center text-center bg-cover bg-center text-white"
                   style={{
@@ -153,18 +226,35 @@ const Section9 = () => {
                   }}
                 >
                   <div className="absolute inset-0 bg-[#00000080] rounded-[10px]"></div>
-                  <IoUmbrellaOutline className="z-10 text-4xl mb-4" />
-                  <h1 className="z-10 text-xl font-bold mb-2">
+                  <motion.div
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                  >
+                    <IoUmbrellaOutline className="z-10 text-4xl mb-4" />
+                  </motion.div>
+                  <motion.h1
+                    className="z-10 text-xl font-bold mb-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                  >
                     We bring the brand to life
-                  </h1>
-                  <p className="z-10 text-sm">
+                  </motion.h1>
+                  <motion.p
+                    className="z-10 text-sm"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
+                  >
                     We only hire great people who strike to push their idea
-                  </p>
+                  </motion.p>
                 </motion.div>
 
                 <motion.div
-                  initial={{ x: 50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
+                  initial={{ x: 50, opacity: 0, scale: 0.8 }}
+                  animate={{ x: 0, opacity: 1, scale: 1 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                   className="w-[368px] h-[300px] relative rounded-[10px] p-10 flex flex-col items-center justify-center text-center bg-cover bg-center text-white"
                   style={{
@@ -173,13 +263,29 @@ const Section9 = () => {
                   }}
                 >
                   <div className="absolute inset-0 bg-[#00000080] rounded-[10px]"></div>
-                  <PiLego className="z-10 text-4xl mb-4" />
-                  <h1 className="z-10 text-xl font-bold mb-2">
+                  <motion.div
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                  >
+                    <PiLego className="z-10 text-4xl mb-4" />
+                  </motion.div>
+                  <motion.h1
+                    className="z-10 text-xl font-bold mb-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.7 }}
+                  >
                     Build Your Dream
-                  </h1>
-                  <p className="z-10 text-sm">
+                  </motion.h1>
+                  <motion.p
+                    className="z-10 text-sm"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.8 }}
+                  >
                     We only hire great people who strike to push their idea
-                  </p>
+                  </motion.p>
                 </motion.div>
               </div>
             </motion.div>
@@ -194,29 +300,62 @@ const Section9 = () => {
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="max-w-[1200px] min-h-[460px] h-fit flex flex-row items-center justify-between p-4 bg-white text-black"
             >
-              <div className="flex w-[40%] flex-col gap-8 items-start justify-start">
-                <h2 className="text-4xl text-start text-[#2A2F35]">
+              <motion.div
+                className="flex w-[40%] flex-col gap-8 items-start justify-start"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <motion.h2
+                  className="text-4xl text-start text-[#2A2F35]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   How to Start your Business
-                </h2>
-                <p className="text-start text-[#999999] text-[18px]">
+                </motion.h2>
+                <motion.p
+                  className="text-start text-[#999999] text-[18px]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
                   We are the comprehensive design and technology partner for the
                   digital age. We help businesses to stay relevant to their
                   customers in the digital era by touching hearts and minds.
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
               <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 items-center justify-center gap-8 p-8">
                 {developmentData.map((data, index) => (
                   <motion.div
                     key={index}
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    initial={{ y: 30, opacity: 0, scale: 0.9 }}
+                    animate={{ y: 0, opacity: 1, scale: 1 }}
+                    whileHover={{ y: -5, scale: 1.02 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     className="flex flex-row items-start justify-start gap-4 p-4"
                   >
-                    <div>{data.icon}</div>
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {data.icon}
+                    </motion.div>
                     <div>
-                      <h1>{data.title}</h1>
-                      <p>{data.description}</p>
+                      <motion.h1
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
+                      >
+                        {data.title}
+                      </motion.h1>
+                      <motion.p
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                      >
+                        {data.description}
+                      </motion.p>
                     </div>
                   </motion.div>
                 ))}
@@ -233,29 +372,62 @@ const Section9 = () => {
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="max-w-[1200px] min-h-[460px] h-fit flex flex-row items-center justify-between p-8 bg-white text-black"
             >
-              <div className="flex w-[40%] flex-col gap-8 items-start justify-start">
-                <h2 className="text-4xl text-start text-[#2A2F35]">
+              <motion.div
+                className="flex w-[40%] flex-col gap-8 items-start justify-start"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <motion.h2
+                  className="text-4xl text-start text-[#2A2F35]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   How to Start your Business
-                </h2>
-                <p className="text-start text-[#999999] text-[18px]">
+                </motion.h2>
+                <motion.p
+                  className="text-start text-[#999999] text-[18px]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
                   We are the comprehensive design and technology partner for the
                   digital age. We help businesses to stay relevant to their
                   customers in the digital era by touching hearts and minds.
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
               <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 items-center justify-center gap-8 p-8">
                 {developmentData.map((data, index) => (
                   <motion.div
                     key={index}
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    initial={{ y: 30, opacity: 0, scale: 0.9 }}
+                    animate={{ y: 0, opacity: 1, scale: 1 }}
+                    whileHover={{ y: -5, scale: 1.02 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     className="flex flex-row items-start justify-start gap-4 p-4"
                   >
-                    <div>{data.icon}</div>
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {data.icon}
+                    </motion.div>
                     <div>
-                      <h1>{data.title}</h1>
-                      <p>{data.description}</p>
+                      <motion.h1
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
+                      >
+                        {data.title}
+                      </motion.h1>
+                      <motion.p
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                      >
+                        {data.description}
+                      </motion.p>
                     </div>
                   </motion.div>
                 ))}
@@ -272,36 +444,70 @@ const Section9 = () => {
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="max-w-[1200px] min-h-[460px] h-fit flex flex-row items-center justify-between p-8 bg-white text-black"
             >
-              <div className="flex w-[33.3%] flex-col gap-8 items-start justify-start">
-                <h2 className="text-4xl text-start text-[#2A2F35]">
+              <motion.div
+                className="flex w-[33.3%] flex-col gap-8 items-start justify-start"
+                initial={{ x: -50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <motion.h2
+                  className="text-4xl text-start text-[#2A2F35]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
                   How to Start your Business
-                </h2>
-                <p className="text-start text-[#999999] text-[18px]">
+                </motion.h2>
+                <motion.p
+                  className="text-start text-[#999999] text-[18px]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
                   We are the comprehensive design and technology partner for the
                   digital age. We help businesses to stay relevant to their
                   customers in the digital era by touching hearts and minds.
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
               <div className="w-[30%] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 items-center justify-center gap-8 p-8">
                 {designData.map((data, index) => (
                   <motion.div
                     key={index}
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    initial={{ y: 30, opacity: 0, scale: 0.9 }}
+                    animate={{ y: 0, opacity: 1, scale: 1 }}
+                    whileHover={{ y: -5, scale: 1.02 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     className="flex flex-row items-start justify-start gap-4 p-4"
                   >
-                    <div>{data.icon}</div>
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {data.icon}
+                    </motion.div>
                     <div>
-                      <h1>{data.title}</h1>
-                      <p>{data.description}</p>
+                      <motion.h1
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 + index * 0.1 }}
+                      >
+                        {data.title}
+                      </motion.h1>
+                      <motion.p
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                      >
+                        {data.description}
+                      </motion.p>
                     </div>
                   </motion.div>
                 ))}
               </div>
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+                initial={{ scale: 0.8, opacity: 0, x: 50 }}
+                animate={{ scale: 1, opacity: 1, x: 0 }}
+                whileHover={{ y: -10, scale: 1.05 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="w-[300px] h-[300px] text-white p-10 flex flex-col items-center justify-center text-center bg-cover bg-center relative rounded-[10px]"
                 style={{
@@ -310,38 +516,116 @@ const Section9 = () => {
                 }}
               >
                 <div className="absolute inset-0 bg-[#00000080] rounded-[10px]"></div>
-                <PiLego className="z-10 text-4xl mb-4" />
-                <h1 className="z-10 text-xl font-bold mb-2">
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                >
+                  <PiLego className="z-10 text-4xl mb-4" />
+                </motion.div>
+                <motion.h1
+                  className="z-10 text-xl font-bold mb-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
                   We bring the brand to life
-                </h1>
-                <p className="z-10 text-sm">
+                </motion.h1>
+                <motion.p
+                  className="z-10 text-sm"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.7 }}
+                >
                   We only hire great people who strike to push their idea
-                </p>
+                </motion.p>
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-      <hr className="max-w-[1200px] w-full h-[1px] bg-[#2A2F35]" />
-      <div className="max-w-[1200px] w-full h-fit flex flex-col gap-8 items-center justify-center text-black p-8 bg-white">
-        <h1 className="text-[#2A2F35] text-4xl">
+      </motion.div>
+
+      <motion.hr
+        className="max-w-[1200px] w-full h-[1px] bg-[#2A2F35]"
+        initial={{ scaleX: 0, opacity: 0 }}
+        whileInView={{ scaleX: 1, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true }}
+      />
+
+      <motion.div
+        className="max-w-[1200px] w-full h-fit flex flex-col gap-8 items-center justify-center text-black p-8 bg-white"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        viewport={{ once: true }}
+      >
+        <motion.h1
+          className="text-[#2A2F35] text-4xl"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
           We create human experience in a digital world
-        </h1>
-        <div className="w-full h-fit grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-8 bg-white text-black">
+        </motion.h1>
+        <motion.div
+          className="w-full h-fit grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-8 bg-white text-black"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          viewport={{ once: true }}
+        >
           {statusData.map((data, index) => (
-            <div
+            <motion.div
               className="flex flex-col items-center justify-center text-center p-4"
               key={index}
+              initial={{ opacity: 0, y: 60, scale: 0.8 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              whileHover={{ y: -10, scale: 1.05 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.6 + index * 0.2,
+                ease: "easeOut",
+              }}
+              viewport={{ once: true }}
             >
-              <h1 className="flex items-center justify-start gap-8 text-[60px] mb-2">
-                {data.icon} {data.title}
-              </h1>
-              <p className="text-[18px] text-[#828282]">{data.description}</p>
-            </div>
+              <motion.h1
+                className="flex items-center justify-start gap-8 text-[60px] mb-2"
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.7 + index * 0.2 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.2 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {data.icon}
+                </motion.div>
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.8 + index * 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  {data.title}
+                </motion.span>
+              </motion.h1>
+              <motion.p
+                className="text-[18px] text-[#828282]"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.9 + index * 0.2 }}
+                viewport={{ once: true }}
+              >
+                {data.description}
+              </motion.p>
+            </motion.div>
           ))}
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

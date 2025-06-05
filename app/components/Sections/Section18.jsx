@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import { motion } from "framer-motion";
 
 const Section18 = () => {
   return (
@@ -7,10 +8,32 @@ const Section18 = () => {
       style={{ backgroundImage: "url(/image5.jpg)" }}
     >
       <div className="absolute inset-0 bg-[#00000090]"></div>
-      <div className="relative text-white flex flex-col w-[500px] items-center justify-center text-center gap-4">
-        <p className="text-[14px]">Want to be our client?</p>
-        <h2 className="text-[55px]">No subscription, you only pay once.</h2>
-        <button
+      <motion.div
+        className="relative text-white flex flex-col w-[500px] items-center justify-center text-center gap-4"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.p
+          className="text-[14px]"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          Want to be our client?
+        </motion.p>
+        <motion.h2
+          className="text-[55px]"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          No subscription, you only pay once.
+        </motion.h2>
+        <motion.button
           style={{
             background: "linear-gradient(to right, #3452ff 0%, #ad3ed8 100%)",
             color: "#fff",
@@ -19,10 +42,24 @@ const Section18 = () => {
             borderRadius: "5px",
             cursor: "pointer",
           }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          whileHover={{
+            scale: 1.05,
+            boxShadow: "0 10px 25px rgba(52, 82, 255, 0.3)",
+          }}
+          whileTap={{ scale: 0.95 }}
+          transition={{
+            duration: 0.6,
+            delay: 0.6,
+            hover: { duration: 0.2 },
+            tap: { duration: 0.1 },
+          }}
+          viewport={{ once: true }}
         >
           Purchase theme
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
     </div>
   );
 };
