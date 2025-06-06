@@ -145,14 +145,6 @@ const Section9 = () => {
               className="border relative cursor-pointer flex items-center justify-center text-center py-2 px-3 sm:py-3 sm:px-4 min-w-[100px] sm:min-w-[120px] rounded-lg hover:bg-[#3452ff] hover:text-white text-sm sm:text-base"
               onClick={() => setIsClicked(item)}
             >
-              {isclicked === item && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 rounded-lg border-2 border-[#3452ff]"
-                  style={{ backgroundColor: "#3452ff" }}
-                  transition={{ duration: 0.2, ease: "easeInOut" }}
-                />
-              )}
               <span className="relative z-10">{item}</span>
             </motion.div>
           ))}
@@ -166,7 +158,7 @@ const Section9 = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.2 }}
               className="max-w-[1200px] w-full min-h-[460px] h-fit flex flex-col lg:flex-row bg-white items-center justify-center text-center p-4 gap-8"
             >
               <div className="flex w-full lg:w-[40%] flex-col gap-4 sm:gap-6 lg:gap-8 items-center lg:items-start justify-start">
@@ -223,7 +215,7 @@ const Section9 = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.2 }}
               className="max-w-[1200px] w-full min-h-[460px] h-fit flex flex-col lg:flex-row items-center justify-between p-4 bg-white text-black gap-8"
             >
               <div className="flex w-full lg:w-[40%] flex-col gap-4 sm:gap-6 lg:gap-8 items-center lg:items-start justify-start">
@@ -265,7 +257,7 @@ const Section9 = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.2 }}
               className="max-w-[1200px] w-full min-h-[460px] h-fit flex flex-col lg:flex-row items-center justify-between p-4 sm:p-6 lg:p-8 bg-white text-black gap-8"
             >
               <div className="flex w-full lg:w-[40%] flex-col gap-4 sm:gap-6 lg:gap-8 items-center lg:items-start justify-start">
@@ -307,7 +299,7 @@ const Section9 = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.2 }}
               className="max-w-[1200px] w-full min-h-[460px] h-fit flex flex-col lg:flex-row items-center justify-between p-4 bg-white text-black gap-8"
             >
               <div className="flex w-full lg:w-[33.3%] flex-col gap-4 sm:gap-6 lg:gap-8 items-center lg:items-start justify-start">
@@ -377,16 +369,14 @@ const Section9 = () => {
 
             return (
               <div
-                className="flex flex-col items-center justify-center text-center p-4 hover:-translate-y-2 transition-transform duration-300"
+                className="flex flex-col items-center justify-center text-center p-4 duration-300"
                 key={index}
               >
                 <h1
                   ref={countRef}
                   className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-[40px] sm:text-[50px] lg:text-[60px] mb-2"
                 >
-                  <div className="mb-2 sm:mb-0 hover:scale-110 transition-transform duration-300">
-                    {data.icon}
-                  </div>
+                  <div className="mb-2 sm:mb-0 duration-300">{data.icon}</div>
                   <span>{count}</span>
                 </h1>
                 <p className="text-[14px] sm:text-[16px] lg:text-[18px] text-[#828282] max-w-[280px]">

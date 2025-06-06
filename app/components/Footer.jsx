@@ -128,7 +128,7 @@ const Footer = () => {
       <div className="w-full py-6 sm:py-8 text-center bg-[#0d0d0d]">
         <p className="text-[#ffffff66] text-[13px] px-4">
           Powered by
-          <span className="text-white hover:text-[#3452ff] hover:scale-105 transition-all duration-300 cursor-pointer ml-1 inline-block">
+          <span className="text-white hover:text-[#3452ff] transition-all duration-300 cursor-pointer ml-1 inline-block">
             Enside - Premium HTML Template
           </span>
         </p>

@@ -30,7 +30,7 @@ const Section10 = () => {
       {section10Data.map((item, index) => (
         <motion.div
           key={index}
-          className="flex flex-col w-full h-[120px] sm:h-[150px] md:h-[180px] lg:h-[150px] group relative items-center justify-center text-center p-2 sm:p-4 cursor-pointer overflow-hidden hover:scale-105 hover:-translate-y-1 transition-transform duration-300"
+          className="flex flex-col w-full h-[120px] sm:h-[150px] md:h-[180px] lg:h-[150px] group relative items-center justify-center text-center p-2 sm:p-4 overflow-hidden duration-300"
           style={{
             backgroundImage: `url(${item.image})`,
             backgroundSize: "cover",
@@ -46,7 +46,7 @@ const Section10 = () => {
         >
           <div className="absolute inset-0 bg-[#000000c2] group-hover:bg-[#3452ffc2] transition-colors duration-300" />
 
-          <h3 className="text-[16px] sm:text-[18px] md:text-[20px] lg:text-[21px] font-semibold text-white relative p-2 rounded z-10 group-hover:scale-110 transition-transform duration-300">
+          <h3 className="text-[16px] sm:text-[18px] md:text-[20px] lg:text-[21px] font-semibold text-white relative p-2 rounded z-10 duration-300">
             {item.title}
           </h3>
         </motion.div>

@@ -1,63 +1,61 @@
 "use client";
+import { MdOutlinePhoneIphone } from "react-icons/md";
+import { IoMailOpen } from "react-icons/io5";
+import { MdContactMail } from "react-icons/md";
 import { motion } from "framer-motion";
 
-const section16Data = [
-  "https://max-themes.net/demos/enside/main/upload/logo-b-2.png",
-  "https://max-themes.net/demos/enside/main/upload/logo-b-3.png",
-  "https://max-themes.net/demos/enside/main/upload/logo-b-4.png",
-  "https://max-themes.net/demos/enside/main/upload/logo-b-7.png",
-  "https://max-themes.net/demos/enside/main/upload/logo-b-8.png",
+const section17Data = [
+  {
+    icon: <MdOutlinePhoneIphone className="text-[40px] text-[#fcb03b]" />,
+    title: "Phone",
+    description: "+1 234 567 890",
+  },
+  {
+    icon: <IoMailOpen className="text-[40px] text-[#f15b26]" />,
+    title: "Email",
+    description: "iDzI5@example.com",
+  },
+  {
+    icon: <MdContactMail className="text-[40px] text-[#3cb878]" />,
+    title: "Address",
+    description: "123 Main Street, City, Country",
+  },
 ];
 
 const Section16 = () => {
   return (
     <motion.div
-      className="w-full h-fit bg-[#fff] py-[60px] sm:py-[80px] lg:py-[110px]"
+      className="w-full h-fit bg-[#eeeeee]"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8 }}
     >
-      <div className="max-w-[1200px] mx-auto w-full h-fit px-4 sm:px-6 lg:px-8">
-        {/* Header Section - Simplified */}
-        <div className="mb-6 sm:mb-8 w-full h-fit flex flex-col items-center justify-center">
-          <h3 className="text-[#828282] font-semibold text-[12px] sm:text-[14px] lg:text-[16px] uppercase tracking-wider mb-2">
-            friends
-          </h3>
-          <h2 className="text-[32px] sm:text-[48px] lg:text-[72px] w-full sm:w-[480px] lg:w-[570px] text-center text-[#2A2F35] leading-tight mb-4 px-4">
-            Our Partners and Brands
-          </h2>
-          <span
-            className="block h-1 sm:h-1.5 w-6 sm:w-8 rounded-full mb-4 sm:mb-6 hover:scale-110 transition-transform duration-300"
-            style={{
-              background: "linear-gradient(135deg, #3452ff 0%, #ad3ed8 100%)",
-            }}
-          />
-          <p className="text-[#808080] w-full sm:w-[480px] lg:w-[570px] text-center text-sm sm:text-base lg:text-lg leading-relaxed px-4">
-            Our team of strategists, designers, and engineers deliver valuable,
-            tangible customer experiences
-          </p>
-        </div>
-
-        {/* Logo Grid - Simplified */}
-        <div className="w-full h-fit grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 p-4 sm:p-6 lg:p-8">
-          {section16Data.map((data, index) => (
-            <motion.div
-              key={index}
-              className="w-full h-full flex flex-row items-center justify-center p-2 sm:p-3 lg:p-4 hover:scale-105 transition-transform duration-300"
-              initial={{ opacity: 0, scale: 0.8, y: 20 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <img
-                src={data}
-                alt={`Partner logo ${index + 1}`}
-                className="grayscale hover:grayscale-0 w-full max-w-[120px] sm:max-w-[160px] lg:max-w-[210px] h-auto transition-all duration-300 hover:scale-105"
-              />
-            </motion.div>
-          ))}
-        </div>
+      <div className="max-w-[1200px] mx-auto w-full h-fit grid grid-cols-1 md:grid-cols-3 text-black items-center justify-center px-4 md:px-0">
+        {section17Data.map((data, index) => (
+          <motion.div
+            key={index}
+            className={`w-full h-fit flex flex-col sm:flex-row gap-4 sm:gap-8 items-center justify-center p-4 sm:p-8 transition-transform duration-300 ${
+              index < section17Data.length - 1
+                ? "border-b md:border-b-0 md:border-r border-gray-300"
+                : ""
+            }`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            viewport={{ once: true }}
+          >
+            <div className="hover:scale-110 hover:rotate-2 transition-transform duration-300">
+              {data.icon}
+            </div>
+            <div className="text-center sm:text-left">
+              <p className="text-[14px] text-[#828282]">{data.title}</p>
+              <h1 className="text-[20px] sm:text-[25px] text-[#2A2F35] font-bold break-words">
+                {data.description}
+              </h1>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </motion.div>
   );

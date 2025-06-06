@@ -45,7 +45,7 @@ const section11Data = [
       "A designer and art director with 11 years of experience specialized in ui and illustration.",
   },
   {
-    image: "https://max-themes.net/demos/enside/main/upload/team-8.jpg",
+    image: "https://max-themes.net/demos/enside/main/upload/team-2.jpg",
     title: "John Doe",
     position:
       "A designer and art director with 11 years of experience specialized in ui and illustration.",
@@ -76,7 +76,7 @@ const Section11 = () => {
         {section11Data.map((data, index) => (
           <motion.div
             key={index}
-            className="flex flex-col items-center relative h-[420px] w-full justify-center text-center p-4 group overflow-hidden cursor-pointer hover:-translate-y-1 transition-transform duration-300"
+            className="flex flex-col items-center relative h-[420px] w-full justify-center text-center p-4 group overflow-hidden hover:-translate-y-1 transition-transform duration-300"
             style={{
               backgroundImage: `url(${data.image})`,
               backgroundSize: "cover",

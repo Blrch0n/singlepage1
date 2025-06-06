@@ -26,7 +26,7 @@ const Section13 = () => {
           style={{
             background: "linear-gradient(to right, #9888ef 0%, #8978d3 100%)",
           }}
-          className="text-white py-3 px-6 md:px-8 rounded-[5px] sm:w-fit w-full md:w-auto text-sm md:text-base hover:-translate-y-0.5 hover:shadow-lg active:scale-95 transition-all duration-200"
+          className="text-white py-3 px-6 md:px-8 rounded-[5px] sm:w-fit w-full md:w-auto text-sm md:text-base hover:shadow-lg active:scale-95 transition-all duration-200"
         >
           See all Features
         </button>

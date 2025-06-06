@@ -116,7 +116,7 @@ const Header = () => {
               <li
                 key={link}
                 onClick={() => scrollToSection(link)}
-                className={`cursor-pointer transition-all duration-200 ease-in-out relative hover:-translate-y-0.5 ${
+                className={`cursor-pointer transition-all duration-200 ease-in-out relative ${
                   isScrolled
                     ? "text-black hover:text-[#3452ff]"
                     : "text-white hover:text-[#3452ff]"
@@ -136,38 +136,72 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className={`lg:hidden p-2 transition-colors duration-200 active:scale-95 ${
+          className={`lg:hidden p-2 transition-all duration-300 active:scale-95 hover:bg-black/10 rounded-lg ${
             isScrolled ? "text-black" : "text-white"
           }`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? <IoClose size={24} /> : <IoMdMenu size={24} />}
+          <div className="relative w-6 h-6 flex items-center justify-center">
+            <IoMdMenu
+              size={24}
+              className={`absolute transition-all duration-300 transform ${
+                isMobileMenuOpen
+                  ? "opacity-0 rotate-90"
+                  : "opacity-100 rotate-0"
+              }`}
+            />
+            <IoClose
+              size={24}
+              className={`absolute transition-all duration-300 transform ${
+                isMobileMenuOpen
+                  ? "opacity-100 rotate-0"
+                  : "opacity-0 -rotate-90"
+              }`}
+            />
+          </div>
         </button>
 
         {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 right-0 lg:hidden bg-white/95 backdrop-blur-md shadow-lg border-t border-gray-200 animate-in slide-in-from-top-2 duration-300">
-            <ul className="flex flex-col py-4">
-              {headerlinks.map((link) => {
+        <div
+          className={`absolute top-full left-0 right-0 lg:hidden transition-all duration-300 ease-out transform ${
+            isMobileMenuOpen
+              ? "opacity-100 translate-y-0 pointer-events-auto"
+              : "opacity-0 -translate-y-4 pointer-events-none"
+          }`}
+        >
+          <div className="bg-white backdrop-blur-md shadow-xl border-t border-gray-200 rounded-b-lg mx-2">
+            <ul className="flex flex-col py-2">
+              {headerlinks.map((link, index) => {
                 const isActive = activeSection === link;
 
                 return (
                   <li
                     key={link}
                     onClick={() => scrollToSection(link)}
-                    className={`cursor-pointer px-6 py-3 text-[16px] font-semibold border-l-4 transition-all duration-200 ${
+                    className={`cursor-pointer px-6 py-4 text-[16px] font-semibold border-l-4 transition-all duration-300 ease-out relative overflow-hidden group ${
                       isActive
                         ? "text-[#3452ff] border-[#3452ff] bg-blue-50"
                         : "text-gray-700 border-transparent hover:text-[#3452ff] hover:border-[#3452ff] hover:bg-gray-50"
                     }`}
+                    style={{
+                      animationDelay: isMobileMenuOpen
+                        ? `${index * 50}ms`
+                        : "0ms",
+                    }}
                   >
-                    {link.toUpperCase()}
+                    {/* Animated background on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+
+                    {/* Text content */}
+                    <span className="relative z-10 block transform transition-transform duration-200 group-hover:translate-x-1">
+                      {link.toUpperCase()}
+                    </span>
                   </li>
                 );
               })}
             </ul>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );

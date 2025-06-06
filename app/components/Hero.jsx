@@ -61,7 +61,7 @@ const Hero = () => {
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`absolute inset-0 h-full w-full bg-cover bg-center flex items-center justify-center transition-opacity duration-1000 ease-in-out ${
+            className={`absolute inset-0 h-full w-full px-10 sm:px-0 bg-cover bg-fixed bg-center flex items-center justify-center transition-opacity duration-1000 ease-in-out ${
               currentSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
             style={{ backgroundImage: `url("${slide.image}")` }}
@@ -93,7 +93,7 @@ const Hero = () => {
       {/* Custom Navigation Arrows */}
       <button
         onClick={handlePrevious}
-        className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 z-20"
+        className="absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-2 sm:p-3 text-white hover:bg-white/30 transition-all duration-300 z-20"
       >
         <svg
           className="w-6 h-6"
@@ -112,7 +112,7 @@ const Hero = () => {
 
       <button
         onClick={handleNext}
-        className="absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-3 text-white hover:bg-white/30 transition-all duration-300 z-20"
+        className="absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 bg-white/20 backdrop-blur-sm rounded-full p-2 sm:p-3 text-white hover:bg-white/30 transition-all duration-300 z-20"
       >
         <svg
           className="w-6 h-6"
@@ -130,7 +130,7 @@ const Hero = () => {
       </button>
 
       {/* Custom Pagination Dots */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+      {/* <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -140,7 +140,7 @@ const Hero = () => {
             }`}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,63 +1,40 @@
 "use client";
-import { MdOutlinePhoneIphone } from "react-icons/md";
-import { IoMailOpen } from "react-icons/io5";
-import { MdContactMail } from "react-icons/md";
 import { motion } from "framer-motion";
-
-const section17Data = [
-  {
-    icon: <MdOutlinePhoneIphone className="text-[40px] text-[#fcb03b]" />,
-    title: "Phone",
-    description: "+1 234 567 890",
-  },
-  {
-    icon: <IoMailOpen className="text-[40px] text-[#f15b26]" />,
-    title: "Email",
-    description: "iDzI5@example.com",
-  },
-  {
-    icon: <MdContactMail className="text-[40px] text-[#3cb878]" />,
-    title: "Address",
-    description: "123 Main Street, City, Country",
-  },
-];
 
 const Section17 = () => {
   return (
-    <motion.div
-      className="w-full h-fit bg-[#eeeeee]"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8 }}
+    <div
+      className="w-full h-[650px] sm:h-[500px] xs:h-[400px] relative bg-cover flex items-center bg-fixed justify-center bg-center px-4"
+      style={{ backgroundImage: "url(/image5.jpg)" }}
     >
-      <div className="max-w-[1200px] mx-auto w-full h-fit grid grid-cols-1 md:grid-cols-3 text-black items-center justify-center px-4 md:px-0">
-        {section17Data.map((data, index) => (
-          <motion.div
-            key={index}
-            className={`w-full h-fit flex flex-col sm:flex-row gap-4 sm:gap-8 items-center justify-center p-4 sm:p-8 transition-transform duration-300 ${
-              index < section17Data.length - 1
-                ? "border-b md:border-b-0 md:border-r border-gray-300"
-                : ""
-            }`}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            viewport={{ once: true }}
-          >
-            <div className="hover:scale-110 hover:rotate-2 transition-transform duration-300">
-              {data.icon}
-            </div>
-            <div className="text-center sm:text-left">
-              <p className="text-[14px] text-[#828282]">{data.title}</p>
-              <h1 className="text-[20px] sm:text-[25px] text-[#2A2F35] font-bold break-words">
-                {data.description}
-              </h1>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
+      <div className="absolute inset-0 bg-[#00000090]"></div>
+      <motion.div
+        className="relative text-white flex flex-col w-full max-w-[500px] sm:max-w-[400px] xs:max-w-[320px] items-center justify-center text-center gap-4 sm:gap-3 xs:gap-2"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <p className="text-[14px] sm:text-[13px] xs:text-[12px]">
+          Want to be our client?
+        </p>
+        <h2 className="text-[32px] sm:text-[40px] md:text-[45px] xs:text-[28px] leading-tight">
+          No subscription, you only pay once.
+        </h2>
+        <button
+          style={{
+            background: "linear-gradient(to right, #3452ff 0%, #ad3ed8 100%)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
+          className="py-3 px-8 sm:py-2.5 sm:px-6 xs:py-2 xs:px-4 text-[16px] sm:text-[14px] xs:text-[13px] font-medium hover:scale-105 hover:shadow-lg active:scale-95 transition-all duration-200"
+        >
+          Purchase theme
+        </button>
+      </motion.div>
+    </div>
   );
 };
 

@@ -6,21 +6,27 @@ import { GoPlug } from "react-icons/go";
 
 const section8Data = [
   {
-    icon: <FiWatch size={40} color="white" />,
+    icon: (
+      <FiWatch size={40} className="group-hover:text-[#2A2F35] text-white" />
+    ),
     title: "Unlimited Colors",
     color: "#664ed3",
     desciption:
       "We help our clients in developing systems of digital products and services over time.",
   },
   {
-    icon: <TfiWorld size={40} color="white" />,
+    icon: (
+      <TfiWorld size={40} className="group-hover:text-[#2A2F35] text-white" />
+    ),
     title: "High Quality Design",
     color: "#ff1053",
     desciption:
       "We help our clients in developing systems of digital products and services over time.",
   },
   {
-    icon: <GoPlug size={40} color="white" />,
+    icon: (
+      <GoPlug size={40} className="group-hover:text-[#2A2F35] text-white" />
+    ),
     title: "Luxurious Layouts",
     color: "#737884",
     desciption:
@@ -41,7 +47,7 @@ const Section8 = () => {
         <motion.div
           key={index}
           style={{ backgroundColor: item.color }}
-          className="flex flex-col items-center sm:items-start justify-start text-white gap-4 py-[40px] px-[30px] sm:py-[50px] sm:px-[40px] lg:py-[60px] lg:px-[50px] min-h-[280px] sm:min-h-[300px] hover:-translate-y-1 transition-transform duration-300"
+          className="flex flex-col items-center sm:items-start justify-start text-white gap-4 py-[40px] px-[30px] sm:py-[50px] sm:px-[40px] lg:py-[60px] lg:px-[50px] min-h-[280px] sm:min-h-[300px] duration-300"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{
@@ -50,7 +56,7 @@ const Section8 = () => {
           }}
           viewport={{ once: true }}
         >
-          <span className="p-4 w-[64px] h-[64px] sm:p-5 sm:w-[74px] sm:h-[74px] flex items-center justify-center border-2 rounded-2xl sm:rounded-3xl border-white hover:scale-110 transition-transform duration-200">
+          <span className="p-4 w-[64px] h-[64px] sm:p-5 sm:w-[74px] sm:h-[74px] flex items-center justify-center group border-2 rounded-2xl sm:rounded-3xl hover:bg-white  border-white duration-200">
             {item.icon}
           </span>
 

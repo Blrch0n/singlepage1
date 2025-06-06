@@ -1,6 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const section14Data = [
   {
@@ -34,7 +41,6 @@ const section14Data = [
 ];
 
 const Section14 = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(1);
 
   // Handle responsive slides per view
@@ -54,37 +60,6 @@ const Section14 = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // Auto-slide functionality
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => {
-        const maxSlide = Math.max(0, section14Data.length - slidesPerView);
-        return prev >= maxSlide ? 0 : prev + 1;
-      });
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [slidesPerView]);
-
-  const nextSlide = () => {
-    const maxSlide = Math.max(0, section14Data.length - slidesPerView);
-    setCurrentSlide((prev) => (prev >= maxSlide ? 0 : prev + 1));
-  };
-
-  const prevSlide = () => {
-    const maxSlide = Math.max(0, section14Data.length - slidesPerView);
-    setCurrentSlide((prev) => (prev <= 0 ? maxSlide : prev - 1));
-  };
-
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
-  };
-
-  const getTranslateX = () => {
-    const slideWidth = 100 / slidesPerView;
-    return -(currentSlide * slideWidth);
-  };
 
   return (
     <motion.div
@@ -114,114 +89,90 @@ const Section14 = () => {
           </p>
         </div>
 
-        {/* Carousel Section */}
+        {/* Swiper Section */}
         <div className="w-full relative">
-          {/* Navigation Buttons */}
-          <button
-            onClick={prevSlide}
-            className="hidden lg:flex absolute -left-6 xl:-left-12 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-12 h-12 xl:w-14 xl:h-14 items-center justify-center shadow-lg transition-all duration-300 z-20 cursor-pointer hover:scale-110"
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            spaceBetween={16}
+            slidesPerView={1}
+            pagination={{
+              el: ".swiper-pagination-custom",
+              clickable: true,
+              renderBullet: (index, className) => {
+                return `<span class="${className} w-[25px] h-[5px] rounded-full transition-all duration-300 cursor-pointer"></span>`;
+              },
+            }}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 24,
+              },
+            }}
+            className="w-full"
           >
-            <svg
-              className="w-6 h-6 xl:w-7 xl:h-7 text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={nextSlide}
-            className="hidden lg:flex absolute -right-6 xl:-right-12 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-12 h-12 xl:w-14 xl:h-14 items-center justify-center shadow-lg transition-all duration-300 z-20 cursor-pointer hover:scale-110"
-          >
-            <svg
-              className="w-6 h-6 xl:w-7 xl:h-7 text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-
-          {/* Carousel Container */}
-          <div className="w-full overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(${getTranslateX()}%)`,
-                width: `${(section14Data.length / slidesPerView) * 100}%`,
-              }}
-            >
-              {section14Data.map((data, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 px-2 sm:px-3 lg:px-4"
-                  style={{ width: `${100 / section14Data.length}%` }}
+            {section14Data.map((data, index) => (
+              <SwiperSlide key={index}>
+                <motion.div
+                  className="w-full flex flex-col group h-72 sm:h-80 md:h-84 lg:h-80 xl:h-84 p-6 sm:p-7 md:p-8 text-white relative items-start justify-between rounded-lg overflow-hidden cursor-pointer duration-300"
+                  style={{
+                    backgroundImage: `url(${data.image})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: (index % slidesPerView) * 0.1,
+                  }}
+                  viewport={{ once: true }}
                 >
-                  <motion.div
-                    className="w-full flex flex-col group h-72 sm:h-80 md:h-84 lg:h-80 xl:h-84 p-6 sm:p-7 md:p-8 text-white relative items-start justify-between rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300"
-                    style={{
-                      backgroundImage: `url(${data.image})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.6,
-                      delay: (index % slidesPerView) * 0.1,
-                    }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="absolute inset-0 z-0 bg-black opacity-50 group-hover:opacity-30 transition-opacity duration-300" />
-                    <h1 className="relative text-sm sm:text-base text-white/50 z-10">
-                      {data.date}
-                    </h1>
-                    <div className="relative w-full z-10 duration-500 transition-all group-hover:-translate-y-2 md:group-hover:-translate-y-3 lg:group-hover:-translate-y-4 text-start">
-                      <h2 className="text-xs sm:text-sm text-white/80 font-normal mb-2 group-hover:text-white transition-colors duration-200">
-                        {data.categories}
-                      </h2>
-                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-tight group-hover:-translate-y-1 transition-transform duration-200">
-                        {data.title}
-                      </p>
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-          </div>
+                  <div className="absolute inset-0 z-0 bg-black opacity-50 group-hover:opacity-30 transition-opacity duration-300" />
+                  <h1 className="relative text-sm sm:text-base text-white/50 z-10">
+                    {data.date}
+                  </h1>
+                  <div className="relative w-full z-10 duration-200 transition-all group-hover:-translate-y-1 md:group-hover:-translate-y-1 lg:group-hover:-translate-y-1 text-start">
+                    <h2 className="text-xs sm:text-sm text-white/80 font-normal mb-2 group-hover:text-white transition-colors duration-200">
+                      {data.categories}
+                    </h2>
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-tight group-hover:-translate-y-1 transition-transform duration-200">
+                      {data.title}
+                    </p>
+                  </div>
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
           {/* Custom Pagination */}
-          <div className="flex justify-center mt-6 sm:mt-8">
-            <div className="flex space-x-2">
-              {Array.from({
-                length: Math.max(1, section14Data.length - slidesPerView + 1),
-              }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-5 h-1 sm:w-6 sm:h-1 rounded-full transition-all duration-300 cursor-pointer ${
-                    index === currentSlide
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600"
-                      : "bg-gray-300 hover:bg-gray-400"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
+          <div className="swiper-pagination-custom flex justify-center mt-6 sm:mt-8 space-x-2"></div>
         </div>
       </div>
+
+      <style jsx global>{`
+        .swiper-pagination-custom .swiper-pagination-bullet {
+          background: #d1d5db;
+          opacity: 1;
+          transition: all 0.3s ease;
+        }
+        .swiper-slide {
+          background: transparent !important;
+        }
+        .swiper-pagination-custom .swiper-pagination-bullet:hover {
+          background: #9ca3af;
+        }
+        .swiper-pagination-custom .swiper-pagination-bullet-active {
+          background: linear-gradient(135deg, #3b82f6 0%, #9333ea 100%);
+        }
+      `}</style>
     </motion.div>
   );
 };

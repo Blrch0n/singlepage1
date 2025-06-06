@@ -86,7 +86,7 @@ const Section6 = () => {
             <motion.div
               key={index}
               className="flex flex-col gap-4 md:gap-6 items-center justify-center text-center p-4"
-              whileHover={{ y: -5 }}
+              whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
             >
               <motion.div
@@ -100,7 +100,9 @@ const Section6 = () => {
                   color: "#fff",
                   fontSize: "2rem",
                 }}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+                }}
                 transition={{ duration: 0.2 }}
               >
                 <span className="w-full h-full rounded-full flex items-center justify-center text-black bg-white">

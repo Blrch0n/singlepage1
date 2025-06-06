@@ -27,7 +27,7 @@ const Section12 = () => {
       style={{ backgroundImage: "url(/image4.jpg)" }}
     >
       {/* Background overlay for better text readability */}
-      {/* <div className="absolute inset-0 bg-black bg-opacity-30"></div> */}
+      <div className="absolute inset-0 bg-[#00000080] bg-opacity-30"></div>
 
       {/* Content Container */}
       <div className="relative z-10 w-full lg:w-[45%] flex flex-col items-center justify-center p-4 sm:p-6 lg:p-12">

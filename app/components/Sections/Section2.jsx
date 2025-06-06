@@ -58,7 +58,7 @@ const Section2 = () => {
             whileInView={{ opacity: 1, y: 0 }}
             whileHover={{ y: -10 }}
             transition={{
-              duration: 0.6,
+              duration: 0.2,
               delay: index * 0.1,
             }}
             viewport={{ once: true }}
@@ -80,9 +80,16 @@ const Section2 = () => {
       </div>
 
       <motion.button
-        className="btn-gradient hover:bg-[#3452ff] duration-300 ease-in-out px-[18px] sm:px-[24px] rounded-[5px] text-white py-3 sm:py-4 text-sm sm:text-base"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.98 }}
+        className="btn-gradient px-[18px] sm:px-[24px] rounded-[5px] text-white py-3 sm:py-4 text-sm sm:text-base"
+        whileHover={{
+          transform: "translateY(-3px)",
+          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "#3452ff",
+        }}
+        transition={{
+          duration: 0.2,
+          ease: "easeInOut",
+        }}
       >
         Explore All Features
       </motion.button>

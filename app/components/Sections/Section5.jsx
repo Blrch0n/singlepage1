@@ -86,7 +86,7 @@ const Section5 = () => {
               key={index}
               whileHover={{
                 y: -5,
-                transition: { duration: 0.3 },
+                transition: { duration: 0.2 },
               }}
             >
               <div className="w-full group relative mb-4">

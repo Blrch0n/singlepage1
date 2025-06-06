@@ -15,7 +15,6 @@ import Section14 from "../components/Sections/Section14";
 import Section15 from "../components/Sections/Section15";
 import Section16 from "../components/Sections/Section16";
 import Section17 from "../components/Sections/Section17";
-import Section18 from "../components/Sections/Section18";
 
 export default function Home() {
   return (
@@ -54,7 +53,6 @@ export default function Home() {
       <div id="contact" className="overflow-hidden">
         <Section16 />
         <Section17 />
-        <Section18 />
       </div>
     </div>
   );

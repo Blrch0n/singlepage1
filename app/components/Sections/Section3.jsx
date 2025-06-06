@@ -34,8 +34,8 @@ const Section3 = () => {
             cursor: "pointer",
           }}
           whileHover={{
-            scale: 1.05,
-            boxShadow: "0 8px 20px rgba(0, 0, 0, 0.3)",
+            scale: 1.0,
+            boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
           }}
           whileTap={{ scale: 0.98 }}
           transition={{ duration: 0.2 }}
