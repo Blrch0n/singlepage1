@@ -56,10 +56,36 @@ const Header = () => {
       setActiveSection(currentSection);
     };
 
+    // Handle hash navigation on page load
+    const handleHashNavigation = () => {
+      const hash = window.location.hash.substring(1); // Remove the '#'
+      if (hash) {
+        // Small delay to ensure the page is fully loaded
+        setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        }, 100);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    // Handle initial hash navigation
+    handleHashNavigation();
+
+    // Handle hash changes (back/forward buttons)
+    window.addEventListener("hashchange", handleHashNavigation);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("hashchange", handleHashNavigation);
+    };
   }, []);
 
   // Function to handle smooth scrolling
@@ -73,13 +99,28 @@ const Header = () => {
         sectionId = sectionName;
     }
 
+    // Check if we're on the home page by looking for the section
     const element = document.getElementById(sectionId);
+
     if (element) {
+      // We're on the home page, scroll to section
       element.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
+    } else {
+      // We're on a different page, navigate to home with hash
+      if (typeof window !== "undefined") {
+        // If sectionId is 'home', just go to root
+        if (sectionId === "home") {
+          window.location.href = "/";
+        } else {
+          // Navigate to home page with hash for the section
+          window.location.href = `/#${sectionId}`;
+        }
+      }
     }
+
     setIsMobileMenuOpen(false); // Close mobile menu after navigation
   };
 
@@ -169,7 +210,13 @@ const Header = () => {
               : "opacity-0 -translate-y-4 pointer-events-none"
           }`}
         >
-          <div className="bg-white backdrop-blur-md shadow-xl border-t border-gray-200 rounded-b-lg mx-2">
+          <div
+            className={`backdrop-blur-md shadow-xl border-t rounded-b-lg mx-2 transition-all duration-300 ${
+              isScrolled
+                ? "bg-white border-gray-200"
+                : "bg-black/90 border-white/20"
+            }`}
+          >
             <ul className="flex flex-col py-2">
               {headerlinks.map((link, index) => {
                 const isActive = activeSection === link;
@@ -180,8 +227,12 @@ const Header = () => {
                     onClick={() => scrollToSection(link)}
                     className={`cursor-pointer px-6 py-4 text-[16px] font-semibold border-l-4 transition-all duration-300 ease-out relative overflow-hidden group ${
                       isActive
-                        ? "text-[#3452ff] border-[#3452ff] bg-blue-50"
-                        : "text-gray-700 border-transparent hover:text-[#3452ff] hover:border-[#3452ff] hover:bg-gray-50"
+                        ? isScrolled
+                          ? "text-[#3452ff] border-[#3452ff] bg-blue-50"
+                          : "text-[#3452ff] border-[#3452ff] bg-white/10"
+                        : isScrolled
+                        ? "text-gray-700 border-transparent hover:text-[#3452ff] hover:border-[#3452ff] hover:bg-gray-50"
+                        : "text-white border-transparent hover:text-[#3452ff] hover:border-[#3452ff] hover:bg-white/10"
                     }`}
                     style={{
                       animationDelay: isMobileMenuOpen
@@ -190,7 +241,13 @@ const Header = () => {
                     }}
                   >
                     {/* Animated background on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                    <div
+                      className={`absolute inset-0 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ${
+                        isScrolled
+                          ? "bg-gradient-to-r from-blue-500/10 to-purple-500/10"
+                          : "bg-gradient-to-r from-white/10 to-blue-500/20"
+                      }`}
+                    />
 
                     {/* Text content */}
                     <span className="relative z-10 block transform transition-transform duration-200 group-hover:translate-x-1">
