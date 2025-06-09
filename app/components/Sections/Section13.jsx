@@ -1,7 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const Section13 = () => {
+  const router = useRouter();
   return (
     <motion.div
       className="w-full h-fit"
@@ -26,6 +28,7 @@ const Section13 = () => {
           style={{
             background: "linear-gradient(to right, #9888ef 0%, #8978d3 100%)",
           }}
+          onClick={() => router.push("/")}
           className="text-white py-3 px-6 md:px-8 rounded-[5px] sm:w-fit w-full md:w-auto text-sm md:text-base hover:shadow-lg active:scale-95 transition-all duration-200"
         >
           See all Features

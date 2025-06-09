@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const section5Data = [
   {
@@ -57,6 +58,7 @@ const section5Data = [
 ];
 
 const Section5 = () => {
+  const router = useRouter();
   return (
     <div className="w-full h-fit flex flex-col items-center justify-center bg-white px-4 sm:px-6 lg:px-8">
       <div className="bg-white max-w-[1200px] w-full h-fit flex flex-col gap-8 sm:gap-12 items-center justify-center text-black py-12 sm:py-16 lg:py-[100px]">
@@ -96,7 +98,10 @@ const Section5 = () => {
                   alt={item.title}
                 />
                 <div className="absolute inset-0 bg-transparent group-hover:bg-[#00000080] flex justify-center items-center transition-all duration-300 rounded-lg">
-                  <button className="bg-white text-black px-4 sm:px-5 hover:bg-[#3452ff] py-2 sm:py-3 text-xs sm:text-[12px] rounded-[5px] opacity-0 group-hover:opacity-100 transition-all cursor-pointer hover:text-white duration-300">
+                  <button
+                    onClick={() => router.push("/news/as")}
+                    className="bg-white text-black px-4 sm:px-5 hover:bg-[#3452ff] py-2 sm:py-3 text-xs sm:text-[12px] rounded-[5px] opacity-0 group-hover:opacity-100 transition-all cursor-pointer hover:text-white duration-300"
+                  >
                     View more
                   </button>
                 </div>

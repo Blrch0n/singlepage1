@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const section2_data = [
   {
@@ -23,6 +24,7 @@ const section2_data = [
 ];
 
 const Section2 = () => {
+  const router = useRouter();
   return (
     <motion.div
       className="w-full h-fit flex py-[110px] md:py-[80px] sm:py-[60px] px-4 sm:px-6 md:px-8 flex-col gap-10 items-center justify-center bg-white text-black"
@@ -81,6 +83,7 @@ const Section2 = () => {
 
       <motion.button
         className="btn-gradient px-[18px] sm:px-[24px] rounded-[5px] text-white py-3 sm:py-4 text-sm sm:text-base"
+        onClick={() => router.push("/")}
         whileHover={{
           transform: "translateY(-3px)",
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",

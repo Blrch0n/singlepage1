@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const Section3 = () => {
+  const router = useRouter();
   return (
     <div
       className="w-full h-fit flex items-center justify-center"
@@ -33,6 +35,7 @@ const Section3 = () => {
             borderRadius: "0.5rem",
             cursor: "pointer",
           }}
+          onClick={() => router.push("/")}
           whileHover={{
             scale: 1.0,
             boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)",
