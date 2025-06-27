@@ -4,8 +4,9 @@ import { BsSafe } from "react-icons/bs";
 import { FaHelmetSafety } from "react-icons/fa6";
 import { PiBag } from "react-icons/pi";
 import { GiCoffeeCup } from "react-icons/gi";
+import { useData } from "@/contexts/DataContext";
 
-const section6Data = [
+const defaultSection6Data = [
   {
     icon: <BsSafe color="#a9a9a9" size={40} />,
     title: "Tailored",
@@ -33,6 +34,15 @@ const section6Data = [
 ];
 
 const Section6 = () => {
+  const { data } = useData();
+
+  // Get data from API or use defaults
+  const ourWorkData = data.ourWork?.section2 || {};
+  const capabilitiesData = ourWorkData.capabilities || defaultSection6Data;
+
+  // Use API capabilities data or fallback to default
+  const section6Data =
+    capabilitiesData.length > 0 ? capabilitiesData : defaultSection6Data;
   return (
     <div className="w-full h-fit bg-white py-[40px] md:py-[80px] flex items-center justify-center px-4 md:px-0">
       <div className="bg-white w-full max-w-[1200px] mx-auto px-10 max-w-[1200px]:px-0 h-fit flex flex-col gap-[40px] md:gap-[80px] items-center justify-center text-black">
@@ -48,10 +58,10 @@ const Section6 = () => {
               className="text-[#828282] uppercase text-sm md:text-base"
               style={{ letterSpacing: "2px" }}
             >
-              Capabilities
+              {ourWorkData.subtitle || "Capabilities"}
             </h3>
             <h2 className="text-[28px] md:text-[36px] w-full md:w-[420px] leading-tight">
-              Creative concept or System Design
+              {ourWorkData.title || "Creative concept or System Design"}
             </h2>
             <span
               className="block h-1.5 w-[35px] rounded-full my-4"
@@ -61,9 +71,8 @@ const Section6 = () => {
               }}
             />
             <p className="text-[#999999] text-[16px] md:text-[18px] leading-relaxed">
-              We are the comprehensive design and technology partner for the
-              digital age. We help businesses to stay relevant to their
-              customers in the digital era by touching hearts and minds.
+              {ourWorkData.description ||
+                "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds."}
             </p>
           </div>
           <img

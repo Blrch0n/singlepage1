@@ -15,7 +15,7 @@ const Section15 = () => {
   const { data, loading, error } = useData();
 
   // Extract section data from API
-  const section15Data = data?.section15 || {};
+  const section15Data = data?.about?.section4 || {};
   const partners =
     section15Data.partners || section15Data.logos || fallbackData;
   const headerData = section15Data.header || {};

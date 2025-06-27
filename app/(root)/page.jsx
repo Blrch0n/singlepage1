@@ -1,3 +1,4 @@
+"use client";
 import Hero from "../components/Hero";
 import Section2 from "../components/Sections/Section2";
 import Section3 from "../components/Sections/Section3";
@@ -15,8 +16,35 @@ import Section14 from "../components/Sections/Section14";
 import Section15 from "../components/Sections/Section15";
 import Section16 from "../components/Sections/Section16";
 import Section17 from "../components/Sections/Section17";
+import { useData } from "@/contexts/DataContext";
+import { LoadingScreen } from "../components/LoadingSpinner";
 
 export default function Home() {
+  const { loading, error } = useData();
+
+  if (loading) {
+    return <LoadingScreen message="Loading website data..." />;
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">
+            Error Loading Data
+          </h1>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="overflow-x-hidden">
       <Hero id="home" />

@@ -1,7 +1,27 @@
 import { TbNotebook } from "react-icons/tb";
 import { AiFillLike } from "react-icons/ai";
+import { useData } from "../../../contexts/DataContext";
 
-const section12Data = [
+// Helper function to format image URLs
+const formatImageUrl = (imageUrl, fallback = "/image4.jpg") => {
+  if (!imageUrl) return fallback;
+
+  // If it's already a full URL (starts with http/https), return as is
+  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+    return imageUrl;
+  }
+
+  // If it starts with /api/uploads, prepend the base URL
+  if (imageUrl.startsWith("/api/uploads")) {
+    return `https://dash-1-iefb.onrender.com${imageUrl}`;
+  }
+
+  // If it's a relative path, use it as is (for local images)
+  return imageUrl;
+};
+
+// Fallback data
+const fallbackData = [
   {
     icon: (
       <TbNotebook className="text-4xl group-hover:text-black text-[#6d83ff]" />
@@ -21,10 +41,34 @@ const section12Data = [
 ];
 
 const Section12 = () => {
+  const { data, loading, error } = useData();
+
+  // Extract section data from API
+  const section12Data = data?.section12 || {};
+  const features = section12Data.features || fallbackData;
+  const contentData = section12Data.content || {};
+
+  if (loading) {
+    return (
+      <div className="w-full min-h-[400px] flex items-center justify-center bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error("Section12 error:", error);
+    // Use fallback data on error
+  }
   return (
     <div
       className="w-full min-h-screen flex flex-col px-4 sm:px-8 md:px-12 lg:px-[100px] lg:flex-row items-center justify-between bg-cover bg-center bg-fixed relative"
-      style={{ backgroundImage: "url(/image4.jpg)" }}
+      style={{
+        backgroundImage: `url(${formatImageUrl(
+          contentData.backgroundImage,
+          "/image4.jpg"
+        )})`,
+      }}
     >
       {/* Background overlay for better text readability */}
       <div className="absolute inset-0 bg-[#00000080] bg-opacity-30"></div>
@@ -36,10 +80,11 @@ const Section12 = () => {
           {/* Header Section */}
           <div className="mb-6 sm:mb-8">
             <h3 className="text-[#b8b8b8] font-semibold text-sm sm:text-[16px] uppercase tracking-wider mb-2">
-              Our Concept
+              {contentData.subtitle || "Our Concept"}
             </h3>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight mb-4">
-              New products inspired by the changing working-style and times
+              {contentData.title ||
+                "New products inspired by the changing working-style and times"}
             </h2>
             <span
               className="block h-1.5 w-16 rounded-full mb-4 sm:mb-6"
@@ -48,9 +93,8 @@ const Section12 = () => {
               }}
             ></span>
             <p className="text-[#ffffff] text-sm sm:text-base lg:text-lg leading-relaxed">
-              Enside allows you to build a fully functional and feature rich
-              onepage WordPress site, whatever your agency or business, without
-              any knowledge of coding.
+              {contentData.description ||
+                "Enside allows you to build a fully functional and feature rich onepage WordPress site, whatever your agency or business, without any knowledge of coding."}
             </p>
           </div>
 
@@ -59,22 +103,37 @@ const Section12 = () => {
 
           {/* Features Grid */}
           <div className="grid grid-cols-1 mt-8 sm:grid-cols-2 gap-6 sm:gap-8">
-            {section12Data.map((data, index) => (
-              <div
-                className="flex flex-col space-y-3 sm:space-y-4 p-3 sm:p-4 rounded-xl transition-all duration-500 transforms"
-                key={index}
-              >
-                <div className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-transparent border border-[#6d83ff] rounded-xl hover:border-white hover:bg-white transition-colors duration-300">
-                  {data.icon}
+            {features.map((feature, index) => {
+              // Map icons based on title or use default
+              let iconComponent = (
+                <TbNotebook className="text-4xl group-hover:text-black text-[#6d83ff]" />
+              );
+              if (
+                feature.title?.toLowerCase().includes("responsive") ||
+                feature.title?.toLowerCase().includes("design")
+              ) {
+                iconComponent = (
+                  <AiFillLike className="text-4xl group-hover:text-black text-[#6d83ff]" />
+                );
+              }
+
+              return (
+                <div
+                  className="flex flex-col space-y-3 sm:space-y-4 p-3 sm:p-4 rounded-xl transition-all duration-500 transforms"
+                  key={index}
+                >
+                  <div className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-transparent border border-[#6d83ff] rounded-xl hover:border-white hover:bg-white transition-colors duration-300">
+                    {feature.icon || iconComponent}
+                  </div>
+                  <h3 className="text-base sm:text-lg font-bold text-white transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-[#b8b8b8] text-sm sm:text-[16px] leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-white transition-colors duration-300">
-                  {data.title}
-                </h3>
-                <p className="text-[#b8b8b8] text-sm sm:text-[16px] leading-relaxed">
-                  {data.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import { FaFacebookF } from "react-icons/fa";
 import { BsTwitter, BsLinkedin } from "react-icons/bs";
 import { motion } from "framer-motion";
+import { useData } from "../../../contexts/DataContext";
 
-const detailData = {
+// Fallback data
+const fallbackDetailData = {
   title: "Brief",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -12,7 +14,28 @@ const detailData = {
   category: "Category Name",
 };
 
-const NewsDetails = () => {
+const NewsDetails = ({ newsId }) => {
+  const { data, loading, error } = useData();
+
+  // Extract news detail data from API
+  const newsData = data?.news || {};
+  const detailData =
+    newsData.articles?.find((article) => article.id === newsId) ||
+    newsData.main?.details ||
+    fallbackDetailData;
+
+  if (loading) {
+    return (
+      <div className="w-full h-[200px] flex items-center justify-center bg-white">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error("NewsDetails error:", error);
+    // Use fallback data on error
+  }
   return (
     <motion.div
       className="w-full mx-auto p-8 bg-white rounded-lg shadow-sm"
@@ -26,7 +49,7 @@ const NewsDetails = () => {
           {detailData.title}
         </h1>
         <p className="text-[14px] md:text-lg text-gray-700 leading-relaxed">
-          {detailData.description}
+          {detailData.description || detailData.content || detailData.excerpt}
         </p>
       </div>
 
@@ -37,7 +60,7 @@ const NewsDetails = () => {
             Client:
           </span>
           <p className="mt-1 md:mt-0 text-base md:text-lg font-semibold md:font-bold text-gray-900">
-            {detailData.client}
+            {detailData.client || detailData.author || "Client Name"}
           </p>
         </div>
         <div className="text-center flex flex-col md:flex-row md:text-left md:justify-center md:items-center gap-2">
@@ -45,12 +68,12 @@ const NewsDetails = () => {
             Project URL:
           </span>
           <a
-            href={detailData.projectUrl}
+            href={detailData.projectUrl || detailData.url || "#"}
             className="mt-1 md:mt-0 text-base md:text-lg font-semibold md:font-bold text-blue-600 hover:text-blue-800 hover:scale-105 active:scale-95 transition-all duration-200 inline-block"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {detailData.projectName}
+            {detailData.projectName || detailData.linkText || "Project Name"}
           </a>
         </div>
         <div className="text-center flex flex-col md:flex-row md:text-left md:justify-center md:items-center gap-2">
@@ -58,7 +81,7 @@ const NewsDetails = () => {
             Category:
           </span>
           <p className="mt-1 md:mt-0 text-base md:text-lg font-semibold md:font-bold text-gray-900">
-            {detailData.category}
+            {detailData.category || "Category Name"}
           </p>
         </div>
       </div>

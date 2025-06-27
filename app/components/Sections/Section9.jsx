@@ -10,10 +10,12 @@ import { SlLike } from "react-icons/sl";
 import { BsSafe2 } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { AnimatePresence, motion, useInView } from "framer-motion";
+import { useData } from "../../../contexts/DataContext";
 
-const buttonData = ["Prototypes", "Development", "Support", "Design"];
+// Fallback data
+const fallbackButtonData = ["Prototypes", "Development", "Support", "Design"];
 
-const statusData = [
+const fallbackStatusData = [
   {
     icon: <SlLike size={42} fontWeight={200} color="#3452ff" />,
     title: 97,
@@ -31,7 +33,7 @@ const statusData = [
   },
 ];
 
-const developmentData = [
+const fallbackDevelopmentData = [
   {
     icon: <TbHammer />,
     title: "Design & Developing",
@@ -58,7 +60,7 @@ const developmentData = [
   },
 ];
 
-const designData = [
+const fallbackDesignData = [
   {
     icon: <TbHammer />,
     title: "Design & Developing",
@@ -74,7 +76,29 @@ const designData = [
 ];
 
 const Section9 = () => {
+  const { data, loading, error } = useData();
   const [isclicked, setIsClicked] = useState("Prototypes");
+
+  // Extract section data from API or use fallbacks
+  const section9Data = data?.section9 || {};
+  const buttonData = section9Data.tabs || fallbackButtonData;
+  const statusData = section9Data.stats || fallbackStatusData;
+  const developmentData = section9Data.capabilities || fallbackDevelopmentData;
+  const designData = section9Data.design || fallbackDesignData;
+  const headerData = section9Data.header || {};
+
+  if (loading) {
+    return (
+      <div className="w-full h-[600px] flex items-center justify-center bg-white">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error("Section9 error:", error);
+    // Continue with fallback data
+  }
 
   const useCountAnimation = (targetValue, duration = 2000) => {
     const [count, setCount] = useState(0);
@@ -114,10 +138,10 @@ const Section9 = () => {
       {/* Header Section - Simplified */}
       <div className="max-w-[1200px] w-full h-fit flex flex-col items-center gap-2 text-center">
         <h3 className="text-[#828282] text-[12px] sm:text-[14px] lg:text-[16px] uppercase">
-          technology
+          {headerData.subtitle || "technology"}
         </h3>
         <h2 className="text-[36px] sm:text-[56px] lg:text-[72px] text-[#2A2F35] px-4">
-          Capabilities
+          {headerData.title || "Capabilities"}
         </h2>
         <span
           className="block h-1.5 w-[35px] rounded-full my-4"
@@ -126,7 +150,8 @@ const Section9 = () => {
           }}
         />
         <p className="text-[14px] sm:text-[16px] lg:text-[18px] text-[#999999] max-w-[600px] px-4">
-          Taking care of the new products's launch and user support
+          {headerData.description ||
+            "Taking care of the new products's launch and user support"}
         </p>
       </div>
 
@@ -358,7 +383,8 @@ const Section9 = () => {
       {/* Stats Section - Simplified */}
       <div className="max-w-[1200px] w-full h-fit flex flex-col gap-6 sm:gap-8 items-center justify-center text-black p-4 sm:p-6 lg:p-8 bg-white">
         <h1 className="text-[#2A2F35] text-2xl sm:text-3xl lg:text-4xl text-center px-4">
-          We create human experience in a digital world
+          {section9Data.statsTitle ||
+            "We create human experience in a digital world"}
         </h1>
         <div className="w-full h-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-6 sm:gap-8 bg-white text-black">
           {statusData.map((data, index) => {

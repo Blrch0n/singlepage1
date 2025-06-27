@@ -58,7 +58,7 @@ const Section11 = () => {
   const { data, loading, error } = useData();
 
   // Extract section data from API
-  const teamData = data?.section11 || {};
+  const teamData = data?.team?.main || {};
   const section11Data = teamData.members || teamData.team || fallbackData;
   const headerData = teamData.header || {};
 

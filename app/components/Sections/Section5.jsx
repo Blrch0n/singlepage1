@@ -1,13 +1,14 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useData } from "@/contexts/DataContext";
 
-const section5Data = [
+const defaultSection5Data = [
   {
     image: "https://max-themes.net/demos/enside/main/upload/tree-brancg.png",
     path: "Agency / App Design / Services",
     title: "Product Design",
-    description: "Creative RIng",
+    description: "Creative Ring",
   },
   {
     image:
@@ -59,6 +60,15 @@ const section5Data = [
 
 const Section5 = () => {
   const router = useRouter();
+  const { data } = useData();
+
+  // Get data from API or use defaults
+  const ourWorkData = data.ourWork?.section1 || {};
+  const projectsData = ourWorkData.projects || defaultSection5Data;
+
+  // Use API projects data or fallback to default
+  const section5Data =
+    projectsData.length > 0 ? projectsData : defaultSection5Data;
   return (
     <div className="w-full h-fit flex flex-col items-center justify-center bg-white px-4 sm:px-6 lg:px-8">
       <div className="bg-white max-w-[1200px] w-full h-fit flex flex-col gap-8 sm:gap-12 items-center justify-center text-black py-12 sm:py-16 lg:py-[100px]">
@@ -67,7 +77,7 @@ const Section5 = () => {
             portfolio
           </h3>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[72px] w-full max-w-[520px] leading-tight">
-            Case Studies
+            {ourWorkData.title || "Case Studies"}
           </h2>
           <span
             className="block h-[6px] w-[35px] rounded-full my-4"
@@ -76,8 +86,8 @@ const Section5 = () => {
             }}
           />
           <p className="text-base sm:text-[18px] text-[#999999] w-full max-w-[520px] leading-relaxed">
-            Inspiring and functional branding, development, consulting,
-            websites, online services, and apps.
+            {ourWorkData.subtitle ||
+              "Inspiring and functional branding, development, consulting, websites, online services, and apps."}
           </p>
         </div>
 
@@ -108,7 +118,7 @@ const Section5 = () => {
               </div>
 
               <span className="uppercase text-[9px] sm:text-[10px] space-x-0.5 text-[#2A2F35]">
-                {item.path}
+                {item.category || item.path}
               </span>
 
               <h1 className="text-lg sm:text-[20px] font-normal">

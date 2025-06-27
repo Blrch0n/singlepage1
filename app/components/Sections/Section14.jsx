@@ -3,13 +3,32 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { useData } from "@/contexts/DataContext";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const section14Data = [
+// Helper function to format image URLs
+const formatImageUrl = (imageUrl, fallback = "/image1.jpg") => {
+  if (!imageUrl) return fallback;
+
+  // If it's already a full URL (starts with http/https), return as is
+  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+    return imageUrl;
+  }
+
+  // If it starts with /api/uploads, prepend the base URL
+  if (imageUrl.startsWith("/api/uploads")) {
+    return `https://dash-1-iefb.onrender.com${imageUrl}`;
+  }
+
+  // If it's a relative path, use it as is (for local images)
+  return imageUrl;
+};
+
+const defaultSection14Data = [
   {
     image:
       "https://max-themes.net/demos/enside/main/upload/Creative-business-team-laughing-1170x660.jpg",
@@ -42,6 +61,15 @@ const section14Data = [
 
 const Section14 = () => {
   const [slidesPerView, setSlidesPerView] = useState(1);
+  const { data } = useData();
+
+  // Get data from API or use defaults
+  const newsData = data.news?.section1 || {};
+  const projectsData = newsData.projects || defaultSection14Data;
+
+  // Use API projects data or fallback to default
+  const section14Data =
+    projectsData.length > 0 ? projectsData : defaultSection14Data;
 
   // Handle responsive slides per view
   useEffect(() => {
@@ -76,7 +104,7 @@ const Section14 = () => {
             articles
           </h3>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl w-full sm:w-[90%] md:w-[80%] lg:w-[570px] text-center text-gray-800 leading-tight mb-4 px-4">
-            Our Recent Writings
+            {newsData.title || "Our Recent Writings"}
           </h2>
           <div
             className="block h-1 sm:h-1.5 w-6 sm:w-8 rounded-full mb-4 sm:mb-6"
@@ -85,7 +113,7 @@ const Section14 = () => {
             }}
           />
           <p className="text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed text-center px-4">
-            Updates and events of Enside
+            {newsData.subtitle || "Updates and events of Enside"}
           </p>
         </div>
 
@@ -123,7 +151,7 @@ const Section14 = () => {
                 <motion.div
                   className="w-full flex flex-col group h-72 sm:h-80 md:h-84 lg:h-80 xl:h-84 p-6 sm:p-7 md:p-8 text-white relative items-start justify-between rounded-lg overflow-hidden cursor-pointer duration-300"
                   style={{
-                    backgroundImage: `url(${data.image})`,
+                    backgroundImage: `url(${formatImageUrl(data.image)})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}

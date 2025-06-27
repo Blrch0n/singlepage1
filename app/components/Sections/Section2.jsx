@@ -1,8 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useData } from "@/contexts/DataContext";
 
-const section2_data = [
+const defaultSection2Data = [
   {
     img: "https://max-themes.net/demos/enside/main/upload/man-business-landscape.jpg",
     title: "Brand Development",
@@ -25,6 +26,22 @@ const section2_data = [
 
 const Section2 = () => {
   const router = useRouter();
+  const { data, loading } = useData();
+
+  // Get data from API or use default
+  const aboutData = data.about?.section1 || {};
+  const welcomeData = aboutData.welcome || {};
+  const featuresData = aboutData.features || {};
+
+  // Use API data for section2_data or fallback to default
+  const section2_data =
+    featuresData.items?.length > 0
+      ? featuresData.items.map((item) => ({
+          img: item.image,
+          title: item.title,
+          description: item.description,
+        }))
+      : defaultSection2Data;
   return (
     <motion.div
       className="w-full h-fit flex py-[110px] md:py-[80px] sm:py-[60px] px-4 sm:px-6 md:px-8 flex-col gap-10 items-center justify-center bg-white text-black"
@@ -34,9 +51,11 @@ const Section2 = () => {
       viewport={{ once: true, amount: 0.2 }}
     >
       <div className="w-full h-fit flex flex-col items-center justify-center text-center">
-        <h3 className="text-[#828282] text-sm sm:text-base">Welcome</h3>
+        <h3 className="text-[#828282] text-sm sm:text-base">
+          {welcomeData.title || "Welcome"}
+        </h3>
         <h2 className="text-[32px] sm:text-[48px] md:text-[60px] lg:text-[72px] text-[#2A2F35] w-full max-w-[520px] px-4">
-          Outstanding Features
+          {featuresData.title || "Outstanding Features"}
         </h2>
         <span
           className="block h-[6px] w-[35px] rounded-full my-4"
@@ -45,9 +64,8 @@ const Section2 = () => {
           }}
         />
         <p className="text-[14px] sm:text-[16px] md:text-[18px] text-[#999999] w-full max-w-[570px] px-4">
-          We are the comprehensive design and technology partner for the digital
-          age. We help businesses to stay relevant to their customers in the
-          digital era by touching hearts and minds.
+          {welcomeData.content ||
+            "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds."}
         </p>
       </div>
 

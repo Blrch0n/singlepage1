@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import { useData } from "../../../contexts/DataContext";
 
 // Import Swiper styles
 import "swiper/css";
@@ -8,9 +9,61 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 
-const news_slider_data = ["/image1.jpg", "/image2.jpg", "/image3.jpg"];
+// Helper function to format image URLs
+const formatImageUrl = (imageUrl, fallback = "/image1.jpg") => {
+  if (!imageUrl) return fallback;
 
-const NewsSlider = () => {
+  // If it's already a full URL (starts with http/https), return as is
+  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+    return imageUrl;
+  }
+
+  // If it starts with /api/uploads, prepend the base URL
+  if (imageUrl.startsWith("/api/uploads")) {
+    return `https://dash-1-iefb.onrender.com${imageUrl}`;
+  }
+
+  // If it's a relative path, use it as is (for local images)
+  return imageUrl;
+};
+
+// Fallback data
+const fallbackSliderData = ["/image1.jpg", "/image2.jpg", "/image3.jpg"];
+
+const NewsSlider = ({ newsId }) => {
+  const { data, loading, error } = useData();
+
+  // Extract slider data from API
+  const newsData = data?.news || {};
+  const currentNews = newsData.articles?.find(
+    (article) => article.id === newsId
+  );
+  const rawSliderData =
+    currentNews?.images ||
+    currentNews?.gallery ||
+    newsData.main?.slider ||
+    fallbackSliderData;
+
+  // Process slider data to ensure proper image URLs
+  const sliderData = rawSliderData.map((image) => {
+    if (typeof image === "string") {
+      return formatImageUrl(image);
+    }
+    return formatImageUrl(image.src || image.url || image.image || image);
+  });
+
+  if (loading) {
+    return (
+      <div className="w-full h-[200px] flex items-center justify-center bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error("NewsSlider error:", error);
+    // Use fallback data on error
+  }
   return (
     <div className="news-slider-wrapper">
       <style jsx>{`
@@ -170,7 +223,7 @@ const NewsSlider = () => {
           speed={800}
           className="news-swiper"
         >
-          {news_slider_data.map((image, index) => (
+          {sliderData.map((image, index) => (
             <SwiperSlide key={index}>
               <img src={image} alt={`News slide ${index + 1}`} />
             </SwiperSlide>

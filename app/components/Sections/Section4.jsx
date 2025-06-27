@@ -6,26 +6,38 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useData } from "@/contexts/DataContext";
 
-const section4Data = [
+const defaultSection4Data = [
   {
-    title: "UNIQUE SPACE",
+    title: "Design Excellence",
     description:
-      "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds.",
+      "We create visually stunning and user-friendly designs that capture your brand essence and engage your audience effectively.",
   },
   {
-    title: "UNIQUE SPACE",
+    title: "Technology Innovation",
     description:
-      "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds.",
+      "Our cutting-edge technology solutions help businesses stay ahead in the rapidly evolving digital landscape.",
   },
   {
-    title: "UNIQUE SPACE",
+    title: "Digital Strategy",
     description:
-      "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds.",
+      "We develop comprehensive digital strategies that align with your business goals and drive measurable results.",
   },
 ];
 
 const Section4 = () => {
+  const { data } = useData();
+
+  // Get data from API or use defaults
+  const aboutData = data.about?.section3 || {};
+  const uniqueSpaceData = aboutData.uniqueSpace || {};
+  const accordionData = aboutData.accordion || defaultSection4Data;
+  const imageData = aboutData.image || {};
+
+  // Use API accordion data or fallback to default
+  const section4Data =
+    accordionData.length > 0 ? accordionData : defaultSection4Data;
   return (
     <motion.div
       className="w-full flex flex-col md:flex-row min-h-screen"
@@ -35,9 +47,12 @@ const Section4 = () => {
       viewport={{ once: true, amount: 0.3 }}
     >
       <div className="w-full lg:w-[50%] bg-[#25282b] min-h-screen py-[60px] px-[30px] lg:py-[120px] lg:px-[150px] flex flex-col">
-        <h3 className="text-[#b8b8b8]">UNIQUE SPACE</h3>
+        <h3 className="text-[#b8b8b8]">
+          {uniqueSpaceData.title || "UNIQUE SPACE"}
+        </h3>
         <h2 className="text-[24px] md:text-[36px] text-white">
-          Slight Differences Can Trigger Creativity
+          {uniqueSpaceData.subtitle ||
+            "Slight Differences Can Trigger Creativity"}
         </h2>
         <span
           className="block h-2 w-6 rounded-full my-4"
@@ -46,9 +61,8 @@ const Section4 = () => {
           }}
         />
         <p className="text-[#999999] text-[16px] md:text-[18px] mb-6">
-          We are the comprehensive design and technology partner for the digital
-          age. We help businesses to stay relevant to their customers in the
-          digital era by touching hearts and minds.
+          {uniqueSpaceData.description ||
+            "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds."}
         </p>
 
         <div className="flex-1 overflow-y-auto">
@@ -78,7 +92,7 @@ const Section4 = () => {
 
       <motion.div
         className="hidden lg:block w-[50%] min-h-screen bg-cover bg-center"
-        style={{ backgroundImage: 'url("/image2.jpg")' }}
+        style={{ backgroundImage: `url("${imageData.src || "/image2.jpg"}")` }}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}

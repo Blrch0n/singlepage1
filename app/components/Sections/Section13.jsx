@@ -1,9 +1,28 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useData } from "../../../contexts/DataContext";
 
 const Section13 = () => {
   const router = useRouter();
+  const { data, loading, error } = useData();
+
+  // Extract section data from API
+  const section13Data = data?.section13 || {};
+  const ctaData = section13Data.cta || {};
+
+  if (loading) {
+    return (
+      <div className="w-full h-[200px] flex items-center justify-center bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error("Section13 error:", error);
+    // Use fallback data on error
+  }
   return (
     <motion.div
       className="w-full h-fit"
@@ -18,20 +37,20 @@ const Section13 = () => {
       <div className="max-w-[1200px] w-full mx-auto h-fit flex flex-col md:flex-row items-center justify-between p-4 md:p-8 gap-6 md:gap-0">
         <div className="text-center md:text-left">
           <h2 className="text-[24px] md:text-[30px] text-white mb-2">
-            Get in touch
+            {ctaData.title || "Get in touch"}
           </h2>
           <p className="text-[#b8b8b8] text-sm md:text-base">
-            Want to Know More About Us? Get In Touch
+            {ctaData.description || "Want to Know More About Us? Get In Touch"}
           </p>
         </div>
         <button
           style={{
             background: "linear-gradient(to right, #9888ef 0%, #8978d3 100%)",
           }}
-          onClick={() => router.push("/")}
+          onClick={() => router.push(ctaData.link || "/")}
           className="text-white py-3 px-6 md:px-8 rounded-[5px] sm:w-fit w-full md:w-auto text-sm md:text-base hover:shadow-lg active:scale-95 transition-all duration-200"
         >
-          See all Features
+          {ctaData.buttonText || "See all Features"}
         </button>
       </div>
     </motion.div>

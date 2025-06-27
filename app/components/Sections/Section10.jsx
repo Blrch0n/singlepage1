@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { useData } from "../../../contexts/DataContext";
 
-const section10Data = [
+// Fallback data
+const fallbackData = [
   {
     image:
       "https://max-themes.net/demos/enside/main/upload/office-interior-3.jpg",
@@ -19,6 +21,23 @@ const section10Data = [
 ];
 
 const Section10 = () => {
+  const { data, loading, error } = useData();
+
+  // Extract section data from API
+  const section10Data = data?.section10 || fallbackData;
+
+  if (loading) {
+    return (
+      <div className="w-full h-[180px] flex items-center justify-center bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    console.error("Section10 error:", error);
+    // Use fallback data on error
+  }
   return (
     <motion.div
       className="w-full h-fit grid grid-cols-1 lg:grid-cols-3 md:gap-0"

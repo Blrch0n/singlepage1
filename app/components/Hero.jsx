@@ -1,41 +1,49 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useData } from "@/contexts/DataContext";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { data, loading } = useData();
 
-  const slides = [
-    {
-      image: "/image1.jpg",
-      title: "Trendy. Creative. Awesome.",
-      subtitle: "All you need",
-      description:
-        "We base our work on thorough industry, product and customer research",
-    },
-    {
-      image: "/image2.jpg",
-      title: "Trendy. Creative. Awesome.",
-      subtitle: "All you need",
-      description:
-        "We base our work on thorough industry, product and customer research",
-    },
-    {
-      image: "/image3.jpg",
-      title: "Modern. Innovative. Bold.",
-      subtitle: "Everything you want",
-      description:
-        "Creating exceptional digital experiences with cutting-edge design",
-    },
-    {
-      image: "/image4.jpg",
-      title: "Fresh. Dynamic. Perfect.",
-      subtitle: "Just what you need",
-      description: "Transforming ideas into stunning visual solutions",
-    },
-  ];
+  // Use API data or fallback to default slides
+  const slides =
+    data.hero.length > 0
+      ? data.hero
+      : [
+          {
+            image: "/image1.jpg",
+            title: "Trendy. Creative. Awesome.",
+            subtitle: "All you need",
+            description:
+              "We base our work on thorough industry, product and customer research",
+          },
+          {
+            image: "/image2.jpg",
+            title: "Modern. Innovative. Bold.",
+            subtitle: "Everything you want",
+            description:
+              "Creating exceptional digital experiences with cutting-edge design",
+          },
+          {
+            image: "/image3.jpg",
+            title: "Fresh. Dynamic. Perfect.",
+            subtitle: "Just what you need",
+            description: "Transforming ideas into stunning visual solutions",
+          },
+          {
+            image: "/image4.jpg",
+            title: "Creative. Professional. Unique.",
+            subtitle: "Beyond expectations",
+            description:
+              "Delivering innovative solutions that exceed your expectations",
+          },
+        ];
 
   // Auto-play functionality
   useEffect(() => {
+    if (slides.length === 0) return;
+
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
@@ -53,6 +61,15 @@ const Hero = () => {
   const handleDotClick = (index) => {
     setCurrentSlide(index);
   };
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="relative h-screen w-full overflow-hidden bg-gray-900 flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative h-screen w-full overflow-hidden">

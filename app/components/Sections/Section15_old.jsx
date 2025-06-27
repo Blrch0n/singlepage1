@@ -15,9 +15,8 @@ const Section15 = () => {
   const { data, loading, error } = useData();
 
   // Extract section data from API
-  const section15Data = data?.section15 || {};
-  const partners =
-    section15Data.partners || section15Data.logos || fallbackData;
+  const section15Data = data?.about?.section4 || {};
+  const partners = section15Data.partners || section15Data.logos || fallbackData;
   const headerData = section15Data.header || {};
 
   if (loading) {
@@ -32,7 +31,6 @@ const Section15 = () => {
     console.error("Section15 error:", error);
     // Use fallback data on error
   }
-
   return (
     <motion.div
       className="w-full h-fit bg-[#fff] py-[60px] sm:py-[80px] lg:py-[110px]"
@@ -42,7 +40,7 @@ const Section15 = () => {
       transition={{ duration: 0.3 }}
     >
       <div className="max-w-[1200px] mx-auto w-full h-fit px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
+        {/* Header Section - Simplified */}
         <div className="mb-6 sm:mb-8 w-full h-fit flex flex-col items-center justify-center">
           <h3 className="text-[#828282] font-semibold text-[12px] sm:text-[14px] lg:text-[16px] uppercase tracking-wider mb-2">
             {headerData.subtitle || "friends"}
@@ -57,12 +55,11 @@ const Section15 = () => {
             }}
           />
           <p className="text-[#808080] w-full sm:w-[480px] lg:w-[570px] text-center text-sm sm:text-base lg:text-lg leading-relaxed px-4">
-            {headerData.description ||
-              "Our team of strategists, designers, and engineers deliver valuable, tangible customer experiences"}
+            {headerData.description || "Our team of strategists, designers, and engineers deliver valuable, tangible customer experiences"}
           </p>
         </div>
 
-        {/* Logo Grid */}
+        {/* Logo Grid - Simplified */}
         <div className="w-full h-fit grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 p-4 sm:p-6 lg:p-8">
           {partners.map((logoSrc, index) => (
             <motion.div
@@ -74,13 +71,19 @@ const Section15 = () => {
               viewport={{ once: true }}
             >
               <img
-                src={
-                  typeof logoSrc === "string"
-                    ? logoSrc
-                    : logoSrc.image || logoSrc.logo
-                }
+                src={typeof logoSrc === 'string' ? logoSrc : logoSrc.image || logoSrc.logo}
                 alt={`Partner ${index + 1}`}
                 className="w-full h-auto max-h-16 sm:max-h-20 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 filter grayscale hover:grayscale-0"
+              />
+            </motion.div>
+          ))}
+        </div>
+              viewport={{ once: true }}
+            >
+              <img
+                src={data}
+                alt={`Partner logo ${index + 1}`}
+                className="grayscale hover:grayscale-0 w-full max-w-[120px] sm:max-w-[160px] lg:max-w-[210px] h-auto transition-all duration-300 hover:scale-[102%]"
               />
             </motion.div>
           ))}

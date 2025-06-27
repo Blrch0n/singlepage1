@@ -2,8 +2,9 @@
 import { IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import React, { useState, useEffect } from "react";
+import { useData } from "@/contexts/DataContext";
 
-const headerlinks = [
+const defaultHeaderlinks = [
   "about",
   "our work",
   "services",
@@ -16,6 +17,14 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { data, loading } = useData();
+
+  // Use API data for header links or fallback to default
+  const headerData = data.header || {};
+  const headerlinks =
+    headerData.labels?.length > 0
+      ? headerData.labels.map((label) => label.toLowerCase())
+      : defaultHeaderlinks;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -139,9 +148,10 @@ const Header = () => {
           <img
             className="w-[140px] h-[36px] md:w-[179px] md:h-[46px] cursor-pointer transition-opacity duration-300"
             src={
-              isScrolled
+              headerData.image ||
+              (isScrolled
                 ? "https://max-themes.net/demos/enside/main/img/logo.png"
-                : "https://max-themes.net/demos/enside/main/upload/logo-white.png"
+                : "https://max-themes.net/demos/enside/main/upload/logo-white.png")
             }
             onClick={() => scrollToSection("home")}
             alt="Logo"
