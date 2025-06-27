@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useData } from "../../../contexts/DataContext";
+import { formatImageUrl } from "../../../lib/api";
 
 // Fallback data
 const fallbackData = [
@@ -14,11 +15,16 @@ const fallbackData = [
 const Section15 = () => {
   const { data, loading, error } = useData();
 
-  // Extract section data from API
-  const section15Data = data?.section15 || {};
-  const partners =
-    section15Data.partners || section15Data.logos || fallbackData;
-  const headerData = section15Data.header || {};
+  // Extract section data from API - use news.section2 which contains the partners data
+  const newsData = data?.news?.section2 || {};
+  const partners = newsData.partners || fallbackData;
+  const headerData = {
+    subtitle: "friends",
+    title: newsData.title || "Our Partners and Brands",
+    description:
+      newsData.subtitle ||
+      "Our team of strategists, designers, and engineers deliver valuable, tangible customer experiences",
+  };
 
   if (loading) {
     return (
@@ -45,10 +51,10 @@ const Section15 = () => {
         {/* Header Section */}
         <div className="mb-6 sm:mb-8 w-full h-fit flex flex-col items-center justify-center">
           <h3 className="text-[#828282] font-semibold text-[12px] sm:text-[14px] lg:text-[16px] uppercase tracking-wider mb-2">
-            {headerData.subtitle || "friends"}
+            {headerData.subtitle}
           </h3>
           <h2 className="text-[32px] sm:text-[48px] lg:text-[72px] w-full sm:w-[480px] lg:w-[570px] text-center text-[#2A2F35] leading-tight mb-4 px-4">
-            {headerData.title || "Our Partners and Brands"}
+            {headerData.title}
           </h2>
           <span
             className="block h-1 sm:h-1.5 w-6 sm:w-8 rounded-full mb-4 sm:mb-6 hover:scale-110 transition-transform duration-300"
@@ -57,8 +63,7 @@ const Section15 = () => {
             }}
           />
           <p className="text-[#808080] w-full sm:w-[480px] lg:w-[570px] text-center text-sm sm:text-base lg:text-lg leading-relaxed px-4">
-            {headerData.description ||
-              "Our team of strategists, designers, and engineers deliver valuable, tangible customer experiences"}
+            {headerData.description}
           </p>
         </div>
 
@@ -74,11 +79,12 @@ const Section15 = () => {
               viewport={{ once: true }}
             >
               <img
-                src={
+                src={formatImageUrl(
                   typeof logoSrc === "string"
                     ? logoSrc
-                    : logoSrc.image || logoSrc.logo
-                }
+                    : logoSrc.image || logoSrc.logo,
+                  fallbackData[index]
+                )}
                 alt={`Partner ${index + 1}`}
                 className="w-full h-auto max-h-16 sm:max-h-20 object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 filter grayscale hover:grayscale-0"
               />

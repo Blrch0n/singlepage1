@@ -43,10 +43,22 @@ const fallbackData = [
 const Section12 = () => {
   const { data, loading, error } = useData();
 
-  // Extract section data from API
-  const section12Data = data?.section12 || {};
-  const features = section12Data.features || fallbackData;
-  const contentData = section12Data.content || {};
+  // Extract section data from API - use team.section2 which contains the concept data
+  const teamData = data?.team?.section2 || {};
+  const features =
+    teamData.projects?.map((project) => ({
+      title: project.title,
+      description: project.description,
+      iconType: project.iconType,
+    })) || fallbackData;
+  const contentData = {
+    title: teamData.title || "Our Technology Stack",
+    subtitle: teamData.subtitle || "Our Concept",
+    description:
+      teamData.description ||
+      "Cutting-edge tools and technologies we use to deliver exceptional results and build modern applications",
+    backgroundImage: teamData.backgroundImage,
+  };
 
   if (loading) {
     return (
@@ -104,16 +116,26 @@ const Section12 = () => {
           {/* Features Grid */}
           <div className="grid grid-cols-1 mt-8 sm:grid-cols-2 gap-6 sm:gap-8">
             {features.map((feature, index) => {
-              // Map icons based on title or use default
+              // Map icons based on iconType from API or title or use default
               let iconComponent = (
                 <TbNotebook className="text-4xl group-hover:text-black text-[#6d83ff]" />
               );
+
               if (
+                feature.iconType === "like" ||
                 feature.title?.toLowerCase().includes("responsive") ||
                 feature.title?.toLowerCase().includes("design")
               ) {
                 iconComponent = (
                   <AiFillLike className="text-4xl group-hover:text-black text-[#6d83ff]" />
+                );
+              } else if (
+                feature.iconType === "notebook" ||
+                feature.title?.toLowerCase().includes("parallax") ||
+                feature.title?.toLowerCase().includes("section")
+              ) {
+                iconComponent = (
+                  <TbNotebook className="text-4xl group-hover:text-black text-[#6d83ff]" />
                 );
               }
 

@@ -4,29 +4,12 @@ import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useData } from "@/contexts/DataContext";
+import { formatImageUrl } from "../../../lib/api";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-// Helper function to format image URLs
-const formatImageUrl = (imageUrl, fallback = "/image1.jpg") => {
-  if (!imageUrl) return fallback;
-
-  // If it's already a full URL (starts with http/https), return as is
-  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
-    return imageUrl;
-  }
-
-  // If it starts with /api/uploads, prepend the base URL
-  if (imageUrl.startsWith("/api/uploads")) {
-    return `https://dash-1-iefb.onrender.com${imageUrl}`;
-  }
-
-  // If it's a relative path, use it as is (for local images)
-  return imageUrl;
-};
 
 const defaultSection14Data = [
   {
@@ -65,11 +48,18 @@ const Section14 = () => {
 
   // Get data from API or use defaults
   const newsData = data.news?.section1 || {};
-  const projectsData = newsData.projects || defaultSection14Data;
+  const projectsData = newsData.projects || [];
 
-  // Use API projects data or fallback to default
+  // Map API data to expected format
   const section14Data =
-    projectsData.length > 0 ? projectsData : defaultSection14Data;
+    projectsData.length > 0
+      ? projectsData.map((project) => ({
+          image: project.image,
+          title: project.title,
+          categories: project.category || project.categories || "General",
+          date: project.date || new Date().toISOString().split("T")[0],
+        }))
+      : defaultSection14Data;
 
   // Handle responsive slides per view
   useEffect(() => {
@@ -165,14 +155,14 @@ const Section14 = () => {
                 >
                   <div className="absolute inset-0 z-0 bg-black opacity-50 group-hover:opacity-30 transition-opacity duration-300" />
                   <h1 className="relative text-sm sm:text-base text-white/50 z-10">
-                    {data.date}
+                    {data.date || "Recent"}
                   </h1>
                   <div className="relative w-full z-10 duration-200 transition-all group-hover:-translate-y-1 md:group-hover:-translate-y-1 lg:group-hover:-translate-y-1 text-start">
                     <h2 className="text-xs sm:text-sm text-white/80 font-normal mb-2 group-hover:text-white transition-colors duration-200">
-                      {data.categories}
+                      {data.categories || data.category || "General"}
                     </h2>
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-tight group-hover:-translate-y-1 transition-transform duration-200">
-                      {data.title}
+                      {data.title || "News Article"}
                     </p>
                   </div>
                 </motion.div>

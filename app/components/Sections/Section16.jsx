@@ -4,6 +4,7 @@ import { IoMailOpen } from "react-icons/io5";
 import { MdContactMail } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useData } from "../../../contexts/DataContext";
+import { formatImageUrl } from "../../../lib/api";
 
 // Fallback data
 const fallbackData = [
@@ -27,9 +28,18 @@ const fallbackData = [
 const Section16 = () => {
   const { data, loading, error } = useData();
 
-  // Extract section data from API
-  const contactData = data?.section16 || {};
-  const section16Data = contactData.info || fallbackData;
+  // Extract section data from API - Section16 uses contact.section1
+  const contactData = data?.contact?.section1 || {};
+  const section16Data =
+    contactData.info ||
+    contactData.contacts ||
+    contactData.contactInfo ||
+    fallbackData;
+
+  // Handle potential header data from API
+  const headerData = contactData.header || {};
+  const sectionTitle = headerData.title || contactData.title;
+  const sectionSubtitle = headerData.subtitle || contactData.subtitle;
 
   if (loading) {
     return (
@@ -53,23 +63,39 @@ const Section16 = () => {
     >
       <div className="max-w-[1200px] mx-auto w-full h-fit grid grid-cols-1 md:grid-cols-3 text-black items-center justify-center px-4 md:px-0">
         {section16Data.map((item, index) => {
-          // Map icons based on title or use default
+          // Map icons based on title, type, or use default
           let iconComponent = (
             <MdOutlinePhoneIphone className="text-[40px] text-[#fcb03b]" />
           );
+
+          const itemTitle = item.title || item.type || item.label || "";
+          const titleLower = itemTitle.toLowerCase();
+
           if (
-            item.title?.toLowerCase().includes("email") ||
-            item.title?.toLowerCase().includes("mail")
+            titleLower.includes("email") ||
+            titleLower.includes("mail") ||
+            item.type === "email"
           ) {
             iconComponent = (
               <IoMailOpen className="text-[40px] text-[#f15b26]" />
             );
           } else if (
-            item.title?.toLowerCase().includes("address") ||
-            item.title?.toLowerCase().includes("location")
+            titleLower.includes("address") ||
+            titleLower.includes("location") ||
+            titleLower.includes("office") ||
+            item.type === "address"
           ) {
             iconComponent = (
               <MdContactMail className="text-[40px] text-[#3cb878]" />
+            );
+          } else if (
+            titleLower.includes("phone") ||
+            titleLower.includes("call") ||
+            titleLower.includes("contact") ||
+            item.type === "phone"
+          ) {
+            iconComponent = (
+              <MdOutlinePhoneIphone className="text-[40px] text-[#fcb03b]" />
             );
           }
 
@@ -90,9 +116,15 @@ const Section16 = () => {
                 {item.icon || iconComponent}
               </div>
               <div className="text-center sm:text-left">
-                <p className="text-[14px] text-[#828282]">{item.title}</p>
+                <p className="text-[14px] text-[#828282]">
+                  {item.title || item.type || item.label || "Contact"}
+                </p>
                 <h1 className="text-[20px] sm:text-[25px] text-[#2A2F35] font-bold break-words">
-                  {item.description || item.value}
+                  {item.description ||
+                    item.value ||
+                    item.content ||
+                    item.text ||
+                    "N/A"}
                 </h1>
               </div>
             </motion.div>

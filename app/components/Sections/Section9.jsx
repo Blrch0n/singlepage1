@@ -79,13 +79,26 @@ const Section9 = () => {
   const { data, loading, error } = useData();
   const [isclicked, setIsClicked] = useState("Prototypes");
 
-  // Extract section data from API or use fallbacks
-  const section9Data = data?.section9 || {};
-  const buttonData = section9Data.tabs || fallbackButtonData;
-  const statusData = section9Data.stats || fallbackStatusData;
-  const developmentData = section9Data.capabilities || fallbackDevelopmentData;
-  const designData = section9Data.design || fallbackDesignData;
-  const headerData = section9Data.header || {};
+  // Extract section data from API - use services.section1 which contains the capabilities data
+  const servicesData = data?.services?.section1 || {};
+  const buttonData = servicesData.categories || fallbackButtonData;
+  const statusData =
+    servicesData.statistics?.stats?.map((stat) => ({
+      icon: <SlLike size={42} fontWeight={200} color="#3452ff" />,
+      title: parseInt(stat.number) || 0,
+      description: stat.label || "",
+    })) || fallbackStatusData;
+  const developmentData =
+    servicesData.sections?.Development?.services || fallbackDevelopmentData;
+  const designData =
+    servicesData.sections?.Design?.services || fallbackDesignData;
+  const headerData = {
+    subtitle: servicesData.subtitle || "technology",
+    title: servicesData.title || "Capabilities",
+    description:
+      servicesData.description ||
+      "Taking care of the new products's launch and user support",
+  };
 
   if (loading) {
     return (
@@ -188,48 +201,55 @@ const Section9 = () => {
             >
               <div className="flex w-full lg:w-[40%] flex-col gap-4 sm:gap-6 lg:gap-8 items-center lg:items-start justify-start">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl text-center lg:text-start text-[#2A2F35]">
-                  All you need is Enside, a modern & simple template
+                  {servicesData.sections?.Prototypes?.leftContent?.title ||
+                    "All you need is Enside, a modern & simple template"}
                 </h2>
                 <p className="text-center lg:text-start text-[#999999] text-[14px] sm:text-[16px] lg:text-[18px]">
-                  We are the comprehensive design and technology partner for the
-                  digital age. We help businesses to stay relevant to their
-                  customers in the digital era by touching hearts and minds.
+                  {servicesData.sections?.Prototypes?.leftContent
+                    ?.description ||
+                    "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds."}
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row w-full h-fit justify-center lg:justify-end items-center gap-4 sm:gap-6 lg:gap-8">
-                <div
-                  className="w-full sm:w-[300px] lg:w-[368px] h-[250px] sm:h-[280px] lg:h-[300px] relative rounded-[10px] p-6 sm:p-8 lg:p-10 flex flex-col items-center justify-center text-center bg-cover bg-center text-white hover:-translate-y-2 transition-transform duration-300"
-                  style={{
-                    backgroundImage:
-                      "url(https://max-themes.net/demos/enside/main/upload/friends-montains-1170x660.jpg)",
-                  }}
-                >
-                  <div className="absolute inset-0 bg-[#00000080] rounded-[10px]"></div>
-                  <IoUmbrellaOutline className="z-10 text-3xl sm:text-4xl mb-4" />
-                  <h1 className="z-10 text-lg sm:text-xl font-bold mb-2">
-                    We bring the brand to life
-                  </h1>
-                  <p className="z-10 text-sm">
-                    We only hire great people who strike to push their idea
-                  </p>
-                </div>
-
-                <div
-                  className="w-full sm:w-[300px] lg:w-[368px] h-[250px] sm:h-[280px] lg:h-[300px] relative rounded-[10px] p-6 sm:p-8 lg:p-10 flex flex-col items-center justify-center text-center bg-cover bg-center text-white hover:-translate-y-2 transition-transform duration-300"
-                  style={{
-                    backgroundImage:
-                      "url(https://max-themes.net/demos/enside/main/upload/friends-montains-1170x660.jpg)",
-                  }}
-                >
-                  <div className="absolute inset-0 bg-[#00000080] rounded-[10px]"></div>
-                  <PiLego className="z-10 text-3xl sm:text-4xl mb-4" />
-                  <h1 className="z-10 text-lg sm:text-xl font-bold mb-2">
-                    Build Your Dream
-                  </h1>
-                  <p className="z-10 text-sm">
-                    We only hire great people who strike to push their idea
-                  </p>
-                </div>
+                {(
+                  servicesData.sections?.Prototypes?.rightContent || [
+                    {
+                      icon: "IoUmbrellaOutline",
+                      title: "We bring the brand to life",
+                      subtitle:
+                        "We only hire great people who strike to push their idea",
+                      backgroundImage:
+                        "https://max-themes.net/demos/enside/main/upload/friends-montains-1170x660.jpg",
+                    },
+                    {
+                      icon: "PiLego",
+                      title: "Build Your Dream",
+                      subtitle:
+                        "We only hire great people who strike to push their idea",
+                      backgroundImage:
+                        "https://max-themes.net/demos/enside/main/upload/friends-montains-1170x660.jpg",
+                    },
+                  ]
+                ).map((item, index) => (
+                  <div
+                    key={index}
+                    className="w-full sm:w-[300px] lg:w-[368px] h-[250px] sm:h-[280px] lg:h-[300px] relative rounded-[10px] p-6 sm:p-8 lg:p-10 flex flex-col items-center justify-center text-center bg-cover bg-center text-white hover:-translate-y-2 transition-transform duration-300"
+                    style={{
+                      backgroundImage: `url(${item.backgroundImage})`,
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-[#00000080] rounded-[10px]"></div>
+                    {index === 0 ? (
+                      <IoUmbrellaOutline className="z-10 text-3xl sm:text-4xl mb-4" />
+                    ) : (
+                      <PiLego className="z-10 text-3xl sm:text-4xl mb-4" />
+                    )}
+                    <h1 className="z-10 text-lg sm:text-xl font-bold mb-2">
+                      {item.title}
+                    </h1>
+                    <p className="z-10 text-sm">{item.subtitle}</p>
+                  </div>
+                ))}
               </div>
             </motion.div>
           )}
@@ -245,12 +265,13 @@ const Section9 = () => {
             >
               <div className="flex w-full lg:w-[40%] flex-col gap-4 sm:gap-6 lg:gap-8 items-center lg:items-start justify-start">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl text-center lg:text-start text-[#2A2F35]">
-                  How to Start your Business
+                  {servicesData.sections?.Development?.leftContent?.title ||
+                    "How to Start your Business"}
                 </h2>
                 <p className="text-center lg:text-start text-[#999999] text-[14px] sm:text-[16px] lg:text-[18px]">
-                  We are the comprehensive design and technology partner for the
-                  digital age. We help businesses to stay relevant to their
-                  customers in the digital era by touching hearts and minds.
+                  {servicesData.sections?.Development?.leftContent
+                    ?.description ||
+                    "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds."}
                 </p>
               </div>
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 items-center justify-center gap-4 sm:gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8">
@@ -287,12 +308,12 @@ const Section9 = () => {
             >
               <div className="flex w-full lg:w-[40%] flex-col gap-4 sm:gap-6 lg:gap-8 items-center lg:items-start justify-start">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl text-center lg:text-start text-[#2A2F35]">
-                  How to Start your Business
+                  {servicesData.sections?.Support?.leftContent?.title ||
+                    "How to Start your Business"}
                 </h2>
                 <p className="text-center lg:text-start text-[#999999] text-[14px] sm:text-[16px] lg:text-[18px]">
-                  We are the comprehensive design and technology partner for the
-                  digital age. We help businesses to stay relevant to their
-                  customers in the digital era by touching hearts and minds.
+                  {servicesData.sections?.Support?.leftContent?.description ||
+                    "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds."}
                 </p>
               </div>
               <div className="w-full grid grid-cols-1 sm:grid-cols-2 items-center justify-center gap-4 sm:gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8">
@@ -329,12 +350,12 @@ const Section9 = () => {
             >
               <div className="flex w-full lg:w-[33.3%] flex-col gap-4 sm:gap-6 lg:gap-8 items-center lg:items-start justify-start">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl text-center lg:text-start text-[#2A2F35]">
-                  How to Start your Business
+                  {servicesData.sections?.Design?.leftContent?.title ||
+                    "How to Start your Business"}
                 </h2>
                 <p className="text-center lg:text-start text-[#999999] text-[14px] sm:text-[16px] lg:text-[18px]">
-                  We are the comprehensive design and technology partner for the
-                  digital age. We help businesses to stay relevant to their
-                  customers in the digital era by touching hearts and minds.
+                  {servicesData.sections?.Design?.leftContent?.description ||
+                    "We are the comprehensive design and technology partner for the digital age. We help businesses to stay relevant to their customers in the digital era by touching hearts and minds."}
                 </p>
               </div>
               <div className="w-full lg:w-[30%] grid grid-cols-1 items-center justify-center gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8">
@@ -360,17 +381,21 @@ const Section9 = () => {
               <div
                 className="w-full sm:w-[280px] lg:w-[300px] h-[250px] sm:h-[280px] lg:h-[300px] text-white p-6 sm:p-8 lg:p-10 flex flex-col items-center justify-center text-center bg-cover bg-center relative rounded-[10px] hover:-translate-y-2 transition-transform duration-300"
                 style={{
-                  backgroundImage:
-                    "url(https://max-themes.net/demos/enside/main/upload/team-3-1024x660.jpg)",
+                  backgroundImage: `url(${
+                    servicesData.sections?.Design?.rightCard?.backgroundImage ||
+                    "https://max-themes.net/demos/enside/main/upload/team-3-1024x660.jpg"
+                  })`,
                 }}
               >
                 <div className="absolute inset-0 bg-[#00000080] rounded-[10px]"></div>
                 <PiLego className="z-10 text-3xl sm:text-4xl mb-4" />
                 <h1 className="z-10 text-lg sm:text-xl font-bold mb-2">
-                  We bring the brand to life
+                  {servicesData.sections?.Design?.rightCard?.title ||
+                    "We bring the brand to life"}
                 </h1>
                 <p className="z-10 text-sm">
-                  We only hire great people who strike to push their idea
+                  {servicesData.sections?.Design?.rightCard?.subtitle ||
+                    "We only hire great people who strike to push their idea"}
                 </p>
               </div>
             </motion.div>
@@ -383,7 +408,7 @@ const Section9 = () => {
       {/* Stats Section - Simplified */}
       <div className="max-w-[1200px] w-full h-fit flex flex-col gap-6 sm:gap-8 items-center justify-center text-black p-4 sm:p-6 lg:p-8 bg-white">
         <h1 className="text-[#2A2F35] text-2xl sm:text-3xl lg:text-4xl text-center px-4">
-          {section9Data.statsTitle ||
+          {servicesData.statistics?.mainTitle ||
             "We create human experience in a digital world"}
         </h1>
         <div className="w-full h-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-6 sm:gap-8 bg-white text-black">

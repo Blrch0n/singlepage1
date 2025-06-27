@@ -3,6 +3,24 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useData } from "../../../contexts/DataContext";
 
+// Helper function to format image URLs
+const formatImageUrl = (imageUrl, fallback) => {
+  if (!imageUrl) return fallback;
+
+  // If it's already a full URL (starts with http/https), return as is
+  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+    return imageUrl;
+  }
+
+  // If it starts with /api/uploads, prepend the base URL
+  if (imageUrl.startsWith("/api/uploads")) {
+    return `https://dash-1-iefb.onrender.com${imageUrl}`;
+  }
+
+  // If it's a relative path, use it as is (for local images)
+  return imageUrl;
+};
+
 // Fallback data
 const fallbackData = [
   {
@@ -23,8 +41,18 @@ const fallbackData = [
 const Section10 = () => {
   const { data, loading, error } = useData();
 
-  // Extract section data from API
-  const section10Data = data?.section10 || fallbackData;
+  // Extract section data from API - use services.section2 which contains the gallery services data
+  const servicesData = data?.services?.section2 || {};
+  const servicesArray = servicesData.services || [];
+
+  // Use API data if available, otherwise fallback
+  const section10Data =
+    servicesArray.length > 0
+      ? servicesArray.map((item) => ({
+          image: item.backgroundImage,
+          title: item.title,
+        }))
+      : fallbackData;
 
   if (loading) {
     return (
@@ -51,7 +79,10 @@ const Section10 = () => {
           key={index}
           className="flex flex-col w-full h-[120px] sm:h-[150px] md:h-[180px] lg:h-[150px] group relative items-center justify-center text-center p-2 sm:p-4 overflow-hidden duration-300"
           style={{
-            backgroundImage: `url(${item.image})`,
+            backgroundImage: `url(${formatImageUrl(
+              item.image,
+              fallbackData[index]?.image
+            )})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

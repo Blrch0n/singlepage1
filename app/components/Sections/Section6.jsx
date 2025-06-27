@@ -5,6 +5,7 @@ import { FaHelmetSafety } from "react-icons/fa6";
 import { PiBag } from "react-icons/pi";
 import { GiCoffeeCup } from "react-icons/gi";
 import { useData } from "@/contexts/DataContext";
+import { formatImageUrl } from "../../../lib/api";
 
 const defaultSection6Data = [
   {
@@ -77,8 +78,8 @@ const Section6 = () => {
           </div>
           <img
             className="w-full md:w-[50%] h-auto object-cover bg-center bg-cover rounded-lg md:rounded-none"
-            src="https://max-themes.net/demos/enside/main/upload/image-preview-enside.png"
-            alt=""
+            src={formatImageUrl(ourWorkData.image || ourWorkData.mainImage)}
+            alt={ourWorkData.imageAlt || "Our work preview"}
           />
         </motion.div>
 

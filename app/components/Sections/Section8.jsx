@@ -39,8 +39,12 @@ const fallbackData = [
 const Section8 = () => {
   const { data, loading, error } = useData();
 
-  // Extract section data from API
-  const section8Data = data?.section8 || fallbackData;
+  // Extract section data from API - use ourWork.section4 which contains the services data
+  const ourWorkData = data?.ourWork?.section4 || {};
+  const servicesData = ourWorkData.services || [];
+
+  // Use API data if available, otherwise fallback
+  const section8Data = servicesData.length > 0 ? servicesData : fallbackData;
 
   if (loading) {
     return (
@@ -92,10 +96,21 @@ const Section8 = () => {
           );
         }
 
+        // Handle color from API (bgColor) or fallback to item.color
+        const backgroundColor =
+          item.color ||
+          (item.bgColor === "from-purple-400 to-pink-400"
+            ? "#664ed3"
+            : item.bgColor === "from-blue-400 to-cyan-400"
+            ? "#ff1053"
+            : item.bgColor === "from-green-400 to-teal-400"
+            ? "#737884"
+            : "#664ed3");
+
         return (
           <motion.div
             key={index}
-            style={{ backgroundColor: item.color }}
+            style={{ backgroundColor }}
             className="flex flex-col items-center sm:items-start justify-start text-white gap-4 py-[40px] px-[30px] sm:py-[50px] sm:px-[40px] lg:py-[60px] lg:px-[50px] min-h-[280px] sm:min-h-[300px] duration-300"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

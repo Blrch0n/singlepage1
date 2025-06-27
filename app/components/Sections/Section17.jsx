@@ -2,32 +2,15 @@
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useData } from "../../../contexts/DataContext";
-
-// Helper function to format image URLs
-const formatImageUrl = (imageUrl, fallback = "/image5.jpg") => {
-  if (!imageUrl) return fallback;
-
-  // If it's already a full URL (starts with http/https), return as is
-  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
-    return imageUrl;
-  }
-
-  // If it starts with /api/uploads, prepend the base URL
-  if (imageUrl.startsWith("/api/uploads")) {
-    return `https://dash-1-iefb.onrender.com${imageUrl}`;
-  }
-
-  // If it's a relative path, use it as is (for local images)
-  return imageUrl;
-};
+import { formatImageUrl } from "../../../lib/api";
 
 const Section17 = () => {
   const router = useRouter();
   const { data, loading, error } = useData();
 
-  // Extract section data from API
-  const section17Data = data?.section17 || {};
-  const ctaData = section17Data.cta || {};
+  // Extract section data from API - Section17 uses contact.section2
+  const section17Data = data?.contact?.section2 || {};
+  const ctaData = section17Data.cta || section17Data || {};
 
   if (loading) {
     return (

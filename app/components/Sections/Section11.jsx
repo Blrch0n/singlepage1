@@ -2,6 +2,24 @@
 import { motion } from "framer-motion";
 import { useData } from "../../../contexts/DataContext";
 
+// Helper function to format image URLs
+const formatImageUrl = (imageUrl, fallback) => {
+  if (!imageUrl) return fallback;
+
+  // If it's already a full URL (starts with http/https), return as is
+  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+    return imageUrl;
+  }
+
+  // If it starts with /api/uploads, prepend the base URL
+  if (imageUrl.startsWith("/api/uploads")) {
+    return `https://dash-1-iefb.onrender.com${imageUrl}`;
+  }
+
+  // If it's a relative path, use it as is (for local images)
+  return imageUrl;
+};
+
 // Fallback data
 const fallbackData = [
   {
@@ -57,10 +75,29 @@ const fallbackData = [
 const Section11 = () => {
   const { data, loading, error } = useData();
 
-  // Extract section data from API
-  const teamData = data?.section11 || {};
-  const section11Data = teamData.members || teamData.team || fallbackData;
-  const headerData = teamData.header || {};
+  // Extract section data from API - use team.section1 which contains the technologies/team data
+  const teamData = data?.team?.section1 || {};
+  const teamProjects = teamData.projects || [];
+  const headerData = {
+    subtitle: teamData.subtitle || "team",
+    title: teamData.title || "Our Team",
+    description:
+      teamData.description ||
+      "Meet our talented team of designers and developers",
+  };
+
+  // Map API projects data to expected format, or use fallback
+  const section11Data =
+    teamProjects.length > 0
+      ? teamProjects.map((project) => ({
+          image: project.image,
+          title: project.title,
+          position: project.position,
+        }))
+      : fallbackData;
+
+  // Always ensure we have data to display
+  const finalData = section11Data.length > 0 ? section11Data : fallbackData;
 
   if (loading) {
     return (
@@ -77,7 +114,7 @@ const Section11 = () => {
 
   return (
     <motion.div
-      className="w-full h-fit flex flex-col pt-[100px] gap-12 items-center justify-center bg-[#F5F5F5]"
+      className="w-full h-fit flex flex-col pt-[100px] pb-[100px] gap-12 items-center justify-center bg-red-200 border-4 border-red-500"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -99,12 +136,15 @@ const Section11 = () => {
 
       {/* Team Grid */}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify-center bg-white text-black">
-        {section11Data.map((member, index) => (
+        {finalData.map((member, index) => (
           <motion.div
             key={index}
             className="flex flex-col items-center relative h-[420px] w-full justify-center text-center p-4 group overflow-hidden hover:-translate-y-1 transition-transform duration-300"
             style={{
-              backgroundImage: `url(${member.image || member.avatar})`,
+              backgroundImage: `url(${formatImageUrl(
+                member.image || member.avatar,
+                fallbackData[index]?.image
+              )})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

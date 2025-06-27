@@ -2,30 +2,13 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import { useData } from "../../../contexts/DataContext";
+import { formatImageUrl } from "../../../lib/api";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-
-// Helper function to format image URLs
-const formatImageUrl = (imageUrl, fallback = "/image1.jpg") => {
-  if (!imageUrl) return fallback;
-
-  // If it's already a full URL (starts with http/https), return as is
-  if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
-    return imageUrl;
-  }
-
-  // If it starts with /api/uploads, prepend the base URL
-  if (imageUrl.startsWith("/api/uploads")) {
-    return `https://dash-1-iefb.onrender.com${imageUrl}`;
-  }
-
-  // If it's a relative path, use it as is (for local images)
-  return imageUrl;
-};
 
 // Fallback data
 const fallbackSliderData = ["/image1.jpg", "/image2.jpg", "/image3.jpg"];
