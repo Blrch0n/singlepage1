@@ -13,6 +13,30 @@ const defaultHeaderlinks = [
   "contact",
 ];
 
+// Mapping for section IDs based on position/index
+const getSectionMapping = (labels) => {
+  const defaultMapping = [
+    { display: "about", sectionId: "about" },
+    { display: "our work", sectionId: "work" },
+    { display: "services", sectionId: "services" },
+    { display: "team", sectionId: "team" },
+    { display: "news", sectionId: "news" },
+    { display: "contact", sectionId: "contact" },
+  ];
+
+  if (!labels || labels.length === 0) {
+    return defaultMapping;
+  }
+
+  // Map the API labels to their corresponding section IDs by position
+  return labels.map((label, index) => ({
+    display: label,
+    sectionId:
+      defaultMapping[index]?.sectionId ||
+      label.toLowerCase().replace(/\s+/g, "-"),
+  }));
+};
+
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -21,10 +45,8 @@ const Header = () => {
 
   // Use API data for header links or fallback to default
   const headerData = data.header || {};
-  const headerlinks =
-    headerData.labels?.length > 0
-      ? headerData.labels.map((label) => label.toLowerCase())
-      : defaultHeaderlinks;
+  const sectionMapping = getSectionMapping(headerData.labels);
+  const headerlinks = sectionMapping.map((item) => item.display);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,17 +54,10 @@ const Header = () => {
       setIsScrolled(scrollTop > 50);
 
       // Check which section is currently in viewport
-      const sections = headerlinks.map((link) => {
-        let sectionId;
-        switch (link) {
-          case "our work":
-            sectionId = "work";
-            break;
-          default:
-            sectionId = link;
-        }
-        return { name: link, id: sectionId };
-      });
+      const sections = sectionMapping.map(({ display, sectionId }) => ({
+        name: display,
+        id: sectionId,
+      }));
 
       // Find the section that's currently most visible
       let currentSection = "";
@@ -95,18 +110,17 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("hashchange", handleHashNavigation);
     };
-  }, []);
+  }, [sectionMapping]);
 
   // Function to handle smooth scrolling
   const scrollToSection = (sectionName) => {
-    let sectionId;
-    switch (sectionName) {
-      case "our work":
-        sectionId = "work";
-        break;
-      default:
-        sectionId = sectionName;
-    }
+    // Find the section ID from the mapping
+    const mappingItem = sectionMapping.find(
+      (item) => item.display === sectionName
+    );
+    const sectionId = mappingItem
+      ? mappingItem.sectionId
+      : sectionName.toLowerCase().replace(/\s+/g, "-");
 
     // Check if we're on the home page by looking for the section
     const element = document.getElementById(sectionId);

@@ -23,7 +23,7 @@ export default function Home() {
   const { loading, error } = useData();
 
   if (loading) {
-    return <LoadingScreen message="Loading website data..." />;
+    return <LoadingScreen message="Веб сайт ачаалалж байна..." />;
   }
 
   if (error) {
